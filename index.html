@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美国东西海岸14天 · 旅行攻略</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<style>
+  :root{
+    --bg:#eef1f6; --card:#fff; --ink:#111827; --sub:#4b5563;
+    --line:#d1d5db; --accent:#1d4ed8; --accent2:#dc4a3a;
+    --west:#0f766e; --east:#6d28d9; --gold:#b45309; --hk:#a21caf;
+    --shadow:0 2px 12px rgba(15,23,42,.05);
+    --r:10px;
+    --doc:900px;
+    --nav-h:118px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;
+    font-size:15px;padding-bottom:64px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── 导航（屏幕） ── */
+  html{scroll-padding-top:var(--nav-h)}
+  .nav{
+    position:sticky;top:0;z-index:3000;background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:0;display:flex;flex-direction:column;gap:0;
+    white-space:normal;overflow:visible;align-items:stretch;
+  }
+  .nav-top,.nav-scroll{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;align-items:center;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .nav-top{padding:8px 16px 7px;border-bottom:1px solid #f1f5f9}
+  .nav-sub{display:flex;align-items:center;gap:8px;padding:5px 16px;min-width:0}
+  .nav-sub + .nav-sub{padding-top:0;padding-bottom:8px}
+  .nav-k{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.08em;color:#9ca3af;text-transform:uppercase}
+  .nav-scroll{flex:1;min-width:0;padding:2px 0;gap:5px}
+  .nav a{font-size:13px;color:var(--sub);text-decoration:none;padding:6px 12px;
+    border-radius:8px;border:1px solid var(--line);transition:.15s;flex:0 0 auto}
+  .nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav a.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav .print-btn{margin-left:auto;background:#111827;color:#fff;border-color:#111827;font-weight:700}
+  .nav a.city{font-size:12px;font-weight:700;padding:5px 10px}
+  .nav a.city.w{border-color:#99f6e4;color:#0f766e}
+  .nav a.city.e{border-color:#ddd6fe;color:#6d28d9}
+  .nav a.city.hk{border-color:#f5d0fe;color:#a21caf}
+  .nav a.city:hover,.nav a.city.on{color:#fff}
+  .nav a.city.w:hover,.nav a.city.w.on{background:var(--west);border-color:var(--west)}
+  .nav a.city.e:hover,.nav a.city.e.on{background:var(--east);border-color:var(--east)}
+  .nav a.city.hk:hover,.nav a.city.hk.on{background:var(--hk);border-color:var(--hk)}
+  .nav a.dayjump{display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;
+    padding:4px 9px;line-height:1.15}
+  .nav a.dayjump b{font-size:12px;font-weight:800}
+  .nav a.dayjump span{font-size:10px;font-weight:600;opacity:.78}
+  .nav a.dayjump.w{border-color:#ccfbf1}
+  .nav a.dayjump.e{border-color:#ede9fe}
+  .nav a.dayjump.f{border-color:#fde68a}
+  .nav a.dayjump.hk{border-color:#f5d0fe}
+  .nav a.dayjump.w.on,.nav a.dayjump.w:hover{background:var(--west);border-color:var(--west);color:#fff}
+  .nav a.dayjump.e.on,.nav a.dayjump.e:hover{background:var(--east);border-color:var(--east);color:#fff}
+  .nav a.dayjump.f.on,.nav a.dayjump.f:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+  .nav a.dayjump.hk.on,.nav a.dayjump.hk:hover{background:var(--hk);border-color:var(--hk);color:#fff}
+
+  .wrap{max-width:var(--doc);margin:0 auto;padding:0 20px}
+
+  /* ── 封面 Hero ── */
+  .hero{
+    background:#0f172a;color:#fff;padding:44px 24px 52px;text-align:center;
+    position:relative;overflow:hidden;border-bottom:4px solid var(--accent);
+  }
+  .hero::before{content:"";position:absolute;inset:0;
+    background:url("images/golden_gate.jpg") center/cover;opacity:.16}
+  .hero>*{position:relative;z-index:1}
+  .hero h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+  .hero .sub{margin-top:12px;font-size:15px;opacity:.92;max-width:640px;margin-inline:auto;line-height:1.75}
+
+  section{margin-top:36px;scroll-margin-top:var(--nav-h)}
+  .h2{
+    font-size:20px;font-weight:800;margin-bottom:14px;padding-bottom:8px;
+    border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:8px;
+    letter-spacing:-.01em;
+  }
+  .h3{font-size:15px;font-weight:800;margin:0 0 10px;color:var(--ink)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+  .panel{
+    background:var(--card);border-radius:var(--r);padding:16px 18px;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .panel-spaced{margin-top:14px}
+  .panel-intro{margin-bottom:18px;font-size:14px;line-height:1.75}
+  .panel p,.panel .lead{font-size:13px;color:var(--sub);line-height:1.7}
+  .note{font-size:12px;color:var(--sub);line-height:1.65;margin:0 0 10px}
+  .note-after{margin:8px 0 0}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{
+    color:var(--sub);font-weight:700;font-size:11px;text-transform:uppercase;
+    letter-spacing:.35px;background:#f8fafc;
+  }
+  tbody tr:nth-child(even){background:#fafbfc}
+  tbody tr:hover{background:#f1f5f9}
+  td.num{text-align:right;font-weight:700;color:var(--accent);white-space:nowrap}
+  td.num-sub{font-weight:500;color:var(--muted);font-size:.88em}
+  th.num{text-align:right}
+  .total{background:#eff6ff;font-weight:800}
+  .total td{color:var(--accent);border-bottom:1px solid #bfdbfe}
+  .total-grand{background:#dbeafe}
+  .total-sub{font-weight:500;font-size:12px;display:block;margin-top:2px;color:#1e40af}
+
+  .overview{
+    background:#fff;border:1px solid #bfdbfe;border-left:4px solid var(--accent);
+    border-radius:var(--r);padding:16px 18px;font-size:14px;line-height:1.85;
+  }
+  .overview.compact{margin-bottom:14px;font-size:13px;line-height:1.7}
+  .overview b{color:#1e40af}
+  .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+  .hl{background:var(--card);border-radius:var(--r);padding:12px 14px;border:1px solid var(--line)}
+  .hl .icon{font-size:20px;margin-bottom:4px;line-height:1}
+  .hl .tit{font-size:13px;font-weight:800;line-height:1.35}
+  .hl .desc{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.55}
+
+  /* ── 机票 ── */
+  .flights{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
+  .fcard{
+    background:var(--card);border-radius:var(--r);padding:14px 16px;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .fcard .tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;display:inline-block;margin-bottom:8px;letter-spacing:.02em}
+  .tag.hk{background:#fae8ff;color:#86198f}.tag.out{background:#dcfce7;color:#166534}
+  .tag.dom{background:#dbeafe;color:#1e40af}.tag.ret{background:#ffedd5;color:#c2410c}
+  .froute{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+  .fp{text-align:center;min-width:0;flex:1}
+  .fp .time{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}
+  .fp .code{font-size:12px;font-weight:700;color:var(--ink);margin-top:4px}
+  .fp .city{font-size:11px;color:var(--sub);line-height:1.35;margin-top:2px}
+  .farrow{flex:0 0 52px;text-align:center;font-size:12px;color:var(--accent);font-weight:600;padding-top:4px}
+  .farrow .dur{font-size:10px;color:var(--sub);display:block;font-weight:400;margin-bottom:2px;line-height:1.3}
+  .fmeta{margin-top:10px;font-size:11px;color:var(--sub);border-top:1px dashed var(--line);padding-top:8px;line-height:1.6}
+  .oktag{float:right;color:#16a34a;font-size:11px;font-weight:700}
+
+  /* ── 路线条 ── */
+  .routebar{background:var(--card);border-radius:var(--r);padding:14px 10px 16px;border:1px solid var(--line);overflow:hidden}
+  .rline{display:flex;align-items:center;width:100%;min-width:0}
+  .rnode{text-align:center;flex:0 1 auto;min-width:0;padding:0 2px}
+  .rdot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:14px;margin:0 auto;color:#fff;font-weight:700}
+  .rname{font-size:11px;font-weight:700;margin-top:5px;line-height:1.25;white-space:nowrap}
+  .rsub{font-size:10px;color:var(--sub);margin-top:2px;white-space:nowrap}
+  .rseg{flex:1 1 10px;height:3px;min-width:6px;max-width:48px;border-radius:2px;margin:0 3px}
+  .rseg.w{background:var(--west)}.rseg.e{background:var(--east)}
+  .rseg.f{background:repeating-linear-gradient(90deg,var(--accent) 0 6px,transparent 6px 12px)}
+  .rseg.h{background:repeating-linear-gradient(90deg,var(--hk) 0 6px,transparent 6px 12px)}
+
+  /* ── 必打卡 ── */
+  .city-must{margin-bottom:28px}
+  .city-head{
+    font-size:17px;font-weight:800;margin-bottom:12px;padding-bottom:6px;
+    border-bottom:2px solid;
+  }
+  .city-must.w .city-head{color:var(--west);border-color:var(--west)}
+  .city-must.e .city-head{color:var(--east);border-color:var(--east)}
+  .spot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+  .spot{
+    background:var(--card);border-radius:var(--r);overflow:hidden;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+  }
+  .spot-img{position:relative;height:160px;overflow:hidden;background:#e5e7eb;flex-shrink:0}
+  .spot-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .spot-img img.fit-sign{object-position:center 28%}
+  .spot-img .day-tag{
+    position:absolute;top:8px;left:8px;font-size:10px;font-weight:700;
+    padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.62);color:#fff;
+  }
+  .spot-body{padding:12px 14px 14px;flex:1;display:flex;flex-direction:column}
+  .spot-body h5{font-size:14px;font-weight:800;line-height:1.35}
+  .spot-body .en{font-size:11px;color:var(--sub);margin:3px 0 6px}
+  .spot-body p{font-size:12px;color:var(--sub);line-height:1.6;flex:1}
+  .spot-meta{margin-top:8px;font-size:11px;color:var(--accent);font-weight:600}
+  .city-must.e .spot-meta{color:var(--east)}
+  .city-must.w .spot-meta{color:var(--west)}
+  .wear-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+  .wear{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:14px 16px;box-shadow:var(--shadow);border-top:4px solid var(--accent);
+  }
+  .wear.w{border-top-color:var(--west)}
+  .wear.la{border-top-color:var(--gold)}
+  .wear.e{border-top-color:var(--east)}
+  .wear .who{font-size:11px;font-weight:800;letter-spacing:.04em;color:var(--sub)}
+  .wear h4{font-size:15px;font-weight:800;margin:4px 0 8px;line-height:1.35}
+  .wear .bits{font-size:13px;font-weight:600;line-height:1.6;margin-bottom:8px}
+  .wear p{font-size:12px;color:var(--sub);line-height:1.65}
+  .wear .when{font-size:11px;font-weight:700;color:var(--accent);margin-top:8px}
+  .wear.w .when{color:var(--west)}
+  .wear.e .when{color:var(--east)}
+  .wear.la .when{color:var(--gold)}
+  .spot-subhead{
+    font-size:13px;font-weight:700;margin:18px 0 10px;padding:6px 0 6px 12px;
+    border-left:3px solid var(--line);color:var(--sub);line-height:1.4;
+  }
+  .city-must.w .spot-subhead{border-left-color:var(--west);color:var(--west)}
+  .city-must.e .spot-subhead{border-left-color:var(--east);color:var(--east)}
+  .city-must .spot-subhead:first-of-type{margin-top:4px}
+
+  /* ── 每日行程卡 ── */
+  .day{
+    background:var(--card);border-radius:var(--r);border:1px solid var(--line);
+    box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden;
+    scroll-margin-top:var(--nav-h);
+  }
+  .day.west{border-top:4px solid var(--west)}
+  .day.east{border-top:4px solid var(--east)}
+  .day.fly{border-top:4px solid var(--gold)}
+  .day.hk{border-top:4px solid var(--hk)}
+
+  .day-header{padding:16px 18px 12px;border-bottom:1px solid var(--line);background:#f9fafb}
+  .dmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .pill{font-size:11px;padding:4px 10px;border-radius:999px;background:#f3f4f6;color:var(--sub);font-weight:600;border:1px solid var(--line)}
+  .pill.w{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+  .pill.e{background:#f5f3ff;color:#5b21b6;border-color:#ddd6fe}
+  .pill.f{background:#fffbeb;color:#92400e;border-color:#fde68a}
+  .dnum{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}
+  .day.west .dnum{color:var(--west)}.day.east .dnum{color:var(--east)}
+  .day.fly .dnum{color:var(--gold)}.day.hk .dnum{color:var(--hk)}
+  .dtitle{font-size:18px;font-weight:800;margin-top:4px;line-height:1.35;letter-spacing:-.01em}
+  .ddate{font-size:13px;color:var(--sub);font-weight:600;margin-top:3px}
+  .wx{
+    margin-top:10px;padding:10px 12px;border-radius:8px;
+    background:#eff6ff;border:1px solid #bfdbfe;text-align:left;
+  }
+  .wx.ref{background:#fffbeb;border-color:#fde68a}
+  .wx-row{font-size:13px;font-weight:700;color:#1e3a8a;line-height:1.5}
+  .wx.ref .wx-row{color:#92400e}
+  .wx-src{font-size:10px;font-weight:600;color:#6b7280;margin-left:6px;letter-spacing:.02em}
+  .wx-wear{font-size:12px;color:#374151;margin-top:4px;line-height:1.55;font-weight:500}
+
+  .day-body{padding:16px 18px 18px}
+  .timeline-label{
+    font-size:11px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;
+    color:var(--sub);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line);
+  }
+  .kind-legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+  .kind-legend span{
+    font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+    border:1px solid var(--line);background:#fff;color:var(--sub);line-height:1.4;
+  }
+  .kind-legend span.k-local{
+    background:#ecfeff;color:#155e75;border-color:#a5f3fc;
+  }
+
+  /* ── 时间轴 ── */
+  .timeline{display:flex;flex-direction:column;gap:12px;position:relative}
+  .timeline::before{
+    content:"";position:absolute;left:76px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,#e5e7eb 0%,#d1d5db 100%);border-radius:1px;
+  }
+  .day.west .timeline::before{background:linear-gradient(180deg,#99f6e4,#5eead4)}
+  .day.east .timeline::before{background:linear-gradient(180deg,#ddd6fe,#c4b5fd)}
+  .day.hk .timeline::before{background:linear-gradient(180deg,#f5d0fe,#e879f9)}
+  .day.fly .timeline::before{background:linear-gradient(180deg,#fde68a,#fbbf24)}
+
+  .tl-item{display:grid;grid-template-columns:68px 1fr;gap:12px;align-items:start;position:relative}
+  .tl-time{
+    font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25;
+    color:var(--accent);text-align:right;padding-top:14px;padding-right:4px;
+  }
+  .day.west .tl-time{color:var(--west)}
+  .day.east .tl-time{color:var(--east)}
+  .day.hk .tl-time{color:var(--hk)}
+  .day.fly .tl-time{color:var(--gold)}
+  .tl-marker{display:none}
+
+  .tl-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r);
+    padding:12px 14px;font-size:13px;line-height:1.65;
+    transition:box-shadow .15s,border-color .15s;
+  }
+  .tl-item:hover .tl-card{box-shadow:0 2px 10px rgba(15,23,42,.06);border-color:#cbd5e1}
+  .tl-card > b,.tl-card-body > b{font-weight:700;color:var(--ink);font-size:14px;display:block;line-height:1.35}
+  .tl-card .en{font-size:12px;color:var(--sub);margin-top:5px;display:block;line-height:1.5}
+  .tl-detail b{display:inline;font-size:inherit;font-weight:700;color:var(--ink)}
+  .tl-facts{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:7px}
+  .tl-facts li{display:grid;grid-template-columns:2.6em 1fr;gap:2px 10px;align-items:start}
+  .tl-facts em{font-style:normal;font-weight:800;font-size:11px;color:var(--west);padding-top:1px;letter-spacing:.02em}
+  .tl-facts .hint{display:block;font-size:11px;color:#6b7280;margin-top:1px;line-height:1.45}
+
+  .tl-card.has-img{padding:0;overflow:hidden;display:flex;flex-direction:row;align-items:stretch}
+  .tl-card-media{
+    width:112px;min-width:112px;max-width:112px;margin:0;order:2;
+    background:#e5e7eb;overflow:hidden;flex-shrink:0;border-left:1px solid var(--line);
+  }
+  .tl-card-media img{width:100%;height:100%;object-fit:cover;display:block;min-height:96px}
+  .tl-card-media img.fit-sign{object-position:center 28%}
+  .tl-card-body{padding:11px 13px 12px;flex:1;min-width:0;order:1}
+  .tl-detail{font-size:12px;color:var(--sub);margin-top:7px;line-height:1.65}
+  .tl-meta{font-size:11px;color:var(--accent);margin-top:6px;font-weight:600;line-height:1.45}
+  .day.west .tl-meta{color:var(--west)}
+  .day.east .tl-meta{color:var(--east)}
+  .photo-shot{
+    display:inline-block;font-size:10px;font-weight:700;color:#9a3412;
+    background:#ffedd5;border:1px solid #fdba74;border-radius:4px;
+    padding:1px 6px;margin-right:5px;vertical-align:middle;white-space:nowrap;
+  }
+  .spot-meta .photo-shot{margin-right:0;margin-left:6px}
+
+  .tl-item .tl-card{grid-column:2;grid-row:1}
+  .tl-item .tl-time{grid-column:1;grid-row:1}
+
+  .tl-kind{
+    display:inline-flex;align-items:center;gap:3px;
+    font-size:10px;font-weight:800;letter-spacing:.02em;
+    padding:2px 7px;border-radius:999px;line-height:1.3;
+    white-space:nowrap;margin-bottom:5px;border:1px solid transparent;
+  }
+  .tl-item[data-kind="sight"] .tl-card{border-left:3px solid #0f766e}
+  .tl-item[data-kind="sight"] .tl-kind{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+  .tl-item[data-kind="move"] .tl-card{border-left:3px solid #2563eb;background:#f8fafc}
+  .tl-item[data-kind="move"] .tl-kind{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .tl-item[data-kind="fly"] .tl-card{border-left:3px solid #b45309;background:#fffbeb}
+  .tl-item[data-kind="fly"] .tl-kind{background:#fffbeb;color:#92400e;border-color:#fde68a}
+  .tl-item[data-kind="food"] .tl-card{border-left:3px solid #c2410c;background:#fff7ed}
+  .tl-item[data-kind="food"] .tl-kind{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  .tl-item[data-kind="stay"] .tl-card{border-left:3px solid #166534;background:#f0fdf4}
+  .tl-item[data-kind="stay"] .tl-kind{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .tl-item[data-kind="rest"] .tl-card{border-left:3px solid #6b7280;background:#f9fafb}
+  .tl-item[data-kind="rest"] .tl-kind{background:#f3f4f6;color:#4b5563;border-color:#e5e7eb}
+  .tl-item[data-kind="local"] .tl-card{border-left:3px dashed #0e7490;background:#ecfeff}
+  .tl-item[data-kind="local"] .tl-kind{background:#cffafe;color:#155e75;border-color:#a5f3fc}
+
+  /* 本地交通：嵌在大交通/住宿卡片内的换乘模块 */
+  .tl-local{
+    margin-top:10px;padding:10px 12px 11px;border-radius:8px;
+    background:#ecfeff;border:1px dashed #67e8f9;
+  }
+  .tl-item[data-kind="local"] .tl-local{
+    margin-top:8px;padding:0;background:transparent;border:0;
+  }
+  .tl-local-hd{
+    display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+    gap:4px 10px;margin-bottom:8px;
+  }
+  .tl-local-tag{
+    font-size:10px;font-weight:800;letter-spacing:.02em;
+    color:#155e75;background:#cffafe;border:1px solid #a5f3fc;
+    padding:2px 7px;border-radius:999px;
+  }
+  .tl-local-meta{font-size:11px;font-weight:700;color:#0e7490}
+  .local-line{list-style:none;margin:0;padding:0}
+  .local-line li{
+    position:relative;padding:0 0 10px 18px;
+    font-size:12px;line-height:1.5;color:#374151;
+  }
+  .local-line li:last-child{padding-bottom:0}
+  .local-line li::before{
+    content:"";position:absolute;left:3px;top:6px;width:8px;height:8px;
+    border-radius:50%;background:#0891b2;box-shadow:0 0 0 3px #cffafe;
+  }
+  .local-line li:not(:last-child)::after{
+    content:"";position:absolute;left:6px;top:16px;bottom:0;width:2px;background:#a5f3fc;
+  }
+  .local-line b{display:block;font-size:12.5px;color:var(--ink);font-weight:700;line-height:1.35}
+  .local-line em{
+    display:block;font-style:normal;font-size:11px;font-weight:700;
+    color:#0e7490;margin-top:2px;
+  }
+  .local-line .hint{display:block;font-size:11px;color:#6b7280;margin-top:1px;line-height:1.45}
+  .local-badge{
+    display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;
+    padding:0 5px;border-radius:4px;background:#0e7490;color:#fff;
+    vertical-align:1px;margin-right:2px;
+  }
+
+  .infobar{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+  .info{font-size:12px;padding:7px 11px;border-radius:8px;line-height:1.5;border:1px solid transparent}
+  .info.food{background:#fff1f0;color:#9a3412;border-color:#fecaca}
+  .info.warn{background:#fffbeb;color:#92400e;border-color:#fde68a}
+  .info.tip{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .info.stay{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
+  .info.stay.pending{background:#fffbeb;color:#92400e;border-color:#fde68a}
+
+  /* ── 路线图 ── */
+  .day-map,.city-map{
+    margin:0 0 14px;padding:12px;border:1px solid var(--line);border-radius:var(--r);
+    background:#f7f6f2;
+  }
+  .day-map-hd,.city-map-hd{
+    display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+    gap:6px 12px;margin-bottom:8px;
+  }
+  .day-map-hd b,.city-map-hd b{font-size:13px;font-weight:800}
+  .day-map-note{font-size:11px;color:var(--sub);font-weight:600}
+  .day-map-route + .day-map-route{
+    margin-top:14px;padding-top:14px;border-top:1px dashed #d1d5db;
+  }
+  .day-map-route-hd{
+    font-size:12px;font-weight:800;color:var(--ink);margin:0 0 8px;
+    padding:4px 0 4px 10px;border-left:3px solid #0f766e;
+  }
+  .day.east .day-map-route-hd{border-left-color:#6d28d9}
+  .map-frame-stacked{height:260px}
+  .map-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+  .map-tabs button{
+    font:700 12px/1.4 "PingFang SC","Microsoft YaHei",sans-serif;
+    padding:5px 10px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;color:var(--sub);cursor:pointer;
+  }
+  .map-tabs button.on{background:#0f766e;color:#fff;border-color:#0f766e}
+  .map-tabs.east button.on{background:#6d28d9;border-color:#6d28d9}
+  .map-frame{
+    height:300px;border-radius:10px;overflow:hidden;border:1px solid #ddd9d0;
+    background:#e8e4dc;z-index:1;position:relative;
+  }
+  .city-map .map-frame{height:min(64vh,480px)}
+  .map-frame.is-loading::after{
+    content:"地图加载中…";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:#6b7280;background:#e8e4dc;z-index:2;letter-spacing:.04em;
+  }
+  .map-legs{
+    display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;
+  }
+  .map-leg{
+    font-size:11px;font-weight:700;color:#374151;background:#fff;
+    border:1px solid #e5e7eb;border-radius:999px;padding:4px 9px;line-height:1.35;
+  }
+  .map-leg b{font-weight:800;color:#0f766e;margin-right:4px}
+  .day.east .map-leg b{color:#6d28d9}
+  .map-list{
+    list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;
+  }
+  .map-list button{
+    font:600 11px/1.35 "PingFang SC","Microsoft YaHei",sans-serif;
+    padding:4px 8px 4px 4px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  }
+  .map-list button:hover,.map-list button.on{border-color:#0f766e;background:#f0fdfa}
+  .map-n{
+    width:18px;height:18px;border-radius:50%;background:#0f766e;color:#fff;
+    font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .map-n.stay{background:#166534;border-radius:4px}
+  .map-n.fly{background:#b45309}
+  .map-n.local{background:#0e7490}
+  .map-n.move{background:#2563eb}
+  .day.east .map-n,.map-n.east{background:#6d28d9}
+  .leaflet-container{font-family:inherit;z-index:1;background:#e8e4dc;cursor:grab}
+  .leaflet-container:hover{cursor:grab}
+  .leaflet-div-icon{background:transparent;border:none}
+  .leaflet-control-zoom{
+    border:none!important;box-shadow:0 2px 8px rgba(15,23,42,.16)!important;overflow:hidden;border-radius:8px!important;
+  }
+  .leaflet-control-zoom a{
+    border:none!important;width:32px!important;height:32px!important;line-height:32px!important;
+    font-size:16px!important;color:#111!important;background:#fff!important;
+  }
+  .leaflet-control-zoom a:hover{background:#f3f4f6!important}
+  .leaflet-control-attribution{font-size:9px!important;background:rgba(255,255,255,.75)!important}
+  .poi-pin{
+    width:28px;height:28px;border-radius:50%;background:#0f766e;color:#fff;
+    font:800 12px/28px "PingFang SC",sans-serif;text-align:center;
+    border:2px solid #fff;box-shadow:0 2px 6px rgba(15,23,42,.28);
+  }
+  .poi-pin.stay{background:#166534;border-radius:7px}
+  .poi-pin.fly{background:#b45309}
+  .poi-pin.local{background:#0e7490}
+  .poi-pin.move{background:#2563eb}
+  .poi-pin.food{background:#c2410c}
+  .poi-pin.east{background:#6d28d9}
+  .poi-pop b{display:block;font-size:13px;margin-bottom:2px}
+  .poi-pop span{font-size:11px;color:#4b5563}
+  .poi-pop a{font-size:11px;font-weight:700}
+  .seg-label{
+    background:#fff;border:1px solid #e5e7eb;border-radius:999px;
+    padding:3px 8px;font-size:10px;font-weight:800;color:#111827;
+    box-shadow:0 1px 4px rgba(15,23,42,.12);white-space:nowrap;
+  }
+  .leaflet-tooltip.seg-label{margin:0;box-shadow:0 1px 4px rgba(15,23,42,.12)}
+  .leaflet-tooltip.seg-label::before{display:none}
+
+  .hotel-ok{color:#16a34a;font-weight:600}
+  .hotel-pending{color:#ca8a04;font-weight:600}
+  .book tr td:first-child{font-weight:600;white-space:nowrap}
+  .urgent{color:#dc2626;font-weight:700}
+
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  footer{
+    text-align:center;margin-top:40px;padding:18px 12px;color:var(--sub);
+    font-size:12px;border-top:1px solid var(--line);line-height:1.7;
+  }
+  footer code{font-size:11px;background:#f3f4f6;padding:2px 6px;border-radius:4px;color:var(--ink)}
+
+    @media(max-width:640px){
+    .nav-k{font-size:9px}
+    .nav a{padding:5px 10px;font-size:12px}
+    .nav a.dayjump{padding:3px 8px}
+    .nav a.dayjump b{font-size:11px}
+    .nav a.dayjump span{font-size:9px}
+    .wrap{padding:0 12px}
+    .tl-item{grid-template-columns:54px 1fr;gap:8px}
+    .timeline::before{left:54px}
+    .tl-card-media{width:92px!important;min-width:92px!important;max-width:92px!important}
+    .dtitle{font-size:17px}
+    .nav .print-btn{display:none}
+    .spot-grid{grid-template-columns:1fr}
+    .routebar{padding:12px 6px 14px}
+    .rdot{width:28px;height:28px;font-size:12px}
+    .rname{font-size:10px}
+    .rsub{font-size:9px}
+    .rseg{margin:0 2px;max-width:28px}
+    .flights{grid-template-columns:1fr}
+  }
+
+  /* ══════════════════════════════════════
+     PDF / 打印
+     浏览器：文件 → 打印 → 另存为 PDF
+     ══════════════════════════════════════ */
+  @page{size:A4;margin:12mm 11mm}
+  @media print{
+    *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+    html,body{background:#fff!important;font-size:10.5pt;line-height:1.55;color:#111}
+    .nav,.print-btn{display:none!important}
+    .wrap{max-width:100%!important;padding:0!important}
+    a{color:inherit;text-decoration:none}
+    a[href]::after{content:none!important}
+
+    .hero{
+      padding:20px 16px 24px!important;margin:0 0 8mm!important;
+      break-after:page;page-break-after:always;
+    }
+    .hero::before{opacity:.1!important}
+    .hero h1{font-size:22pt}
+    .hero .sub{font-size:11pt}
+
+    section{margin-top:16px;scroll-margin:0}
+    .h2{font-size:14pt;margin-bottom:10px;break-after:avoid;page-break-after:avoid}
+    .h3{font-size:11pt}
+
+    #mustsee{break-before:page;page-break-before:always}
+    #west>.h2,#east>.h2{break-before:page;page-break-before:always;break-after:avoid}
+    #hotels{break-before:page;page-break-before:always}
+
+    .panel,.fcard,.hl,.spot,.day{box-shadow:none!important}
+    .panel,.fcard,.spot,.day,.hl{border:1px solid #bbb!important}
+
+    .flights{grid-template-columns:1fr 1fr!important;gap:8px}
+    .fcard{padding:10px 12px;break-inside:avoid;page-break-inside:avoid}
+    .fp .time{font-size:14pt}
+    .fp .city{font-size:9pt}
+
+    .highlights{grid-template-columns:1fr 1fr!important;gap:8px}
+    .spot-grid{grid-template-columns:1fr 1fr!important;gap:8px}
+    .spot{break-inside:avoid;page-break-inside:avoid}
+    .spot-img{height:105px!important}
+    .spot-body p{font-size:10pt}
+
+    .grid2{grid-template-columns:1fr 1fr!important;gap:10px}
+    .grid3{grid-template-columns:1fr 1fr!important;gap:8px}
+
+    .wear-grid{grid-template-columns:1fr 1fr!important;gap:8px}
+    .wear{break-inside:avoid;page-break-inside:avoid;box-shadow:none!important}
+
+    table{font-size:10pt}
+    th,td{padding:6px 8px}
+    th{background:#f0f0f0!important}
+    tbody tr:nth-child(even){background:#f9f9f9!important}
+
+    .routebar{overflow:visible!important;padding:12px}
+    .rline{min-width:0!important;flex-wrap:wrap;justify-content:center;gap:6px 4px}
+    .rseg{display:none}
+    .rnode{min-width:52px}
+    .rdot{width:30px;height:30px;font-size:12px}
+    .rname{font-size:9pt}
+
+    .day{
+      break-inside:auto;page-break-inside:auto;
+      margin-bottom:14px;
+    }
+    .day-header{
+      break-inside:avoid;page-break-inside:avoid;break-after:avoid;
+      background:#f5f5f5!important;padding:12px 14px!important;
+    }
+    .dtitle{font-size:13pt}
+    .wx{padding:8px 10px;margin-top:8px}
+    .wx-row{font-size:10pt}
+    .wx-wear{font-size:9.5pt}
+    .day-body{padding:12px 14px!important}
+
+    .timeline::before{left:62px;background:#ccc!important}
+    .tl-item{
+      grid-template-columns:58px 1fr!important;gap:8px!important;
+      break-inside:avoid;page-break-inside:avoid;
+    }
+    .tl-card{font-size:10pt;padding:8px 10px!important}
+    .tl-card > b,.tl-card-body > b{font-size:10.5pt}
+    .tl-detail,.tl-card .en{font-size:9.5pt}
+    .tl-card-media{width:80px!important;min-width:80px!important;max-width:80px!important}
+    .tl-card-media img{max-height:88px!important;min-height:72px!important}
+    .tl-item:hover .tl-card{box-shadow:none!important}
+
+    .kind-legend{margin-bottom:8px}
+    .tl-kind{font-size:8pt;padding:1px 6px}
+    .tl-local{padding:8px 10px}
+    .local-line li{font-size:9.5pt}
+    .info{font-size:9pt;padding:5px 8px}
+
+    footer{margin-top:20px;padding:12px;break-before:auto;font-size:9pt}
+    .city-must{margin-bottom:18px}
+    .day-map,.city-map,.map-frame{display:none!important}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-top">
+    <a href="#flights" class="on" data-nav="doc">机票</a>
+    <a href="#overview" data-nav="doc">概览</a>
+    <a href="#route" data-nav="doc">路线</a>
+    <a href="#maps" data-nav="doc">地图</a>
+    <a href="#mustsee" data-nav="doc">必打卡</a>
+    <a href="#hotels" data-nav="doc">酒店</a>
+    <a href="#transport" data-nav="doc">交通</a>
+    <a href="#tickets" data-nav="doc">门票</a>
+    <a href="#book" data-nav="doc">预订</a>
+    <a href="#budget" data-nav="doc">预算</a>
+    <a href="#tips" data-nav="doc">贴士</a>
+    <a href="#pack" data-nav="doc">穿搭</a>
+    <a href="#" class="print-btn" onclick="window.print();return false">🖨 导出 PDF</a>
+  </div>
+  <div class="nav-sub">
+    <span class="nav-k">城市</span>
+    <div class="nav-scroll" id="nav-cities">
+      <a href="#d0" class="city hk" data-nav="city" data-days="d0">香港</a>
+      <a href="#d1" class="city w" data-nav="city" data-days="d1,d2">旧金山</a>
+      <a href="#d3" class="city w" data-nav="city" data-days="d2,d3">一号公路</a>
+      <a href="#d4" class="city w" data-nav="city" data-days="d4,d5,d6">洛杉矶</a>
+      <a href="#d7" class="city e" data-nav="city" data-days="d6,d7,d8">华盛顿</a>
+      <a href="#d8" class="city e" data-nav="city" data-days="d8,d9,d10">纽约</a>
+      <a href="#d11" class="city e" data-nav="city" data-days="d11,d12">波士顿</a>
+    </div>
+  </div>
+  <div class="nav-sub">
+    <span class="nav-k">日期</span>
+    <div class="nav-scroll" id="nav-days">
+      <a href="#d0" class="dayjump hk" data-nav="day" data-day="d0"><b>D0</b><span>9/24 香港</span></a>
+      <a href="#d1" class="dayjump w" data-nav="day" data-day="d1"><b>D1</b><span>9/25 旧金山</span></a>
+      <a href="#d2" class="dayjump w" data-nav="day" data-day="d2"><b>D2</b><span>9/26 南下</span></a>
+      <a href="#d3" class="dayjump w" data-nav="day" data-day="d3"><b>D3</b><span>9/27 大苏尔</span></a>
+      <a href="#d4" class="dayjump w" data-nav="day" data-day="d4"><b>D4</b><span>9/28 进 LA</span></a>
+      <a href="#d5" class="dayjump w" data-nav="day" data-day="d5"><b>D5</b><span>9/29 好莱坞</span></a>
+      <a href="#d6" class="dayjump f" data-nav="day" data-day="d6"><b>D6</b><span>9/30 飞 DC</span></a>
+      <a href="#d7" class="dayjump e" data-nav="day" data-day="d7"><b>D7</b><span>10/1 华盛顿</span></a>
+      <a href="#d8" class="dayjump e" data-nav="day" data-day="d8"><b>D8</b><span>10/2 抵纽约</span></a>
+      <a href="#d9" class="dayjump e" data-nav="day" data-day="d9"><b>D9</b><span>10/3 下城</span></a>
+      <a href="#d10" class="dayjump e" data-nav="day" data-day="d10"><b>D10</b><span>10/4 上城</span></a>
+      <a href="#d11" class="dayjump e" data-nav="day" data-day="d11"><b>D11</b><span>10/5 波士顿</span></a>
+      <a href="#d12" class="dayjump f" data-nav="day" data-day="d12"><b>D12</b><span>10/6 返程</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>美国东西海岸 14 天完整攻略</h1>
+  <p class="sub">已定机票定制 · 美西自然公路自驾 + 美东人文历史纵贯<br>旧金山借车 → 一号公路 3 天 → 洛杉矶还车 · 华盛顿 / 纽约 / 波士顿 大巴串联</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 机票 -->
+  <section id="flights">
+    <div class="h2">✈️ 已定机票（5 段联程）</div>
+    <div class="flights">
+      <div class="fcard">
+        <span class="tag hk">第1段 · 09/24 周三</span><span class="oktag">已出票</span>
+        <div class="froute">
+          <div class="fp"><div class="time">19:40</div><div class="code">PEK T3</div><div class="city">北京</div></div>
+          <div class="farrow"><span class="dur">CX337 · 3h45m</span>✈</div>
+          <div class="fp"><div class="time">23:25</div><div class="code">HKG</div><div class="city">香港国际机场</div></div>
+        </div>
+        <div class="fmeta">国泰航空 · 波音777-300ER · 当晚香港丽豪航天城酒店过夜 · 出关取行李</div>
+      </div>
+      <div class="fcard">
+        <span class="tag out">第2段 · 09/25 周四</span><span class="oktag">已出票</span>
+        <div class="froute">
+          <div class="fp"><div class="time">13:25</div><div class="code">HKG</div><div class="city">香港国际机场</div></div>
+          <div class="farrow"><span class="dur">CX870 · 12h30m</span>✈</div>
+          <div class="fp"><div class="time">10:55</div><div class="code">SFO</div><div class="city">旧金山国际机场</div></div>
+        </div>
+        <div class="fmeta">国泰航空 · 波音777 · 9/25 10:55 抵旧金山国际机场 SFO · 酒店退房后再托运行李</div>
+      </div>
+      <div class="fcard">
+        <span class="tag dom">第3段 · 09/30 周二</span><span class="oktag">已出票</span>
+        <div class="froute">
+          <div class="fp"><div class="time">12:31</div><div class="code">LAX</div><div class="city">洛杉矶国际机场</div></div>
+          <div class="farrow"><span class="dur">AA591 · 5h06m</span>✈</div>
+          <div class="fp"><div class="time">20:37</div><div class="code">DCA</div><div class="city">罗纳德·里根国家机场</div></div>
+        </div>
+        <div class="fmeta">美国航空 · 波音737 · LAX 还车 · 建议 10:00 前到洛杉矶国际机场 LAX</div>
+      </div>
+      <div class="fcard">
+        <span class="tag ret">第4段 · 10/06–07</span><span class="oktag">已出票</span>
+        <div class="froute">
+          <div class="fp"><div class="time">01:45</div><div class="code">BOS</div><div class="city">洛根国际机场</div></div>
+          <div class="farrow"><span class="dur">CX811 · 15h15m</span>✈</div>
+          <div class="fp"><div class="time">05:00</div><div class="code">HKG</div><div class="city">香港国际机场</div></div>
+        </div>
+        <div class="fmeta">国泰航空 · 空客A350 · 跨日航班 · 10/5 22:00 前须抵洛根国际机场 BOS</div>
+      </div>
+      <div class="fcard">
+        <span class="tag ret">第5段 · 10/07 周三</span><span class="oktag">已出票</span>
+        <div class="froute">
+          <div class="fp"><div class="time">07:25</div><div class="code">HKG</div><div class="city">香港国际机场</div></div>
+          <div class="farrow"><span class="dur">CX334 · 3h20m</span>✈</div>
+          <div class="fp"><div class="time">10:45</div><div class="code">PEK</div><div class="city">北京</div></div>
+        </div>
+        <div class="fmeta">国泰航空 · 空客A330-300 · 香港国际机场 HKG 中转 2h25m · 07:25 前到达登机口</div>
+      </div>
+    </div>
+    <div class="panel panel-spaced">
+      <h3>机场对照</h3>
+      <table>
+        <tr><th>代码</th><th>机场全称</th><th>城市</th></tr>
+        <tr><td>HKG</td><td>香港国际机场</td><td>香港</td></tr>
+        <tr><td>SFO</td><td>旧金山国际机场</td><td>旧金山</td></tr>
+        <tr><td>LAX</td><td>洛杉矶国际机场</td><td>洛杉矶</td></tr>
+        <tr><td>DCA</td><td>罗纳德·里根国家机场</td><td>华盛顿</td></tr>
+        <tr><td>BOS</td><td>洛根国际机场</td><td>波士顿</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 行程概览 -->
+  <section id="overview">
+    <div class="h2">📋 行程概览</div>
+    <div class="overview">
+      <b>设计原则：</b>完全依照你已出票的 5 段联程定制，美西美东各留 <b>5 个完整游玩日</b>，不绕路、不赶夜路、不压缩核心体验。<br><br>
+      <b>美西 5 天：</b>旧金山 1.5 天 → 一号公路 3 天（北向南自驾）→ 洛杉矶 <b>1.5 天</b>（9/28 下午进场 + 9/29 全天）· SF 借车 / LAX 还车<br>
+      <b>美东 5 天：</b>华盛顿 1.5 天 → 纽约 2 天（下城 / 上城分日）→ 波士顿精华半日 · 大巴 DC→NY→Boston
+    </div>
+    <div class="highlights">
+      <div class="hl"><div class="icon">🛣</div><div class="tit">一号公路 3 天</div><div class="desc">17-Mile · 卡梅尔 · Big Sur · 圣巴巴拉 · 圣莫尼卡，分段慢行不赶路</div></div>
+      <div class="hl"><div class="icon">🚄</div><div class="tit">美东全程火车</div><div class="desc">DC → NYC → Boston 市中心到市中心，避开堵车与停车费</div></div>
+      <div class="hl"><div class="icon">🗽</div><div class="tit">纽约上下城分日</div><div class="desc">D8 中城第五大道+洛克菲勒 / D9 下城女神+华尔街 / D10 路过联合国+Met+高线+Vessel</div></div>
+      <div class="hl"><div class="icon">✈️</div><div class="tit">航班精准衔接</div><div class="desc">9/30 LAX 还车飞 DCA · 10/5 22:00 前抵洛根国际机场 BOS</div></div>
+    </div>
+    <div class="panel panel-spaced">
+      <h3>时间分配一览</h3>
+      <table>
+        <tr><th>区段</th><th>天数</th><th>日期</th><th>住宿</th></tr>
+        <tr><td>香港中转</td><td>—</td><td>9/24</td><td class="hotel-ok">✅ 丽豪航天城酒店 · 机场穿梭车</td></tr>
+        <tr><td>旧金山</td><td>1.5天</td><td>9/25 – 9/26 午</td><td class="hotel-ok">✅ Vintage Court · 旧金山</td></tr>
+        <tr><td>一号公路</td><td>3天</td><td>9/26 午 – 9/28</td><td class="hotel-ok">✅ Marina → Morro Bay → LA</td></tr>
+        <tr><td>洛杉矶</td><td>1.5天</td><td>9/28 下午 – 9/29</td><td class="hotel-ok">✅ Sirtaj · 比佛利山</td></tr>
+        <tr><td>飞华盛顿</td><td>—</td><td>9/30</td><td class="hotel-ok">✅ Clarion Arlington · DCA 罗纳德·里根晚抵</td></tr>
+        <tr><td>华盛顿</td><td>1.5天</td><td>10/1 – 10/2 午</td><td class="hotel-ok">✅ Clarion Arlington（续住）</td></tr>
+        <tr><td>纽约</td><td>2天游玩</td><td>10/2 晚 – 10/5 晨</td><td class="hotel-ok">✅ Harmony Suites · Secaucus NJ（3 晚）</td></tr>
+        <tr><td>波士顿</td><td>打卡日</td><td>10/5</td><td>约 11:00–21:00 游玩 · 22:00 前抵洛根国际机场 BOS</td></tr>
+        <tr><td>返程</td><td>—</td><td>10/6 – 10/7</td><td>—</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 路线 -->
+  <section id="route">
+    <div class="h2">🗺 路线全景 & 时间分配</div>
+    <div class="routebar">
+      <div class="rline">
+        <div class="rnode"><div class="rdot" style="background:var(--hk)">🏙</div><div class="rname">香港</div><div class="rsub">D0 中转</div></div>
+        <div class="rseg h"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--west)">🌉</div><div class="rname">旧金山</div><div class="rsub">1.5天</div></div>
+        <div class="rseg w"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--west)">🛣</div><div class="rname">1号公路</div><div class="rsub">3天</div></div>
+        <div class="rseg w"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--west)">🎬</div><div class="rname">洛杉矶</div><div class="rsub">1.5天</div></div>
+        <div class="rseg f"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--east)">🏛</div><div class="rname">华盛顿</div><div class="rsub">1.5天</div></div>
+        <div class="rseg e"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--east)">🗽</div><div class="rname">纽约</div><div class="rsub">2天</div></div>
+        <div class="rseg e"></div>
+        <div class="rnode"><div class="rdot" style="background:var(--east)">🎓</div><div class="rname">波士顿</div><div class="rsub">打卡日</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="maps">
+    <div class="h2">📍 城市路线图</div>
+    <div class="city-map">
+      <div class="city-map-hd">
+        <b>按游览顺序标点</b>
+        <span class="day-map-note">可拖动缩放 · 滚轮/双指 · 右上角 +/- · 段标为估算</span>
+      </div>
+      <div class="map-tabs" id="city-map-tabs"></div>
+      <div class="map-frame" id="city-map-frame"></div>
+      <ol class="map-list" id="city-map-list"></ol>
+    </div>
+  </section>
+
+  <!-- 必打卡景点 -->
+  <section id="mustsee">
+    <div class="h2">⭐ 必打卡景点 · 图文速览</div>
+
+    <div class="city-must w">
+      <div class="city-head">🌉 旧金山 · D1–D2</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/fishermans_wharf.jpg" alt="渔人码头" loading="lazy"><span class="day-tag">D1 下午</span></div>
+          <div class="spot-body"><h5>渔人码头 & Pier 39</h5><div class="en">Fisherman's Wharf</div>
+          <p>看加州海狮晒太阳、吃 Boudin 酸面包蛤蜊浓汤。码头免费，海狮最佳观赏 9–10 点。</p>
+          <div class="spot-meta">⏱ 2h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/golden_gate.jpg" alt="金门大桥" loading="lazy"><span class="day-tag">D1 傍晚</span></div>
+          <div class="spot-body"><h5>金门大桥</h5><div class="en">Golden Gate Bridge</div>
+          <p>旧金山绝对地标，朱红色悬索桥横跨金门海峡。推荐 Battery Spencer 或南岸 Vista Point 拍日落，9–10月少雾出片率最高。</p>
+          <div class="spot-meta">⏱ 1–2h · 免费 <span class="photo-shot">📸#1</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/chinatown_sf.jpg" alt="旧金山唐人街" loading="lazy"><span class="day-tag">D2 上午 · 必去</span></div>
+          <div class="spot-body"><h5>唐人街</h5><div class="en">Chinatown · Grant Avenue</div>
+          <p>全美最老华人社区之一，龙门牌坊、都板街。酒店沿 Bush 步行 5–8min 即达；逛完再坐 Powell-Hyde 去九曲花街。</p>
+          <div class="spot-meta">⏱ 1–1.5h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/lombard_street.jpg" alt="九曲花街" loading="lazy"><span class="day-tag">D2 上午</span></div>
+          <div class="spot-body"><h5>九曲花街 + 叮当车</h5><div class="en">Lombard Street · Cable Car</div>
+          <p>世界上最弯的街道之一，8 个急转弯鲜花坡道。搭配 Powell-Hyde 叮当车体验旧金山经典交通。</p>
+          <div class="spot-meta">⏱ 1h · 叮当车 $8 <span class="photo-shot">📸#2</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/palace_of_fine_arts.jpg" alt="艺术宫" loading="lazy"><span class="day-tag">D2 10:15</span></div>
+          <div class="spot-body"><h5>艺术宫</h5><div class="en">Palace of Fine Arts</div>
+          <p>罗马式圆顶建筑倒映在人工湖上，1915 年世博会遗存。九曲花街之后先来，再南下彩绘女士。</p>
+          <div class="spot-meta">⏱ 45min · 免费 <span class="photo-shot">📸#3</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/painted_ladies.jpg" alt="彩绘女士" loading="lazy"><span class="day-tag">D2 11:00</span></div>
+          <div class="spot-body"><h5>六姐妹彩绘楼</h5><div class="en">Painted Ladies</div>
+          <p>维多利亚式彩色建筑群，《超能敢死队》取景地。Alamo Square 全福街是最佳明信片机位。拍完先回酒店取行李，再去 Union Square 取车。</p>
+          <div class="spot-meta">⏱ 30min · 免费 <span class="photo-shot">📸#4</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="city-must w">
+      <div class="city-head">🛣 一号公路 · D2午 – D4</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/half_moon_bay.jpg" alt="半月湾" loading="lazy"><span class="day-tag">D2 下午</span></div>
+          <div class="spot-body"><h5>半月湾</h5><div class="en">Half Moon Bay</div>
+          <p>出城后第一个海岸停靠点，悬崖海岸与冲浪海滩。适合短暂停留拍照、伸展腿脚。</p>
+          <div class="spot-meta">⏱ 30min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/17_mile_drive.jpg" alt="17英里" loading="lazy"><span class="day-tag">D2 傍晚</span></div>
+          <div class="spot-body"><h5>17-Mile Drive</h5><div class="en">17-Mile Drive</div>
+          <p>私人海岸景观公路，孤柏树 Lone Cypress 是标志性打卡点，沿途圆石滩豪宅海景。</p>
+          <div class="spot-meta">⏱ 1h · 约 $12/车</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/carmel.jpg" alt="卡梅尔" loading="lazy"><span class="day-tag">D2 傍晚</span></div>
+          <div class="spot-body"><h5>卡梅尔小镇</h5><div class="en">Carmel-by-the-Sea</div>
+          <p>童话般艺术小镇，不允许广告牌和快餐店。鹅卵石街道、画廊、精品餐厅，适合晚餐散步。</p>
+          <div class="spot-meta">⏱ 1–2h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/bixby_bridge.jpg" alt="Bixby大桥" loading="lazy"><span class="day-tag">D3 上午</span></div>
+          <div class="spot-body"><h5>比克斯比溪大桥</h5><div class="en">Bixby Creek Bridge</div>
+          <p>一号公路最著名地标，260 英尺高拱形桥横跨峡谷。南北两侧观景台均可停车拍照。</p>
+          <div class="spot-meta">⏱ 30min · 免费 <span class="photo-shot">📸#5</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/mcway_falls.jpg" alt="McWay瀑布" loading="lazy"><span class="day-tag">D3 上午</span></div>
+          <div class="spot-body"><h5>麦克威瀑布</h5><div class="en">McWay Falls</div>
+          <p>瀑布直接坠入太平洋沙滩，朱莉娅·菲佛公园步道步行 10 分钟即达。大苏尔最震撼景观之一。</p>
+          <div class="spot-meta">⏱ 45min · 公园 $10/车 <span class="photo-shot">📸#6</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/elephant_seal.jpg" alt="象海豹" loading="lazy"><span class="day-tag">D3 下午</span></div>
+          <div class="spot-body"><h5>象海豹滩</h5><div class="en">Elephant Seal Vista Point</div>
+          <p>圣西蒙附近观景台，成百上千头象海豹在沙滩晒太阳、打架、嚎叫。完全免费。</p>
+          <div class="spot-meta">⏱ 30min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/santa_barbara.jpg" alt="圣巴巴拉" loading="lazy"><span class="day-tag">D4 上午</span></div>
+          <div class="spot-body"><h5>圣巴巴拉</h5><div class="en">Santa Barbara</div>
+          <p>「美国里维埃拉」，红顶白墙西班牙殖民风情。县法院可登顶俯瞰全城，最美建筑之一。</p>
+          <div class="spot-meta">⏱ 1.5h · 法院免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/santa_monica.jpg" alt="圣莫尼卡" loading="lazy"><span class="day-tag">D4 傍晚</span></div>
+          <div class="spot-body"><h5>圣莫尼卡海滩</h5><div class="en">Santa Monica Pier</div>
+          <p>66 号公路官方终点标志，码头游乐园 + 太平洋日落。一号公路南下的完美收官。</p>
+          <div class="spot-meta">⏱ 1.5h · 免费</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="city-must w">
+      <div class="city-head">🎬 洛杉矶 · D4下午 – D5</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/santa_monica.jpg" alt="圣莫尼卡" loading="lazy"><span class="day-tag">D4 下午</span></div>
+          <div class="spot-body"><h5>圣莫尼卡 Pier</h5><div class="en">Santa Monica Pier</div>
+          <p>66 号公路终点标志，9/28 下午抵 LA 首站。码头日落 + 第三街购物区 Promenade 顺逛。</p>
+          <div class="spot-meta">⏱ 1.5–2h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/rodeo_drive.jpg" alt="比佛利山庄 Rodeo Drive" loading="lazy"><span class="day-tag">D4 17:30</span></div>
+          <div class="spot-body"><h5>比佛利山庄 & Rodeo Drive</h5><div class="en">Beverly Hills · Rodeo Drive</div>
+          <p>名店街 Gucci / LV / Bottega 等，比佛利山庄市徽打卡。Sirtaj 酒店步行即达；D5 盖蒂→好莱坞时<b>顺路再补 20min</b>。</p>
+          <div class="spot-meta">⏱ 1–2h · D4 晚 · 免费逛街</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/crypto_arena.jpg" alt="Crypto.com Arena" loading="lazy"><span class="day-tag">D5 10:00</span></div>
+          <div class="spot-body"><h5>Crypto.com Arena · 外观</h5><div class="en">9/29 无赛无 Tour · 外部打卡</div>
+          <p>无赛无 Tour。外观 → L.A. LIVE → Star Plaza 雕像，约 1h · 免费。</p>
+          <div class="spot-meta">⏱ 约 1h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/getty_center.jpg" alt="盖蒂中心" loading="lazy"><span class="day-tag">D5 12:30</span></div>
+          <div class="spot-body"><h5>盖蒂中心</h5><div class="en">The Getty Center</div>
+          <p>Crypto 外观后<b>西行</b> Sepulveda Pass，梵高、莫奈真迹 + 迈尔建筑。<b>✅ 9/29 12:30 已预约</b> · 2人 · 。15:00 前离馆。<br><b>驾车：</b>N Sepulveda Blvd &amp; Getty Center Dr · 停车 $25 刷卡 · 车库无信号 · QR 截图</p>
+          <div class="spot-meta">⏱ 2h · 入馆免费 · 停车 $25 · <span class="photo-shot">📸#7</span> · </div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/rodeo_drive.jpg" alt="比佛利山庄 Rodeo Drive" loading="lazy"><span class="day-tag">D5 15:30</span></div>
+          <div class="spot-body"><h5>Rodeo Drive · 顺路补逛</h5><div class="en">Beverly Hills · 盖蒂→好莱坞途经</div>
+          <p>盖蒂下山沿 Sunset 经比佛利，顺路名店街 + 市徽。D4 晚已初探，此处补 20–30min，不必折返酒店。</p>
+          <div class="spot-meta">⏱ 20–30min · 免费逛街</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/walk_of_fame.jpg" alt="好莱坞星光大道" loading="lazy"><span class="day-tag">D5 16:00</span></div>
+          <div class="spot-body"><h5>好莱坞星光大道</h5><div class="en">Hollywood Walk of Fame</div>
+          <p>地上镶嵌 2700+ 颗明星星形奖章，TCL 中国剧院手印。<b>必去</b>，快速打卡即可，不必久留。盖蒂→Rodeo 之后先到好莱坞大道，再上山拍 Sign。</p>
+          <div class="spot-meta">⏱ 30min · 免费 · 必去</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img class="fit-sign" src="images/hollywood_sign.jpg" alt="Hollywood Sign" loading="lazy"><span class="day-tag">D5 16:35</span></div>
+          <div class="spot-body"><h5>好莱坞标志</h5><div class="en">Hollywood Sign · Lake Hollywood Park</div>
+          <p><b>📍 推荐机位：Lake Hollywood Park</b><br>3160 Canyon Lake Dr, Los Angeles, CA 90068 · 导航搜「Lake Hollywood Park」<br>Canyon Lake Dr 路边免费停车，公园草坡朝北，人与 Sign 同框最轻松。</p>
+          <div class="spot-meta">⏱ 30min · 免费 · <a href="https://www.google.com/maps/search/?api=1&query=Lake+Hollywood+Park+3160+Canyon+Lake+Dr+Los+Angeles" target="_blank">Google Maps</a></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/griffith_observatory.jpg" alt="格里菲斯天文台" loading="lazy"><span class="day-tag">D5 17:15</span></div>
+          <div class="spot-body"><h5>格里菲斯天文台</h5><div class="en">Griffith Observatory</div>
+          <p>与 Sign 相邻，日落+夜景压轴。《爱乐之城》取景地，俯瞰 LA 全城。</p>
+          <div class="spot-meta">⏱ 1.5h · 免费 <span class="photo-shot">📸#8</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="city-must e">
+      <div class="city-head">🏛 华盛顿 · D7–D8上午</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/lincoln_memorial.jpg" alt="林肯纪念堂" loading="lazy"><span class="day-tag">D7 17:15</span></div>
+          <div class="spot-body"><h5>林肯纪念堂</h5><div class="en">Lincoln Memorial</div>
+          <p>古希腊神殿式建筑，19 英尺林肯坐像。前方反思池正对华盛顿纪念碑，马丁·路德·金「我有一个梦想」演讲地。</p>
+          <div class="spot-meta">⏱ 1h · 免费 <span class="photo-shot">📸#9</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/us_capitol.jpg" alt="国会大厦" loading="lazy"><span class="day-tag">D7 10:40</span></div>
+          <div class="spot-body"><h5>国会大厦导览</h5><div class="en">US Capitol · Capitol Tour</div>
+          <p>Visitor Center 官方导览，圆顶大厅与立法机构象征。<b>✅ 10/1 10:40 已预约</b> · 2人 · 已预约。</p>
+          <div class="spot-meta">⏱ 1h · 免费 · 09:45 前抵达安检</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/lincoln_memorial.jpg" alt="华盛顿纪念碑" loading="lazy"><span class="day-tag">D7 12:30</span></div>
+          <div class="spot-body"><h5>华盛顿纪念碑登顶</h5><div class="en">Washington Monument Tour</div>
+          <p>电梯升至 500 英尺观景台看 DC 全景。<b>✅ 10/1 12:30 已预约</b> · 2人 ·  一人一码。</p>
+          <div class="spot-meta">⏱ 约 45min · 代理已订 · </div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/air_space_museum.jpg" alt="航空航天博物馆" loading="lazy"><span class="day-tag">D7 下午</span></div>
+          <div class="spot-body"><h5>航空航天博物馆</h5><div class="en">National Air and Space Museum</div>
+          <p>史密森尼第一人气馆，莱特兄弟飞机、阿波罗登月舱。<b>必须 free timed pass</b>，30 天前 8AM ET 放票。</p>
+          <div class="spot-meta">⏱ 2–3h · 免费 · 🟡 <b>9/1 20:00 抢</b> · <a href="https://airandspace.si.edu/visit/museum-dc" target="_blank">预约</a></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/white_house.jpg" alt="白宫" loading="lazy"><span class="day-tag">D7 13:15</span></div>
+          <div class="spot-body"><h5>白宫</h5><div class="en">The White House</div>
+          <p>美国总统官邸，宾夕法尼亚大道外景拍照。内部参观须提前数月通过使馆申请。</p>
+          <div class="spot-meta">⏱ 20min · 外景免费 <span class="photo-shot">📸#10</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/jefferson_memorial.jpg" alt="杰斐逊纪念堂" loading="lazy"><span class="day-tag">D7 16:15</span></div>
+          <div class="spot-body"><h5>杰斐逊纪念堂</h5><div class="en">Jefferson Memorial</div>
+          <p>潮汐湖畔圆顶白色建筑，纪念《独立宣言》起草人。樱花季（3–4月）最美，傍晚光影绝佳。</p>
+          <div class="spot-meta">⏱ 45min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/national_gallery.jpg" alt="国家美术馆" loading="lazy"><span class="day-tag">D8 上午</span></div>
+          <div class="spot-body"><h5>国家美术馆</h5><div class="en">National Gallery of Art</div>
+          <p>全美顶级艺术殿堂，达芬奇、梵高、莫奈真迹荟萃。西馆新古典主义建筑，毗邻国家广场，永久免费。</p>
+          <div class="spot-meta">⏱ 2h · 免费</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="city-must e">
+      <div class="city-head">🗽 纽约 · D8晚 – D10</div>
+      <div class="spot-subhead">D8 · 10/2 抵 NY · 先放行李 · 中城第五大道</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/ny_public_library.jpg" alt="纽约公共图书馆" loading="lazy"><span class="day-tag">D8 17:30</span></div>
+          <div class="spot-body"><h5>纽约公共图书馆</h5><div class="en">NYPL · Stephen A. Schwarzman Building</div>
+          <p>第五大道 42 街地标，大理石 Astor Hall、Rose Main Reading Room。大巴抵 NY 后<b>先去 Secaucus 放行李</b>，轻装 NJ Transit 进城，此处为 D8 第一站。</p>
+          <div class="spot-meta">⏱ 30–45min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/fifth_avenue.jpg" alt="第五大道 Trump Tower" loading="lazy"><span class="day-tag">D8 18:00</span></div>
+          <div class="spot-body"><h5>第五大道 · Trump · LV</h5><div class="en">Fifth Avenue · Trump Tower · Louis Vuitton</div>
+          <p>从图书馆沿第五大道向北：Trump Tower（725 5th Ave）、LV Maison（57 街）、Tiffany · Saks 橱窗。顺路走向洛克菲勒。</p>
+          <div class="spot-meta">⏱ 45min · 免费逛街</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/times_square.jpg" alt="时代广场" loading="lazy"><span class="day-tag">D8 18:45</span></div>
+          <div class="spot-body"><h5>时代广场</h5><div class="en">Times Square</div>
+          <p>第五大道西侧，霓虹大屏与街头表演。逛完 Trump/LV 后西行即达，再上 Top of the Rock 看夜景。</p>
+          <div class="spot-meta">⏱ 30min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/top_of_the_rock.jpg" alt="洛克菲勒中心" loading="lazy"><span class="day-tag">D8 19:30</span></div>
+          <div class="spot-body"><h5>Top of the Rock 夜景</h5><div class="en">Rockefeller Center</div>
+          <p>洛克菲勒中心 70 层观景台，唯一能将帝国大厦收入镜头的观景点。本行程<strong>只上此处</strong>，不再安排帝国大厦。</p>
+          <div class="spot-meta">⏱ 1.5h · $40 · 🟡 提前订 <span class="photo-shot">📸#11</span></div></div>
+        </div>
+      </div>
+      <div class="spot-subhead">D9 · 10/3 下城 · 女神 → 华尔街 → DUMBO</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/statue_of_liberty.jpg" alt="自由女神" loading="lazy"><span class="day-tag">D9 10:00</span></div>
+          <div class="spot-body"><h5>自由女神像</h5><div class="en">Statue of Liberty · Reserve with Pedestal</div>
+          <p>纽约象征，含底座登岛权限 + 埃利斯岛。<b>✅ 10/3 10:00 已预约</b> · 2人 · 已预约 · 合计 <b>$52</b>。</p>
+          <div class="spot-meta">⏱ 3h · $52（2人）· 09:30 前抵码头 · <span class="photo-shot">📸#12</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/wall_street.jpg" alt="华尔街铜牛 Charging Bull" loading="lazy"><span class="day-tag">D9 12:00</span></div>
+          <div class="spot-body"><h5>华尔街 · 铜牛</h5><div class="en">Wall Street · Charging Bull</div>
+          <p>Bowling Green 附近 iconic 铜牛合影；沿 Wall St 感受下城金融区。与 9/11 纪念馆步行约 10min。</p>
+          <div class="spot-meta">⏱ 45min · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/memorial_911.jpg" alt="9/11 纪念馆" loading="lazy"><span class="day-tag">D9 13:00</span></div>
+          <div class="spot-body"><h5>9/11 纪念馆</h5><div class="en">9/11 Memorial · Ground Zero</div>
+          <p>归零地双瀑布纪念池，One World Trade 为背景。庄严肃穆，建议预留 45min–1h。</p>
+          <div class="spot-meta">⏱ 1h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/brooklyn_bridge.jpg" alt="布鲁克林大桥" loading="lazy"><span class="day-tag">D9 15:00</span></div>
+          <div class="spot-body"><h5>布鲁克林大桥 & DUMBO</h5><div class="en">Brooklyn Bridge · DUMBO</div>
+          <p>1883 年建成的哥特式悬索桥，步行过桥约 30 分钟。DUMBO 区 Washington St 是曼哈顿天际线经典机位。</p>
+          <div class="spot-meta">⏱ 2h · 免费 <span class="photo-shot">📸#13</span> <span class="photo-shot">📸#15</span></div></div>
+        </div>
+      </div>
+      <div class="spot-subhead">D10 · 10/4 路过联合国 → Met → 高线 → Vessel</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/united_nations.jpg" alt="联合国总部" loading="lazy"><span class="day-tag">D10 09:00</span></div>
+          <div class="spot-body"><h5>联合国总部 · 门口路过</h5><div class="en">UN Headquarters · Exterior Only</div>
+          <p><b>10/2–10/4 闭馆</b>，Visitors Centre 与导览均不开放。D10（10/4）沿 1st Ave 门口看旗帜与秘书处大楼外观即可，<b>不进内部</b>。</p>
+          <div class="spot-meta">⏱ 15–20min · 外观免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/central_park.jpg" alt="中央公园" loading="lazy"><span class="day-tag">D10 09:30</span></div>
+          <div class="spot-body"><h5>中央公园</h5><div class="en">Central Park</div>
+          <p>曼哈顿中心的 843 英亩绿洲，Bow Bridge、Bethesda 喷泉是经典机位。可步行或租自行车。</p>
+          <div class="spot-meta">⏱ 45min · 免费 <span class="photo-shot">📸#14</span></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/the_met.jpg" alt="大都会博物馆" loading="lazy"><span class="day-tag">D10 10:15</span></div>
+          <div class="spot-body"><h5>大都会艺术博物馆</h5><div class="en">The Metropolitan Museum of Art</div>
+          <p>埃及神庙、欧洲大师画作、美国艺术。至少 2.5h。<b>建议官网 timed ticket</b>，10/4 约 10:00 时段。</p>
+          <div class="spot-meta">⏱ 2.5h · $30 · 🟡 <b>现在可约</b> · <a href="https://www.metmuseum.org/visit/buy-tickets" target="_blank">购票</a></div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/high_line.jpg" alt="高线公园" loading="lazy"><span class="day-tag">D10 14:30</span></div>
+          <div class="spot-body"><h5>高线公园</h5><div class="en">The High Line</div>
+          <p>废弃铁路改造成的空中花园，南段近切尔西市场。免费、轻松、看 Hudson River 日落，是 NY 最治愈路线之一。</p>
+          <div class="spot-meta">⏱ 1–1.5h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/the_vessel.jpg" alt="The Vessel Hudson Yards" loading="lazy"><span class="day-tag">D10 16:00</span></div>
+          <div class="spot-body"><h5>The Vessel</h5><div class="en">Hudson Yards · 仅外观</div>
+          <p>高线终点旁铜色蜂巢地标，外部拍照即走，不登塔。</p>
+          <div class="spot-meta">⏱ 15–20min · 免费</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="city-must e">
+      <div class="city-head">🎓 波士顿 · D11</div>
+      <div class="spot-grid">
+        <div class="spot">
+          <div class="spot-img"><img src="images/freedom_trail.jpg" alt="自由之路" loading="lazy"><span class="day-tag">D11 上午</span></div>
+          <div class="spot-body"><h5>自由之路</h5><div class="en">Freedom Trail</div>
+          <p>4 公里红砖路串联 16 处独立战争遗迹，从波士顿公园到老北教堂。美国历史活的教科书。</p>
+          <div class="spot-meta">⏱ 2–3h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/quincy_market.jpg" alt="昆西市场" loading="lazy"><span class="day-tag">D11 中午</span></div>
+          <div class="spot-body"><h5>昆西市场</h5><div class="en">Quincy Market · Faneuil Hall</div>
+          <p>1826 年市场，新英格兰美食聚集地。龙虾卷、蛤蜊浓汤、生蚝吧，波士顿必吃午餐。</p>
+          <div class="spot-meta">⏱ 1h · 餐食 $15–30</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/harvard.jpg" alt="哈佛大学" loading="lazy"><span class="day-tag">D11 下午</span></div>
+          <div class="spot-body"><h5>哈佛大学</h5><div class="en">Harvard University</div>
+          <p>美国最古老大学（1636），Harvard Yard 草坪、图书馆、谎言雕像（摸左脚求好运）。剑桥区步行游览。</p>
+          <div class="spot-meta">⏱ 1h · 免费</div></div>
+        </div>
+        <div class="spot">
+          <div class="spot-img"><img src="images/mit.jpg" alt="MIT" loading="lazy"><span class="day-tag">D11 下午</span></div>
+          <div class="spot-body"><h5>麻省理工 MIT</h5><div class="en">Massachusetts Institute of Technology</div>
+          <p>世界顶尖理工学府，查尔斯河畔校园、现代主义建筑、Great Dome 圆顶。与哈佛相距 2km。</p>
+          <div class="spot-meta">⏱ 45min · 免费</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 美西 -->
+  <section id="west">
+    <div class="h2">🌅 美西 5 天 · 自然与公路之旅</div>
+    <div class="panel panel-intro">
+      <b>交通：</b>旧金山国际机场 SFO 借车 → 洛杉矶国际机场 LAX 还车 · <b>节奏：</b>9/28 下午进 LA · 9/29 盖蒂+好莱坞 · D4 07:30 自 Morro Bay 早出发
+      <div class="kind-legend" style="margin-top:10px">
+        <span>📍 景点</span><span>🚗 大交通</span><span>✈️ 飞行</span><span class="k-local">🚌 本地交通</span><span>🍽 吃饭</span><span>🏨 住宿</span><span>☕ 休息</span>
+      </div>
+    </div>
+
+    <!-- D0 -->
+    <div class="day hk" id="d0" data-day="d0">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D0 · 中转日</div>
+          <div class="dtitle">北京出发 · 香港过夜</div>
+          <div class="ddate">9/24 周三</div>
+          <div class="dmeta">
+            <span class="pill f">✈️ CX337</span>
+            <span class="pill">🏨 丽豪航天城 · 已订</span>
+          </div>
+          <div class="wx">
+            <div class="wx-row">🌦 香港 26–29℃ · 湿热多云，偶有短时小雨（约 35%）<span class="wx-src">预报 · 9/12 · Open-Meteo + 天文台趋势</span></div>
+            <div class="wx-wear">👕 短袖即可；机场与酒店空调加一件薄外套。湿度高，不要穿厚衣服。次日上午同样湿热。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="fly"><div class="tl-time">19:40</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>北京首都机场 T3 起飞</b><div class="en">CX337 · 国泰航空 · 波音777</div><div class="tl-detail">建议提前 3 小时到机场；今晚香港过夜需出关入住，托运行李一般需在 HKG 提取，次日 CX870 再托运。</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">23:25</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>抵达香港国际机场 HKG</b><div class="en">Hong Kong International Airport · 出关 · 取行李</div><div class="tl-detail">持港澳通行证入境；出关取行李后入住丽豪航天城，当晚倒时差。</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">过夜</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="hong_kong.jpg"><b>丽豪航天城酒店 · 已订</b><div class="en">Regal Airport Hotel Hong Kong · 机场周边</div><div class="tl-detail">¥680 · 睡足倒时差，次日再回机场飞旧金山。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">酒店免费穿梭车</span></div><ol class="local-line"><li><b>2 号客运大厅 9–11 号门</b><em>出关取行李后在此等车</em></li><li><b>丽豪航天城酒店</b><em>接驳车直达 · 次日原路回机场</em></li></ol></div><div class="tl-meta">🏨 已订 · ¥680 · ⏱ 23:25–次日 10:30</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">次日</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>10:30 前回香港国际机场 HKG</b> · 13:25 飞旧金山<div class="en">CX870 → SFO · 穿梭车回机场 · 留足安检与登机时间</div><div class="tl-detail">可再乘酒店穿梭车回机场；第二段 13:25 起飞，建议 10:30 前到达登机区域；飞机上尽量调整作息，抵 SFO 后按当地时间活动。</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info tip">🚌 穿梭车：T2 客运大厅 9–11 号门 · 需港澳通行证出关</span>
+          <span class="info warn">⚠️ 次日航班 13:25，建议睡足倒时差</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D1 -->
+    <div class="day west" id="d1" data-day="d1">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D1 · 美西第1天</div>
+          <div class="dtitle">旧金山 · 抵达 + 滨海轻松游</div>
+          <div class="ddate">9/25 周四</div>
+          <div class="dmeta">
+            <span class="pill w">🌉 旧金山</span>
+            <span class="pill">倒时差日</span>
+            <span class="pill">🚌 292 + 30 进城</span>
+          </div>
+          <div class="wx">
+            <div class="wx-row">☀️ 旧金山 17–26℃ · 晴，晨有海雾，午后转暖，基本无雨<span class="wx-src">预报 · 9/12 · Open-Meteo 与 NWS 一致</span></div>
+            <div class="wx-wear">👕 已定：黑短袖 + 牛仔衣 + 黑色紧身牛仔裤 + 黑鞋。日落风大再套抓绒。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="fly"><div class="tl-time">10:55</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>落地旧金山国际机场 SFO</b><div class="en">CX870 · 入关约 1–1.5h · 取行李</div><div class="tl-detail">国际到达入关、取行李后在航站楼内换乘公交进城。D1 不租车。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">292 → 30 · 约 1h · ≈$5.25</span></div><ol class="local-line"><li><b>国际航站楼 1 层 Courtyard G / A</b><em>上 <span class="local-badge">292</span> San Francisco</em><span class="hint">谷歌常把机场钉在 585 McDonnell Rd 货站，别跑去那里</span></li><li><b>Mission St &amp; 3rd St</b><em>下车 · 约 50min</em></li><li><b>3rd St &amp; Mission / Moscone Center</b><em>步行 2min · 站号 13136 · 上 <span class="local-badge">30</span> The Presidio</em><span class="hint">别上写 Caltrain 方向的 30</span></li><li><b>Stockton St &amp; Sutter St</b><em>3 站约 5min · 再步行 2min 到酒店 650 Bush</em></li></ol></div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">14:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="fishermans_wharf.jpg"><b>渔人码头 Fisherman's Wharf</b><div class="en">Boudin 酸面包 · 蛤蜊浓汤 · 螃蟹</div><div class="tl-detail">旧金山最经典滨海区，可先解决午餐。Boudin 烘焙坊看酸面包制作，Fog Harbor 海鲜也不错。</div><div class="tl-meta">⏱ 约 1.5h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="pier_39_sea_lions.jpg"><b>Pier 39 加州海狮</b><div class="en">Sea Lions at Pier 39</div><div class="tl-detail">码头北侧看数百头海狮晒太阳，9–10 月数量多。周边有小吃和纪念品，步行即可到金门大桥方向。</div><div class="tl-meta">⏱ 45min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="golden_gate.jpg"><b>金门大桥 Vista Point 日落</b><div class="en">Golden Gate Bridge · 南岸或 Battery Spencer</div><div class="tl-detail">旧金山绝对地标，9 月秋季少雾出片率高。南岸 Vista Point 最方便；摄影党可去 Battery Spencer 俯拍。<b>📸#1</b> 侧脸或背影，整桥入镜。</div><div class="tl-meta"><span class="photo-shot">📸#1</span>⏱ 1–1.5h · 免费</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Executive Hotel Vintage Court · 650 Bush St · ¥724 · ✅ 含自助（次日早）</span>
+          <span class="info food">🍽 今日抵达无酒店早 · 码头简餐即可</span>
+          <span class="info tip">💡 进城：292 San Francisco → 30 The Presidio · 别上写 Caltrain 的 30</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D2 -->
+    <div class="day west" id="d2" data-day="d2">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D2 · 美西第2天</div>
+          <div class="dtitle">唐人街 → 取车南下 · 宿卡梅尔</div>
+          <div class="ddate">9/26 周五</div>
+          <div class="dmeta">
+            <span class="pill w">🌉 SF 半天</span>
+            <span class="pill w">🛣 1号公路起程</span>
+          </div>
+          <div class="wx">
+            <div class="wx-row">☀️ 旧金山 15–22℃ 晴有风 · 蒙特雷/卡梅尔 13–24℃ 大部晴，无雨<span class="wx-src">预报 · 9/12 · 海边阵风可到 30mph</span></div>
+            <div class="wx-wear">👕 已定：和 D1 同一套（黑短袖 + 牛仔衣 + 黑色紧身牛仔裤 + 黑鞋）。17-Mile 傍晚抓绒不要放后备箱。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="sight"><div class="tl-time">08:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="chinatown_sf.jpg"><b>唐人街 Chinatown</b><div class="en">Dragon Gate · Grant Ave · Stockton St</div><div class="tl-detail">酒店自助后沿 Bush 东走约 5–8min 到龙门。都板街、茶点，以走为主。逛完走回 <b>Powell & California / Bush</b> 坐叮当车去九曲花街，不必先空跑一趟 Powell。</div><div class="tl-meta">⏱ 1–1.5h · 必去 · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="cable_car.jpg"><b>Powell-Hyde 叮当车 → 九曲花街</b><div class="en">Cable Car · Powell & California / Bush 上车</div><div class="tl-detail">酒店和唐人街都在 Powell 线旁边，<b>这一趟就是去 Lombard 的车</b>，不用单独排一站体验。Powell & Market 总站人多，就近上车即可。约 20min 到 Lombard 附近下车。</div><div class="tl-meta">⏱ 20min · 约 $8</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:50</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="lombard_street.jpg"><b>九曲花街 Lombard Street</b><div class="en">8 弯鲜花坡道 · Russian Hill</div><div class="tl-detail">世界上最弯曲的街道之一，8 个急弯铺满鲜花。叮当车在附近下车即可。<b>📸#2</b> Hyde 顶俯拍弯道。路边车位少，拍完即走，接着去艺术宫。</div><div class="tl-meta"><span class="photo-shot">📸#2</span>⏱ 15–20min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">10:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="palace_of_fine_arts.jpg"><b>艺术宫 Palace of Fine Arts</b><div class="en">1915 世博会遗存 · 九曲花街之后北去 Marina</div><div class="tl-detail">罗马式圆顶倒映人工湖，适合快速拍照。<b>📸#3</b> 柱廊框人 + 湖面倒影。与 Lombard 同属北区，先来再南下彩绘女士，少绕路。时间紧可跳过。</div><div class="tl-meta"><span class="photo-shot">📸#3</span>⏱ 30–45min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">11:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="painted_ladies.jpg"><b>彩绘女士 Painted Ladies</b><div class="en">Alamo Square · 六姐妹维多利亚楼</div><div class="tl-detail"><b>📸#4</b> Alamo Square 草坡对面，六栋彩楼 + 天际线。拍完<b>先打车回酒店取行李退房</b>，再去 Union Square 取车（酒店到 Alamo 步行约 10min）。</div><div class="tl-meta"><span class="photo-shot">📸#4</span>⏱ 15–20min · 免费</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">11:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>回 Vintage Court · 取行李退房</b><div class="en">650 Bush St · 退房后再取车</div><div class="tl-detail">Alamo Square 打车回酒店约 10–12min。行李从酒店取出后再走去取车点；<b>不要拖着箱子逛彩绘女士</b>。酒店到 Alamo（340 O'Farrell）约 800m，步行 10min 或再打车。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">打车约 12min · 随后步行取车</span></div><ol class="local-line"><li><b>Alamo Square</b><em>打车回 650 Bush</em></li><li><b>Vintage Court</b><em>退房 · 取行李</em></li><li><b>Alamo Union Square</b><em>步行约 10min · 14:00 取车</em></li></ol></div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">14:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>取租车 · Alamo Union Square</b><div class="en">340 O'Farrell St · 9/26 14:00 · IDP + 驾照 + 信用卡</div><div class="tl-detail">已订 Alamo 异地还车 SF→LAX（¥2,000）。<b>先回酒店取行李</b>再来取车，取车后不再回市区。检查满油、保险、刮痕拍照。导航分段：SF → Monterey。</div><div class="tl-meta">🚗 已出票 · 4 天</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="half_moon_bay.jpg"><b>半月湾 Half Moon Bay</b><div class="en">出城后首段海岸</div><div class="tl-detail">悬崖与冲浪海滩，一号公路海景第一次在右侧展开。停车伸展、拍几张即可，不必久留。</div><div class="tl-meta">⏱ 20–30min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="santa_cruz.jpg"><b>圣克鲁斯 Santa Cruz</b><div class="en">海滨游乐园外拍 · 可跳过</div><div class="tl-detail">海滨木板路与过山车外立面可停车外拍。时间紧就继续南下，傍晚要赶 17-Mile Drive。</div><div class="tl-meta">⏱ 20min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="17_mile_drive.jpg"><b>17-Mile Drive</b><div class="en">Lone Cypress · Pebble Beach</div><div class="tl-detail">十七英里私人海岸公路（$12/车），孤柏树 Lone Cypress 必停。分段导航，勿跟错出口。</div><div class="tl-meta">⏱ 1–1.5h · $12/车</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">18:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="carmel.jpg"><b>卡梅尔 Carmel-by-the-Sea</b><div class="en">鹅卵石街 · 童话艺术小镇</div><div class="tl-detail">不允许广告牌与快餐店，画廊与精品店林立。早上已吃自助，此处以散步为主，饿了再买简餐。当晚入住 Marina。</div><div class="tl-meta">⏱ 45min–1h · 免费逛街</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Monarch Valley Inn · Marina · ¥1,263 · ✅ 含自助（次日早）</span>
+          <span class="info food">🍽 Vintage Court 自助当早午饭 · 白天走为主 · 饿了再买</span>
+          <span class="info tip">💡 先唐人街；去九曲花街再坐 Powell-Hyde。彩绘女士后先回酒店取行李，再步行去取车</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3 -->
+    <div class="day west" id="d3" data-day="d3">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D3 · 美西第3天</div>
+          <div class="dtitle">一号公路精华 · 大苏尔 Big Sur 全天</div>
+          <div class="ddate">9/27 周六</div>
+          <div class="dmeta"><span class="pill w">🛣 1号公路 Day2</span><span class="pill w">📸 全程最美段</span></div>
+          <div class="wx">
+            <div class="wx-row">⛅ 大苏尔海岸 14–20℃ · 多云无雨，崖边风硬<span class="wx-src">预报 · 用沿海点，非内陆高温</span></div>
+            <div class="wx-wear">👕 已定：黑色迪桑特上衣 + 白色休闲裤 + 黑鞋。崖边风大把抓绒套上。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="bixby_bridge.jpg"><b>比克斯比溪大桥 Bixby Creek Bridge</b><div class="en">Big Sur · 一号公路最上镜地标</div><div class="tl-detail"><b>📸#5</b> 260 英尺拱形桥，北侧观景台拱桥 + 太平洋。早到光线好、停车相对容易。</div><div class="tl-meta"><span class="photo-shot">📸#5</span>⏱ 30min · 免费</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">11:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Nepenthe · 饿了再停</b><div class="en">Big Sur 悬崖 · 比克斯比与 McWay 之间</div><div class="tl-detail">南下顺路，<b>不要先去 McWay 再折回来</b>。早上酒店自助已当早午饭。不饿就拍个景继续走；饿了再买简餐或打包，不必正餐。</div><div class="tl-meta">⏱ 可选 · 简餐即可</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">12:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="mcway_falls.jpg"><b>麦克威瀑布 McWay Falls</b><div class="en">Julia Pfeiffer Burns State Park</div><div class="tl-detail">Nepenthe 再往南约 15min。<b>📸#6</b> 步道终点崖顶俯拍，瀑布直入太平洋。步行约 10 分钟到观景台；公园停车费约 $10/车。</div><div class="tl-meta"><span class="photo-shot">📸#6</span>⏱ 45min · 停车约 $10</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="elephant_seal.jpg"><b>象海豹海滩</b><div class="en">Elephant Seal Vista Point · San Simeon</div><div class="tl-detail">圣西蒙附近免费观景台，成群象海豹晒太阳、打架、换皮，非常生动。停留 20–30 分钟即可。</div><div class="tl-meta">⏱ 30min · 免费</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">傍晚</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="morro_rock.jpg"><b>抵莫罗湾 Morro Bay</b><div class="en">Morro Rock 地标 · 入住 Best Western</div><div class="tl-detail">海滨小镇 Morro Rock 是地标巨石；当晚早休息，<b>D4 须 07:30 出发</b>赶 LA 下午行程。进 Big Sur 前已加满油。</div><div class="tl-meta">🏨 Best Western San Marcos Inn</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Best Western San Marcos Inn · Morro Bay · ¥811 · ✅ 含自助（次日早）</span>
+          <span class="info food">🍽 Monarch 自助当早午饭 · 白天走为主</span>
+          <span class="info warn">⚠️ Big Sur 无手机信号 · 离线地图 · 进 Big Sur 前加满油 · 查 Caltrans 封路</span>
+          <span class="info tip">💡 当晚早休息 · 次日 D4 07:30 出发赶 LA 下午进场</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4 -->
+    <div class="day west" id="d4" data-day="d4">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D4 · 美西第4天</div>
+          <div class="dtitle">早出发 · 下午进场洛杉矶</div>
+          <div class="ddate">9/28 周日</div>
+          <div class="dmeta"><span class="pill w">🛣 1号公路 Day3</span><span class="pill w">🎬 LA 下午起</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🌤️ 早莫罗湾约 14℃ · 圣巴巴拉 18–26℃ · 洛杉矶 21–29℃ 晴热干燥<span class="wx-src">气候+9/27 趋势 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：和 D5 同一套，米黄衬衫 + 白裤子 + 绿鞋。07:30 莫罗湾约 14℃，车上先套抓绒，热了再脱。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="move"><div class="tl-time">07:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>莫罗湾出发 · 101 南下</b><div class="en">Solvang 丹麦村跳过 · 控时进 LA</div><div class="tl-detail">今日核心目标 14:00 前进 LA。出发前把 Best Western 自助吃饱当早午饭。走 101 比 1 号公路快，Solvang 时间紧可放弃。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="santa_barbara.jpg"><b>圣巴巴拉县法院 + 老城</b><div class="en">Santa Barbara Courthouse · 西班牙红顶白墙</div><div class="tl-detail">「美国最美法院」可登顶俯瞰红顶白墙小城；老城步行街快速逛一圈。严格控制在 45min–1h，避免影响下午 LA。</div><div class="tl-meta">⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">11:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="malibu.jpg"><b>马里布 PCH 海岸</b><div class="en">Malibu · Pacific Coast Highway</div><div class="tl-detail">Zuma Beach 等路段摇下车窗拍照即可，不必久留。太平洋海岸公路南段，为下午圣莫尼卡热身。</div><div class="tl-meta">⏱ 20min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">14:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="santa_monica.jpg"><b>圣莫尼卡 Pier</b><div class="en">Route 66 终点 · 码头摩天轮</div><div class="tl-detail">66 号公路终点标志、码头与海景。早上已吃自助，以走为主；饿了再买 In-N-Out 等简餐。</div><div class="tl-meta">⏱ 1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="third_street.jpg"><b>第三街 Promenade</b><div class="en">Third Street Promenade · 步行街</div><div class="tl-detail">码头旁边的步行街，LA 行程正式启动。逛街拍照即可，16:30 前动身去比佛利入住。</div><div class="tl-meta">⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">16:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>入住 Sirtaj Beverly Hills</b><div class="en">120 S Reeves Dr · 比佛利山</div>          <div class="tl-detail">比佛利山核心位置，步行可达 Rodeo Drive。注意 valet 停车约 $50/晚。<b>本店无早餐</b>（全程唯一），D5 早上需自备/外买简餐。</div><div class="tl-meta">🏨 第 1 晚 · 已订</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="rodeo_drive.jpg"><b>Rodeo Drive 初逛</b><div class="en">Beverly Hills Sign · 名店街预热</div><div class="tl-detail">Gucci、LV、Bottega 等旗舰店，比佛利山庄市徽打卡。今晚先熟悉路线，D5 顺路再补逛。</div><div class="tl-meta">⏱ 1h · 免费逛街</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Sirtaj Beverly Hills · 第 1 晚 · ❌ 无早餐</span>
+          <span class="info food">🍽 早上已吃 Best Western 自助 · 饿了码头简餐</span>
+          <span class="info warn">⚠️ LA 停车贵 · 比佛利山 valet 约 $50/晚 · 格里菲斯改 D5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D5 -->
+    <div class="day west" id="d5" data-day="d5">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D5 · 美西第5天</div>
+          <div class="dtitle">Crypto 球馆 · 盖蒂 · 好莱坞 · 格里菲斯</div>
+          <div class="ddate">9/29 周一</div>
+          <div class="dmeta"><span class="pill w">🎬 洛杉矶</span><span class="pill">🏟 Crypto</span><span class="pill">🖼 盖蒂</span></div>
+          <div class="wx ref">
+            <div class="wx-row">☀️ 洛杉矶 21–29℃ · 晴热干燥，几乎无雨，紫外中高<span class="wx-src">气候+趋势 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：米黄衬衫 + 白裤子 + 绿鞋，就这一身。盖蒂平台防晒；格里菲斯风大外套可拎在手上。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="overview compact">
+          <b>9/29 无赛无 Tour</b>，上午 Crypto 外观后西行盖蒂。动线：市中心 → 盖蒂 → Rodeo → <b>星光大道</b> → Sign → 格里菲斯。
+        </div>
+        <div class="timeline-label">今日行程 · 按地理顺序</div><div class="timeline">
+          <div class="tl-item" data-kind="move"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>酒店出发 · 驱车南下</b><div class="en">Sirtaj Beverly Hills → Downtown LA</div><div class="tl-detail">比佛利 → Crypto 约 <b>30–45min</b>。Sirtaj <b>无早餐</b>，出发前买个面包/咖啡，或 11:15 市中心简餐当正餐。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">10:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="crypto_arena.jpg"><b>Crypto.com Arena · 外观打卡</b><div class="en">9/29 无赛无 Tour · 仅外部</div><div class="tl-detail">球馆外立面 → L.A. LIVE → Star Plaza 雕像。<br>无法入内，约 1h · 免费。</div><div class="tl-meta">⏱ 约 1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">11:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>市中心午餐</b><div class="en">L.A. LIVE 周边 · 简餐后西行</div><div class="tl-detail">Sirtaj 无早餐，这顿当正餐。<b>11:45 前上路</b>赶 12:30 入场。市中心 → 盖蒂约 <b>40–45min</b>。</div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">11:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>驱车 → 盖蒂中心</b><div class="en">Downtown → Getty Center · 西行 · I-405/Sepulveda Pass</div><div class="tl-detail"><ul class="tl-facts">
+            <li><em>导航</em><span>N Sepulveda Blvd &amp; Getty Center Dr<span class="hint">唯一公共入口，部分 GPS 会导错</span></span></li>
+            <li><em>停车</em><span>$25/车 · 自助机仅刷卡 · 离馆前缴费</span></li>
+            <li><em>注意</em><span>车库无信号 · QR 提前截图</span></li>
+            <li><em>路况</em><span>I-405 施工可能封道 · 出发前查 <a href="https://quickmap.dot.ca.gov/" target="_blank">Caltrans Quickmap</a></span></li>
+          </ul></div><div class="tl-meta">🚗 约 40–45min · 停车现场付</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">12:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="getty_center.jpg"><b>盖蒂中心 The Getty Center</b><div class="en">✅ Center Admission · 2人 · 免费</div><div class="tl-detail">入库 → 缆车上山 → 验 QR。西馆精华约 2h；<b>📸#7</b> 出馆后中央花园 / 平台拍建筑 + LA 远景。<b>15:00 前离馆</b>。</div><div class="tl-meta"><span class="photo-shot">📸#7</span>⏱ 2h · 免费 · 已预约</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="rodeo_drive.jpg"><b>Rodeo Drive · 顺路快速补逛</b><div class="en">Beverly Hills · 盖蒂 → 好莱坞途经</div><div class="tl-detail">盖蒂下山后沿 Sunset 经比佛利，<b>顺路</b> Rodeo 名店街 + 市徽合影（D4 晚已初探，此处补 20–30min）。</div><div class="tl-meta">⏱ 20–30min · 免费逛街</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="walk_of_fame.jpg"><b>好莱坞星光大道</b><div class="en">Hollywood Walk of Fame · TCL Chinese Theatre</div><div class="tl-detail"><b>必去。</b>好莱坞大道地面星形奖章 + 中国剧院手印。Rodeo 之后先到这条街，快速打卡 30min，再开车上山拍 Sign。</div><div class="tl-meta">⏱ 30min · 免费 · 必去</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:35</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="hollywood_sign.jpg" data-img-fit="fit-sign"><b>Hollywood Sign 合影</b><div class="en">Lake Hollywood Park · 3160 Canyon Lake Dr</div><div class="tl-detail"><b>📍 Lake Hollywood Park</b>（3160 Canyon Lake Dr · 导航搜 Lake Hollywood Park）<br>Canyon Lake Dr 路边停车 → 公园草坡朝北，人与 Sign 同框。约 30min 后转格里菲斯。</div><div class="tl-meta">⏱ 30min · 免费 · <a href="https://www.google.com/maps/search/?api=1&query=Lake+Hollywood+Park+3160+Canyon+Lake+Dr+Los+Angeles" target="_blank">Maps</a></div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="griffith_observatory.jpg"><b>格里菲斯天文台 日落+夜景</b><div class="en">Griffith Observatory · 《爱乐之城》取景地</div><div class="tl-detail"><b>📸#8</b> 西侧看 Sign，入夜后改朝市区灯海。俯瞰 LA 全城，<b>本日压轴</b>；9 月底日落约 18:30。</div><div class="tl-meta"><span class="photo-shot">📸#8</span>⏱ 1–1.5h · 免费</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Sirtaj Beverly Hills · 续住 · ❌ 无早餐 · 9/30 09:00 LAX 还车</span>
+          <span class="info food">🍽 今日无酒店早 · 市中心简餐 · 白天走为主</span>
+          <span class="info warn">⚠️ 盖蒂：I-405 施工 · 车库无信号 · 15:00 前离馆</span>
+          <span class="info tip">💡 盖蒂 QR 截图 · 离馆前刷卡付 $25 停车</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D6 fly west -->
+    <div class="day fly" id="d6" data-day="d6">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D6 · 飞行日</div>
+          <div class="dtitle">洛杉矶还车 · 飞华盛顿</div>
+          <div class="ddate">9/30 周二</div>
+          <div class="dmeta"><span class="pill f">✈️ AA591</span><span class="pill f">🚗 LAX还车</span></div>
+          <div class="wx ref">
+            <div class="wx-row">☀️ 洛杉矶上午 21–28℃ 晴 · 华盛顿晚间约 14–23℃ 转凉<span class="wx-src">气候参考 · 临行再核</span></div>
+            <div class="wx-wear">👕 还车穿短袖即可；飞机和抵 DC 晚上要外套。托运行李前把防风层放随身包。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="move"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>LAX Alamo 还租车</b><div class="en">5251 W 98th St · 9/30 09:00</div><div class="tl-detail">Sirtaj <b>无早餐</b>，退房前买面包/咖啡。直奔 LAX 还车点；确认满油、无新增刮痕，保留还车单据。12:31 起飞仍有约 2.5h 缓冲。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">Alamo Shuttle · 约 15–20min</span></div><ol class="local-line"><li><b>Alamo 还车点 5251 W 98th St</b><em>还车后乘接驳</em></li><li><b>LAX 航站楼</b><em>Shuttle 直达 · 再值机</em></li></ol></div><div class="tl-meta">🚗 已出票 · 还车</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">10:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>抵达 LAX 航站楼</b><div class="en">Los Angeles International Airport · AA591 · 值机安检</div><div class="tl-detail">12:31 起飞，建议 10:00 前完成值机安检。美航国内线飞 DCA，托运行李直挂华盛顿。</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">12:31</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="la_skyline.jpg"><b>AA591 飞华盛顿 DCA</b><div class="en">LAX → Ronald Reagan National Airport · 约 5h</div><div class="tl-detail">横跨美国大陆，选靠窗可看地貌变化。罗纳德·里根国家机场距 Arlington 酒店近，晚 8 点多抵达后直接入住。</div><div class="tl-meta">✈️ 已出票 · 12:31–20:37</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">20:37</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>抵 DCA 罗纳德·里根国家机场 · 入住 Arlington</b><div class="en">Ronald Reagan Washington National Airport · Clarion Arlington Court Suites</div><div class="tl-detail">当晚不排景点，倒时差+休整。套房含厨房，确认延迟入住。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">Uber · 约 15min</span></div><ol class="local-line"><li><b>DCA 航站楼</b><em>出站打车</em></li><li><b>Clarion Arlington Court Suites</b><em>直达入住</em></li></ol></div><div class="tl-meta">🏨 Clarion · 已订</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Clarion Arlington · 晚抵 · ✅ 含自助（次日早）</span>
+          <span class="info food">🍽 Sirtaj 无早 · 机场/机上简餐即可</span>
+          <span class="info warn">⚠️ 当晚不排景点，倒时差+休整</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 美东 -->
+  <section id="east">
+    <div class="h2">🗽 美东 5 天 · 人文与历史之旅</div>
+    <div class="panel panel-intro">
+      <b>交通：</b>大巴串联（华盛顿 Union Station ↔ 纽约中城 31街&8大道 ↔ 波士顿 South Station）· 市中心到市中心 · 比 Amtrak 更省预算
+      <div class="kind-legend" style="margin-top:10px">
+        <span>📍 景点</span><span>🚗 大交通</span><span>✈️ 飞行</span><span class="k-local">🚌 本地交通</span><span>🍽 吃饭</span><span>🏨 住宿</span><span>☕ 休息</span>
+      </div>
+    </div>
+
+    <!-- D7 -->
+    <div class="day east" id="d7" data-day="d7">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D7 · 美东第1天</div>
+          <div class="dtitle">华盛顿 · 国家广场权力中心</div>
+          <div class="ddate">10/1 周三</div>
+          <div class="dmeta"><span class="pill e">🏛 华盛顿</span><span class="pill">🚶 步行</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🍂 华盛顿 14–23℃ · 秋高气爽，约三成可能有雨<span class="wx-src">气候均值 10/1 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：和 D3 同一套，黑色迪桑特上衣 + 白色休闲裤 + 黑鞋。14℃ 抓绒可套在外面，馆内再脱。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="overview compact">
+          <b>D7 动线 · 单向不回头：</b>国会（东）→ 向西步行 → 纪念碑（中）→ 白宫（北，<b>可选小绕 20min</b>）→ 航空馆（南）→ 潮汐湖（杰斐逊 → MLK → 林肯）→ 回酒店。<br>
+          <b>时间核算（预约不变）：</b>10:40 国会 1h → 11:45 步行 20min → 12:20 排队纪念碑 → 13:05 结束 → 13:15–13:35 白宫（可跳过，纪念碑顶也能看）→ 13:50 抵航空馆 → <b>14:00 入场</b> → 16:00 出馆 → 16:15 杰斐逊 → <b>16:50 MLK 顺路</b> → 17:15 林肯日落 → 18:30 回酒店。
+        </div>
+        <div class="timeline-label">今日行程 · 按地理单向</div><div class="timeline">
+          <div class="tl-item" data-kind="local"><div class="tl-time">08:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Clarion 自助 → 打车赴国会</b><div class="en">Arlington → 国会大厦 · 约 20–25min</div><ol class="local-line"><li><b>Clarion Arlington</b><em>自助吃饱当早午饭</em></li><li><b>Capitol Visitor Center</b><em>Uber/Lyft · First St SE &amp; East Capitol St NE</em></li></ol><div class="tl-detail">锚点是 <b>10:40 国会导览</b>，直接从酒店往东端最顺，不必先去 Mall 西端林肯。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">10:40</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="us_capitol.jpg"><b>国会大厦导览 Capitol Tour</b><div class="en">Visitor Center 入内 · ✅ 已预约 · 2 passes</div><div class="tl-detail"><b>09:45 前</b>到 Capitol Visitor Center 过安检、取票（同一地点，不是两个景点）。10:40 官方导览约 1h，预计 11:45 结束。已预约。</div><div class="tl-meta">⏱ 约 1h · 免费 · 已预约</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">11:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>沿国家广场向西 · 赴纪念碑</b><div class="en">Capitol → Washington Monument · 约 15–20min</div><ol class="local-line"><li><b>国会大厦</b><em>导览结束 · 轻装出发</em></li><li><b>华盛顿纪念碑底部</b><em>沿 Mall 中轴西行 · 一路向前</em></li></ol><div class="tl-detail">大包、食物、婴儿车不能上塔，底部<b>无寄存</b>。QR <b>提前截图</b>，一人一码。</div><div class="tl-meta">⏱ 20min · 轻装</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">12:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="washington_monument.jpg"><b>华盛顿纪念碑登顶</b><div class="en">✅ Monument Tour · 2 Tickets</div><div class="tl-detail"><b>12:20 前</b>到底部排队验票。约 45min 结束。</div><div class="tl-meta">⏱ 约 45min · 已预约</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">13:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="white_house.jpg"><b>白宫外景 · 顺路小绕</b><div class="en">White House · Pennsylvania Ave · 纪念碑北侧步行约 10min</div><div class="tl-detail"><b>📸#10 · 可选。</b> 从纪念碑向北 10min 拍正立面，20min 足够；<b>时间紧可跳过</b>（纪念碑 500ft 顶也能俯瞰白宫）。<b>13:35 前</b>折回南侧去航空馆，赶 14:00 入场。</div><div class="tl-meta"><span class="photo-shot">📸#10</span>⏱ 20min · 可选 · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">14:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="air_space_museum.jpg"><b>航空航天博物馆</b><div class="en">Smithsonian Air &amp; Space · Jefferson Dr 入口</div><div class="tl-detail">纪念碑南侧步行约 5min 即达。莱特兄弟飞机、阿波罗登月舱。<b>必须 free timed pass</b> · <a href="https://airandspace.si.edu/visit/museum-dc" target="_blank">airandspace.si.edu</a><br>⏰ <b>9/1 20:00（北京）</b>抢 10/1 14:00 时段</div><div class="tl-meta">⏱ 2h · 免费 · 🟡 待约</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="jefferson_memorial.jpg"><b>杰斐逊纪念堂 · 潮汐湖</b><div class="en">Jefferson Memorial · 从航空馆向南步行约 15min</div><div class="tl-detail">出馆后向南进潮汐湖，不再往北折返。白色圆顶 + 湖景，控制在 30min，为 MLK 留时间。</div><div class="tl-meta">⏱ 30min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:50</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="mlk_memorial.jpg"><b>马丁·路德·金纪念堂</b><div class="en">MLK Memorial · 沿潮汐湖顺路</div><div class="tl-detail">杰斐逊沿湖南岸步行约 10min 即达。花岗岩雕像「Out of the mountain of despair, a stone of hope」，《我有一个梦想》演讲地。停留 20min，<b>17:10 前</b>向西赴林肯。</div><div class="tl-meta">⏱ 20min · 免费 · 顺路</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="lincoln_memorial.jpg"><b>林肯纪念堂 + 反思池 · 日落</b><div class="en">MLK → Lincoln · 沿湖继续向西约 10min</div><div class="tl-detail"><b>📸#9</b> 坐像 + 台阶东看反思池 + 尖碑，10 月初日落约 18:30，17:15 抵达光线正好。</div><div class="tl-meta"><span class="photo-shot">📸#9</span>⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">18:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Uber 回 Clarion · 收队</b><div class="en">Lincoln Memorial → Arlington · 约 15min</div><div class="tl-detail">林肯为最西端，打车回酒店最省腿。D8 上午不再重复走国家广场。</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 ✅ Clarion Arlington · 续住 · ✅ 含自助（尽量吃饱当早午饭）</span>
+          <span class="info food">🍽 自助当早午饭 · 国会前不饿 · 13:45 前完成白宫</span>
+          <span class="info warn">⚠️ 10:40 国会 · 12:20 前到纪念碑 · 14:00 航空馆 pass · 轻装无寄存</span>
+          <span class="info tip">💡 单向：Capitol → 西 → 白宫北绕 → 航空馆南 → 杰斐逊 → MLK → 林肯 → 回酒店</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D8 -->
+    <div class="day east" id="d8" data-day="d8">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D8 · 美东第2天</div>
+          <div class="dtitle">华盛顿上午 → 大巴抵纽约 · 中城第五大道</div>
+          <div class="ddate">10/2 周四</div>
+          <div class="dmeta"><span class="pill e">🏛→🗽</span><span class="pill">🚌 4.5h · 已出票</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🍂 华盛顿上午 14–22℃ · 纽约傍晚 13–21℃<span class="wx-src">气候均值 · 临行再核</span></div>
+            <div class="wx-wear">👕 上午继续 D3/华盛顿那身（黑迪桑特 + 白休闲裤 + 黑鞋）。抵 NY 放行李后换<b>已定夜景套</b>：黑灰拼接外套 + 蓝灰牛仔裤 + 黑鞋。Top of the Rock 外套不要脱。D9 不接着穿。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="overview compact">
+          <b>D8 动线优化：</b>MLK 已在 D7 潮汐湖顺路看过。上午只排国家美术馆 → 直赴 Union Station（东北方向，不折返南岸）。<b>12:00 大巴不变。</b>
+        </div>
+        <div class="timeline-label">今日行程 · 上午单向赴车站</div><div class="timeline">
+          <div class="tl-item" data-kind="local"><div class="tl-time">08:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Clarion 退房 · 打车赴国家美术馆</b><div class="en">行李随身 · 约 20min</div><div class="tl-detail">08:30 前退房。Arlington → National Gallery West Building，09:00 开馆即进。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="national_gallery.jpg"><b>国家美术馆 西馆精华</b><div class="en">National Gallery of Art · West Building</div><div class="tl-detail">达芬奇《吉内薇拉》、梵高《自画像》、莫奈睡莲等；西馆永久免费。控制在 <b>1h45</b>，10:45 必须离馆赶车。</div><div class="tl-meta">⏱ 1h45 · 免费</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">10:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>打车 → Union Station</b><div class="en">National Gallery → Union Station · 约 8–10min</div><ol class="local-line"><li><b>国家美术馆</b><em>10:45 离馆 · 拖行李</em></li><li><b>Union Station</b><em>Uber · 约 1.5km 东北方向</em></li></ol><div class="tl-detail">不再南下潮汐湖。11:00 前到站，<b>12:00 大巴</b> 留足 1h 缓冲 · 站内简餐候车。</div><div class="tl-meta">⏱ 10min 车程 · 🚌 12:00 已出票</div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">12:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>大巴 华盛顿 → 纽约</b><div class="en">Union Station → 31st St &amp; 8th Ave · 约 4.5h</div><div class="tl-detail">已订 ¥440。下车点在中城 31 街与 8 大道，近 Penn Station。抵 NY 后<b>先去 Secaucus 酒店放行李</b>，再轻装进城游玩。</div><div class="tl-meta">🚌 已出票 · ¥440</div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">16:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>抵纽约中城 · 31 街 &amp; 8 大道</b><div class="en">Bus drop-off · 近 Penn Station</div><div class="tl-detail">大巴下车点在中城，近 Penn Station。<b>拖着全套行李不便逛街</b>，先赴酒店放行李再进 Manhattan。</div></div></div>
+          <div class="tl-item" data-kind="stay"><div class="tl-time">16:40</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Harmony Suites Secaucus · 放行李入住</b><div class="en">已订 3 晚 · 先入住再进城</div><div class="tl-detail">办理入住、<b>行李放房间</b>，轻装再玩。比拖着箱子逛第五大道现实得多。</div><div class="tl-local"><div class="tl-local-hd"><span class="tl-local-tag">🚌 本地交通</span><span class="tl-local-meta">Uber/Lyft · 约 15–20min</span></div><ol class="local-line"><li><b>31st St &amp; 8th Ave 下车点</b><em>拖行李打车出发</em></li><li><b>Harmony Suites Secaucus</b><em>入住放行李</em></li></ol></div><div class="tl-meta">🏨 10/2 入住 · ¥3,034 · 3 晚</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">17:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>NJ Transit 进 Manhattan</b><div class="en">Secaucus Junction → Penn Station · 轻装</div><ol class="local-line"><li><b>Secaucus Junction</b><em>酒店附近上车 · 约 10–15min</em></li><li><b>Penn Station</b><em>再步行或地铁赴中城</em></li></ol><div class="tl-detail">当晚玩完仍回 Secaucus 过夜。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">17:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="ny_public_library.jpg"><b>纽约公共图书馆</b><div class="en">NYPL · 476 5th Ave · 42nd St</div><div class="tl-detail">轻装从 Penn Station 步行至第五大道：大理石 Astor Hall、Rose Main Reading Room（以当日开放为准）。D8 中城动线起点。</div><div class="tl-meta">⏱ 25–35min · 免费</div></div></div>
+          <div class="tl-item" data-kind="rest"><div class="tl-time">17:50</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="bryant_park.jpg"><b>Bryant Park</b><div class="en">图书馆后方 · 歇脚</div><div class="tl-detail">馆后小公园，可坐一下再北上第五大道。不饿就喝水休息。</div><div class="tl-meta">⏱ 10–15min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">18:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="fifth_avenue.jpg"><b>第五大道 · Trump Tower · LV</b><div class="en">725 5th Ave · Louis Vuitton Maison · Tiffany</div><div class="tl-detail">沿第五大道向北顺逛：Trump Tower 金时钟、LV 旗舰店（57 街）、Tiffany · Saks 橱窗。不购物也值得看建筑，一路走向洛克菲勒中心。</div><div class="tl-meta">⏱ 45min · 免费逛街</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">18:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="times_square.jpg"><b>时代广场</b><div class="en">Times Square · 霓虹大屏</div><div class="tl-detail">从第五大道向西步行即达，感受 NY 街头脉动。短暂停留后上 Top of the Rock，结束后再 NJ Transit 回 Secaucus。</div><div class="tl-meta">⏱ 30min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">19:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="top_of_the_rock.jpg"><b>Top of the Rock 夜景</b><div class="en">Rockefeller Center · 唯一观景台</div><div class="tl-detail"><b>📸#11</b> 帝国大厦居中，曼哈顿夜景。<strong>本行程只安排此处上天台</strong>。建议提前订日落/夜景时段票。</div><div class="tl-meta"><span class="photo-shot">📸#11</span>⏱ 1.5h · $40+ · 🟡 提前订</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">21:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>回 Secaucus 酒店</b><div class="en">NJ Transit · Penn Station → Secaucus Junction</div><ol class="local-line"><li><b>洛克菲勒 / 中城</b><em>地铁或步行至 Penn Station</em></li><li><b>Secaucus Junction</b><em>NJ Transit 回酒店</em></li></ol><div class="tl-detail">D9–D10 同样 Secaucus 为基地，每日轻装进城。</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 Harmony Suites Secaucus · ✅ 含自助（次日早） · 3 晚 · ¥3,034</span>
+          <span class="info food">🍽 上午 Clarion 自助 · 晚上饿了再简餐</span>
+          <span class="info tip">💡 抵 NY 先打车去 Secaucus 放行李 · 轻装 NJ Transit 进城 · 7 日地铁卡约 $36</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D9 -->
+    <div class="day east" id="d9" data-day="d9">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D9 · 美东第3天</div>
+          <div class="dtitle">纽约下城 · 金融、自由与记忆</div>
+          <div class="ddate">10/3 周五</div>
+          <div class="dmeta"><span class="pill e">🗽 下城</span><span class="pill">🚇 地铁</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🍂 纽约 13–21℃ · 凉爽，约三成可能有雨<span class="wx-src">气候均值 10/3 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：和 D10 同一套。黑色卫衣 + 米咖色宽松休闲裤 + 黑鞋。渡轮海风薄防风套最外，走一天更舒服。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="local"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>赴 Battery Park 码头</b><div class="en">Secaucus → Manhattan · Statue City Cruises</div><ol class="local-line"><li><b>Secaucus Junction</b><em>NJ Transit 进 NYC</em></li><li><b>Penn Station</b><em>换乘地铁南下</em></li><li><b>Battery Park 码头</b><em>宜 09:30 前抵达 · 10:00 优先入场</em></li></ol></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">10:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="statue_of_liberty.jpg"><b>自由女神像 + 底座 + 埃利斯岛</b><div class="en">✅ Reserve with Pedestal · 2人 · $52</div><div class="tl-detail"><b>📸#12</b> 去程渡轮甲板船侧，女神 + 曼哈顿天际线（比底座近景更出片）。已预约。登岛后顺访移民博物馆约 3h。</div><div class="tl-meta"><span class="photo-shot">📸#12</span>⏱ 3h · $52（2人）</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">12:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="wall_street.jpg"><b>华尔街 · 铜牛合影</b><div class="en">Charging Bull · Bowling Green · Wall St</div><div class="tl-detail">铜牛在 Bowling Green 附近（不在 Wall St 本街）；经典 Charging Bull 合影后沿 Wall St 感受下城金融区。</div><div class="tl-meta">⏱ 45min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">13:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="memorial_911.jpg"><b>9/11 纪念馆</b><div class="en">9/11 Memorial · Ground Zero · One WTC</div><div class="tl-detail">归零地双瀑布纪念池，庄严肃穆；步行约 10min 从铜牛过来。One World Observatory 可选，时间紧可外观。</div><div class="tl-meta">⏱ 1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="brooklyn_bridge.jpg"><b>布鲁克林大桥步行</b><div class="en">Brooklyn Bridge Walk · Manhattan Skyline</div><div class="tl-detail"><b>📸#15</b> 木栈道中段，钢索 + 曼哈顿天际线。步行约 30min，日落前 1h 光线最佳。</div><div class="tl-meta"><span class="photo-shot">📸#15</span>⏱ 30–40min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="dumbo.jpg"><b>DUMBO 拍照</b><div class="en">Washington St · 桥下经典机位</div><div class="tl-detail"><b>📸#13</b> Washington St，桥拱下框住曼哈顿。纽约人像第一机位。拍完可回曼哈顿或顺路往切尔西。</div><div class="tl-meta"><span class="photo-shot">📸#13</span>⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">18:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>切尔西市场 · 饿了再买</b><div class="en">Chelsea Market · 可跳过</div><div class="tl-detail">早上 Harmony 自助已当早午饭。不饿就路过看一眼；饿了买塔可/三明治即可，不必正餐。</div><div class="tl-meta">⏱ 可选 · 简餐</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 续住 Harmony Suites · ✅ 含自助（尽量吃饱当早午饭）</span>
+          <span class="info food">🍽 自助当早午饭 · 白天走下城 · 切尔西饿了再买</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D10 -->
+    <div class="day east" id="d10" data-day="d10">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D10 · 美东第4天</div>
+          <div class="dtitle">路过联合国 · Met · 高线 · Vessel</div>
+          <div class="ddate">10/4 周六</div>
+          <div class="dmeta"><span class="pill e">🗽 东岸+西岸</span><span class="pill">🌆 轻松节奏</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🍂 纽约 13–21℃ · 凉爽，公园与高线偏风<span class="wx-src">气候均值 10/4 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：和 D9 同一套。黑色卫衣 + 米咖色宽松休闲裤 + 黑鞋。Met 馆内热了可脱卫衣。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="united_nations.jpg"><b>联合国总部 · 门口路过外观</b><div class="en">UN HQ · 1st Ave &amp; 46th St · 不进内部</div><div class="tl-detail"><b>10/2–10/4 闭馆</b>（含 D10 的 10/4），Visitors Centre 与导览均不开放。Secaucus 过来可在 1st Ave 沿街看各国旗帜与玻璃秘书处大楼，拍照即走，<b>无需预约</b>。</div><div class="tl-meta">⏱ 15–20min · 外观免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">09:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="central_park.jpg"><b>中央公园 轻松漫步</b><div class="en">Central Park · Bow Bridge</div><div class="tl-detail"><b>📸#14</b> Bow Bridge，桥身弧线 + 湖面 + 远处楼。控制在 45min，为 Met 留体力。</div><div class="tl-meta"><span class="photo-shot">📸#14</span>⏱ 45min · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">10:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="the_met.jpg"><b>大都会艺术博物馆 The Met</b><div class="en">The Metropolitan Museum of Art · 1000 5th Ave</div><div class="tl-detail">埃及馆、欧洲绘画精华 · 2.5h。<b>建议预购 timed ticket</b> · 约 <b>10:00</b> 入场<br><a href="https://www.metmuseum.org/visit/buy-tickets" target="_blank">metmuseum.org</a> · 约 $30/人 · 🟡 <b>现在可约</b></div><div class="tl-meta">⏱ 2.5h · $30 · 待约</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">13:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>上东区 · 饿了再简餐</b><div class="en">Met 周边 · 可跳过</div><div class="tl-detail">早上 Harmony 自助已当早午饭。不饿就休息喝水；饿了再买三明治之类，下午转西岸。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">14:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="high_line.jpg"><b>高线公园 南段漫步</b><div class="en">The High Line · 朝 Hudson Yards</div><div class="tl-detail">建议从 23 街或 30 街入口上高线，向南或向 Hudson Yards 方向走。废弃铁路改空中花园，免费看 Hudson River。</div><div class="tl-meta">⏱ 1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">16:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="the_vessel.jpg"><b>The Vessel · 外观拍照</b><div class="en">Hudson Yards · 高线终点 · 不登塔</div><div class="tl-detail">高线南段终点即 Hudson Yards；Vessel 外部合影即可，不登塔。逛完早晚餐，D10 不必赶夜景。</div><div class="tl-meta">⏱ 15–20min · 免费</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">17:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>回 Secaucus · 早休息</b><div class="en">D11 07:00 大巴去波士顿</div><ol class="local-line"><li><b>Hudson Yards / 高线</b><em>NJ Transit 或 Uber</em></li><li><b>Harmony Suites Secaucus</b><em>早休息赶次日清晨大巴</em></li></ol><div class="tl-detail">D8 已上 Top of the Rock，今晚不排观景台。</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info stay">🏨 续住 Harmony Suites · ✅ 含自助 · 10/5 晨 05:30 退房可能赶不上自助</span>
+          <span class="info food">🍽 自助当早午饭 · 白天走为主 · 饿了再买</span>
+          <span class="info tip">💡 联合国 10/2–10/4 闭馆 · 仅门口外观 · Met 不必全馆看完 · Vessel 仅外观</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D11 -->
+    <div class="day east" id="d11" data-day="d11">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D11 · 美东第5天</div>
+          <div class="dtitle">波士顿四打卡 · 赶凌晨航班</div>
+          <div class="ddate">10/5 周日</div>
+          <div class="dmeta"><span class="pill e">🎓 哈佛·MIT</span><span class="pill e">🚶 自由之路</span><span class="pill f">✈️ 01:45 起飞</span></div>
+          <div class="wx ref">
+            <div class="wx-row">🍁 纽约清晨约 10–13℃ · 波士顿 10–19℃，全程最凉一天<span class="wx-src">气候均值 10/5 · 临行再核</span></div>
+            <div class="wx-wear">👕 已定：波士顿独立一套。红色针织衫 + 白色裤子 + 绿鞋。05:30 约 10℃，抓绒套外面，薄防风可再加。备伞。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="overview compact">
+          <b>够吗？</b>四个点<strong>都能打到卡</strong>，但只有约 <b>10h 有效游玩</b>（11:30 抵 → 21:00 收队），属于<strong>精华打卡</strong>，不是悠闲深度游。昆西市场在自由之路沿线上，可与步行合并。
+        </div>
+        <div class="timeline-label">推荐节奏（按地理顺序）</div><div class="timeline">
+          <div class="tl-item" data-kind="local"><div class="tl-time">05:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Secaucus 退房 · 赶大巴上车点</b><div class="en">Harmony Suites → 31st St &amp; 8th Ave</div><ol class="local-line"><li><b>Harmony Suites Secaucus</b><em>清晨退房 · 行李随身</em></li><li><b>31st St &amp; 8th Ave</b><em>Uber / NJ Transit · <b>06:30 前抵达</b>候车</em></li></ol><div class="tl-detail">07:00 大巴已订 ¥430。</div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">07:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>大巴 纽约 → 波士顿</b><div class="en">31st St &amp; 8th Ave → South Station · 约 4.25h</div><div class="tl-detail">已订 ¥430。预计 11:15 抵 Boston South Station；10/6 凌晨 01:45 飞 BOS，白天勿睡太多。</div><div class="tl-meta">🚌 已出票 · ¥430</div></div></div>
+          <div class="tl-item" data-kind="move"><div class="tl-time">11:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>抵 South Station</b><div class="en">有效游玩从 11:30 开始</div><div class="tl-detail">含出站与步行至 downtown，11:30 前后开始玩。行李可寄存，轻装逛剑桥。</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">11:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="freedom_trail.jpg"><b>自由之路 精华段</b><div class="en">Boston Common → State House → Faneuil Hall</div><div class="tl-detail">4km 红砖路全程走不完，只走 downtown 段约 1–1.5h。波士顿公园、州议会金顶、Faneuil Hall 同线串联。</div><div class="tl-meta">⏱ 1–1.5h · 免费</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">12:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="quincy_market.jpg"><b>昆西市场 午餐</b><div class="en">Lobster Roll · Clam Chowder</div><div class="tl-detail">新英格兰必吃：龙虾卷 + 蛤蜊浓汤。就在 Faneuil Hall 旁，与自由之路同区域，Legal Sea Foods 亦可。</div><div class="tl-meta">⏱ 1h · $15–30 · 优先级最高</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">13:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>Red Line → 剑桥</b><div class="en">South Station → Harvard Square · 约 20min</div><ol class="local-line"><li><b>South Station</b><em>上 <span class="local-badge">Red</span> Line · CharlieTicket / 单程票</em></li><li><b>Harvard Square</b><em>出站步行 5min 到哈佛 Yard</em></li></ol></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">14:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="harvard.jpg"><b>哈佛大学 Harvard Yard</b><div class="en">Harvard Yard · John Harvard Statue</div><div class="tl-detail">美国最古老大学，哈佛雕像摸左脚求好运是游客传统。校园开放式，45min–1h 足够核心区域。</div><div class="tl-meta">⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="sight"><div class="tl-time">15:15</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="mit.jpg"><b>MIT + 查尔斯河</b><div class="en">Great Dome · Charles River</div><div class="tl-detail">步行或地铁 1 站到 MIT，Great Dome 圆顶是标志；查尔斯河畔拍哈佛与波士顿天际线。与哈佛合计 45min–1h。</div><div class="tl-meta">⏱ 45min–1h · 免费</div></div></div>
+          <div class="tl-item" data-kind="rest"><div class="tl-time">16:30</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>缓冲 · 纪念品</b><div class="en">预留延误 · 勿排第三景点</div><div class="tl-detail">四打卡日时间紧，留 30min 弹性。延误取舍：砍老北教堂 → 哈佛/MIT 各缩 30min → 仍 21:00 去机场。</div></div></div>
+          <div class="tl-item" data-kind="food"><div class="tl-time">18:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>简餐 · 回 Station 方向</b><div class="en">早晚餐 · 保持清醒</div><div class="tl-detail">凌晨 01:45 起飞 CX811，白天不要睡太多。17:00 后可早晚餐，慢慢移向南站/机场方向。</div></div></div>
+          <div class="tl-item" data-kind="local"><div class="tl-time">21:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>前往洛根国际机场 BOS</b><div class="en">Logan International Airport · Silver Line SL1 或 Uber</div><ol class="local-line"><li><b>South Station / 市区</b><em>务必 21:00 前出发</em></li><li><b>洛根国际机场 BOS</b><em><span class="local-badge">SL1</span> 约 25–35min · 或 Uber 约 $35–45</em></li></ol></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">22:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="airplane_window.jpg"><b>洛根国际机场 BOS 值机 · CX811</b><div class="en">Logan International Airport · 01:45 起飞 · 国际线提前 3h</div><div class="tl-detail">22:00 抵 BOS 较稳妥；01:45 飞香港 HKG，10/7 05:00 抵港再转机回北京。波士顿打卡日结束。</div><div class="tl-meta">✈️ CX811 · 已出票</div></div></div>
+        </div>
+        <div class="infobar">
+          <span class="info warn">⚠️ 延误取舍：砍老北教堂 → 哈佛 MIT 各缩至 30min → 仍赶 21:00 去机场</span>
+          <span class="info tip">💡 四点优先级：昆西午餐 &gt; 哈佛 &gt; 自由之路 &gt; MIT（或 MIT/哈佛二选一深度）</span>
+          <span class="info food">🍽 昆西当正餐（D11 太早赶不上酒店自助）</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- D12 -->
+    <div class="day fly" id="d12" data-day="d12">
+      <div class="day-header"><div class="day-head">
+          <div class="dnum">D12 · 返程</div>
+          <div class="dtitle">波士顿 → 香港 → 北京</div>
+          <div class="ddate">10/6–10/7</div>
+          <div class="wx ref">
+            <div class="wx-row">✈️ 波士顿夜里约 10℃ · 香港转机 26–29℃ 湿热<span class="wx-src">气候参考 · 临行再核</span></div>
+            <div class="wx-wear">👕 凌晨登机继续波士顿独立那身：红针织当空调衫，抓绒可盖。抵港短袖即可，转机不出关。</div>
+          </div>
+        </div></div>
+      <div class="day-body">
+        <div class="timeline-label">今日行程</div><div class="timeline">
+          <div class="tl-item" data-kind="fly"><div class="tl-time">01:45</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="airplane_window.jpg"><b>洛根国际机场 BOS 起飞 CX811</b><div class="en">Logan International Airport → 香港国际机场 HKG · 约 15h</div><div class="tl-detail">10/5 深夜 D11 已在 BOS 值机；01:45 起飞，机上尽量休息。托运行李直挂北京，香港 HKG 转机不出关。</div><div class="tl-meta">✈️ 已出票 · 01:45–05:00+1</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">05:00</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card" data-img="hong_kong.jpg"><b>抵香港国际机场 HKG · 转机</b><div class="en">Hong Kong International Airport · 10/7 05:00 · 停留约 2.5h</div><div class="tl-detail">走转机通道至 CX334 登机口；可在机场简餐或休息区休整，不必出关。</div><div class="tl-meta">⏱ 转机 2.5h</div></div></div>
+          <div class="tl-item" data-kind="fly"><div class="tl-time">07:25</div><div class="tl-marker" aria-hidden="true"></div><div class="tl-card"><b>CX334 香港 HKG 飞北京</b><div class="en">HKG → PEK T3 · 约 3h20</div><div class="tl-detail">07:25 起飞，10:45 抵首都机场 T3，14 天美国东西海岸之旅圆满结束。</div><div class="tl-meta">✈️ 10:45 抵京</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 酒店 -->
+  <section id="hotels">
+    <div class="h2">🏨 已定酒店（7 家 · 11 晚）</div>
+    <div class="overview compact">
+      全程 7 家已全部确认 · 合计 <b>¥10,229.91</b>（含香港过夜 ¥680）<br>
+      <b>早餐：</b>仅比佛利 <b>Sirtaj 无早餐</b> · 美国其余 5 家均含自助（尽量吃饱当早午饭，白天以走为主，饿了再买简餐）<br>
+      订单</div>
+    <div class="panel">
+      <table>
+        <tr><th>入住</th><th>退房</th><th>城市</th><th>酒店</th><th>早餐</th><th class="num">费用</th><th>行程日</th></tr>
+        <tr><td>9/24</td><td>9/25</td><td>香港机场</td><td>丽豪航天城酒店 · 穿梭车 T2 门 9–11</td><td>—</td><td class="num">¥680</td><td>D0</td></tr>
+        <tr><td>9/25</td><td>9/26</td><td>旧金山</td><td>Executive Hotel Vintage Court</td><td class="hotel-ok">✅ 自助</td><td class="num">¥724</td><td>D1</td></tr>
+        <tr><td>9/26</td><td>9/27</td><td>Marina</td><td>Monarch Valley Inn Marina</td><td class="hotel-ok">✅ 自助</td><td class="num">¥1,263</td><td>D2</td></tr>
+        <tr><td>9/27</td><td>9/28</td><td>Morro Bay</td><td>Best Western San Marcos Inn</td><td class="hotel-ok">✅ 自助</td><td class="num">¥811</td><td>D3</td></tr>
+        <tr><td>9/28</td><td>9/30</td><td>比佛利山</td><td>Sirtaj Beverly Hills</td><td>❌ 无早餐</td><td class="num">¥1,503</td><td>D4–D5</td></tr>
+        <tr><td>9/30</td><td>10/2</td><td>阿灵顿</td><td>Clarion Arlington Court Suites</td><td class="hotel-ok">✅ 自助</td><td class="num">¥2,214</td><td>D6–D7</td></tr>
+        <tr><td>10/2</td><td>10/5</td><td>Secaucus NJ</td><td>Harmony Suites Secaucus Meadowlands</td><td class="hotel-ok">✅ 自助</td><td class="num">¥3,034</td><td>D8–D10</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 交通 -->
+  <section id="transport">
+    <div class="h2">🚌 交通</div>
+    <div class="overview compact">
+      租车 + 美东两段大巴已全部出票 · 合计 <b>¥2,870</b><br>
+      ✅ 电话 + 流量卡已买 · <b>¥280</b>（2 人合计 · 覆盖全程） · ✅ 旅游保险已买 · <b>¥400</b>（¥200/人 × 2）<br>
+      </div>
+    <div class="panel">
+      <h3>已定交通（租车 + 大巴）</h3>
+      <table>
+        <tr><th>类型</th><th>日期</th><th>路线</th><th class="num">费用</th><th>行程日</th></tr>
+        <tr><td>🚗 租车</td><td>9/26 14:00 – 9/30 09:00</td><td>Alamo · Union Square SF → LAX</td><td class="num">¥2,000</td><td>D2–D6</td></tr>
+        <tr><td>🚌 大巴</td><td>10/2 12:00</td><td>Washington Union Station → NY 31st &amp; 8th Ave</td><td class="num">¥440</td><td>D8</td></tr>
+        <tr><td>🚌 大巴</td><td>10/5 07:00</td><td>NY 31st &amp; 8th Ave → Boston South Station</td><td class="num">¥430</td><td>D11</td></tr>
+      </table>
+    </div>
+    <div class="panel panel-spaced">
+      <h3>已买 · 电话卡 + 保险</h3>
+      <table>
+        <tr><th>类型</th><th>覆盖</th><th>说明</th><th class="num">费用</th><th>状态</th></tr>
+        <tr><td>📱 电话 + 流量卡</td><td>9/24–10/7</td><td>覆盖全程 · <b>2 人合计</b></td><td class="num">¥280</td><td class="hotel-ok">✅ 已买</td></tr>
+        <tr><td>🛡 旅游保险</td><td>全程</td><td>¥200/人 × 2</td><td class="num">¥400</td><td class="hotel-ok">✅ 已买</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>全程交通方案明细</h3>
+      <table>
+        <tr><th>分类</th><th>区段</th><th>方式</th><th>时间/费用</th></tr>
+        <tr><td>🚌 本地交通</td><td>旧金山市内</td><td>292 → 30 公交进城</td><td>D1 不租车 · 约 1h</td></tr>
+        <tr><td>🚗 大交通</td><td>SF → LA</td><td>自驾1号公路</td><td>3天 · 油费 $80–120</td></tr>
+        <tr><td>🚗 大交通</td><td>租车</td><td>Alamo SF→LAX · 9/26–9/30</td><td>已订 ¥2,000 + 油费</td></tr>
+        <tr><td>✈️ 大交通</td><td>LA → 华盛顿</td><td>AA591 已定</td><td>LAX → DCA 罗纳德·里根</td></tr>
+        <tr><td>🚌 本地交通</td><td>华盛顿市内</td><td>地铁+步行</td><td>国家广场步行可达</td></tr>
+        <tr><td>🚌 大交通</td><td>DC → 纽约</td><td>大巴 · 10/2 12:00</td><td>约 4.5h · 已订 ¥440</td></tr>
+        <tr><td>🚌 本地交通</td><td>纽约市内</td><td>NJ Transit + 地铁（7日卡×2）</td><td>约 $72</td></tr>
+        <tr><td>🚌 大交通</td><td>纽约 → 波士顿</td><td>大巴 · 10/5 07:00</td><td>约 4.25h · 已订 ¥430</td></tr>
+        <tr><td>🚌 本地交通</td><td>波士顿 → BOS</td><td>Silver Line SL1 / Uber</td><td>洛根国际机场 · 约 30min</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 门票 -->
+  <section id="tickets">
+    <div class="h2">🎫 已定门票</div>
+    <div class="overview compact">
+      已订 4 项 · 国会 + 盖蒂 + 纪念碑登顶 + 自由女神 <b>$52</b><br>
+      订单  ·  ·  · 
+    </div>
+    <div class="panel">
+      <table>
+        <tr><th>日期</th><th>景点</th><th>时间</th><th>人数</th><th>状态</th><th class="num">费用</th><th>行程日</th></tr>
+        <tr><td>9/29</td><td>盖蒂中心 Center Admission</td><td><b>12:30 PM</b></td><td>2</td><td>—</td><td class="num">免费</td><td>D5</td></tr>
+        <tr><td>10/1</td><td>国会大厦导览 Capitol Tour</td><td><b>10:40 AM</b></td><td>2</td><td>—</td><td class="num">免费</td><td>D7</td></tr>
+        <tr><td>10/1</td><td>华盛顿纪念碑登顶 Monument Tour</td><td><b>12:30 PM</b></td><td>2</td><td>—</td><td class="num">代理已订</td><td>D7</td></tr>
+        <tr><td>10/3</td><td>自由女神 Reserve with Pedestal</td><td><b>10:00 AM</b></td><td>2</td><td>—</td><td class="num">$52</td><td>D9</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 预订 -->
+  <section id="book">
+    <div class="h2">📋 提前预订清单（按紧急程度）</div>
+    <div class="panel" style="margin-bottom:1rem">
+      <h3>📅 待预约提醒（2 项未订）</h3>
+      <table class="book">
+        <tr><th>⏰ 提醒日</th><th>景点</th><th>参观日 · 建议时段</th><th>渠道</th><th>费用</th></tr>
+        <tr><td class="urgent"><b>9/1 晚 8 点</b><br><span style="font-weight:normal;font-size:.85em">美东 8:00 AM 放票</span></td><td>航空航天博物馆</td><td>D7 · 10/1 · <b>14:00</b> 入场</td><td><a href="https://airandspace.si.edu/visit/museum-dc" target="_blank">airandspace.si.edu</a></td><td>免费 · 30 天前抢</td></tr>
+        <tr><td><b>现在可约</b></td><td>大都会 The Met</td><td>D10 · 10/4 · <b>10:00</b></td><td><a href="https://www.metmuseum.org/visit/buy-tickets" target="_blank">metmuseum.org</a></td><td>约 $30/人</td></tr>
+      </table>
+      <p class="note note-after">航空航天馆 <b>必须</b> timed pass；大都会 <b>强烈建议</b> 预购 timed ticket。QR 码截图保存。</p>
+    </div>
+    <div class="panel">
+      <table class="book">
+        <tr><th>优先级</th><th>项目</th><th>预订渠道</th><th>提前时间</th><th>参考价格</th></tr>
+        <tr><td class="hotel-ok">✅ 无需</td><td>Crypto.com Arena · 9/29 无赛无 Tour · 仅外观</td><td>—</td><td>—</td><td>免费</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>租车 Alamo SF→LAX · 9/26–9/30</td><td>平台已确认</td><td>—</td><td>¥2,000</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>大巴 DC→NY（10/2）+ NY→Boston（10/5）</td><td>平台已确认</td><td>—</td><td>¥870</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>全程 11 晚酒店（含香港丽豪航天城 · 见「酒店」栏目）</td><td>平台已确认</td><td>—</td><td>¥10,230</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>国会大厦导览 Capitol Tour · 10/1 10:40 · 2人</td><td>visitthecapitol.gov · 见门票栏目</td><td>—</td><td>免费</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>自由女神 Reserve with Pedestal · 10/3 10:00 · 2人</td><td>statuecruises.com · 见门票栏目</td><td>—</td><td>$52</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>盖蒂中心 Center Admission · 9/29 12:30 · 2人</td><td>tickets.getty.edu</td><td>—</td><td>免费 · 停车 $25 现场</td></tr>
+        <tr><td class="hotel-ok">✅ 已订</td><td>华盛顿纪念碑登顶 · 10/1 12:30 · 2人</td><td>代理出票 · </td><td>—</td><td>代理已订</td></tr>
+        <tr><td class="hotel-ok">✅ 已买</td><td>电话 + 流量卡 · 覆盖全程 · <b>2 人合计</b></td><td>已购</td><td>—</td><td>¥280</td></tr>
+        <tr><td class="hotel-ok">✅ 已买</td><td>旅游保险 · ¥200/人 × 2</td><td>已购</td><td>—</td><td>¥400</td></tr>
+        <tr><td class="urgent">🔴 立刻</td><td>租车取还核对（满油/刮痕拍照）</td><td>Alamo · 见交通记录</td><td>出发前</td><td>油费另计</td></tr>
+        <tr><td>🟡 待约</td><td>航空航天馆 timed pass · D7 10/1 14:00 · <b>9/1 20:00 抢</b></td><td><a href="https://airandspace.si.edu/visit/museum-dc">airandspace.si.edu</a></td><td>30 天前 8AM ET</td><td>免费</td></tr>
+        <tr><td>🟡 待约</td><td>大都会 The Met · D10 10/4 10:00</td><td><a href="https://www.metmuseum.org/visit/buy-tickets">metmuseum.org</a></td><td>现在可约</td><td>约 $30/人</td></tr>
+        <tr><td>🟡 尽快</td><td>Top of the Rock 夜景 · D8 10/2 19:30</td><td>rockefellercenter.com</td><td>1–2 周</td><td>$40–50/人</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 预算 -->
+  <section id="budget">
+    <div class="h2">💰 预算</div>
+    <div class="panel">
+      <h3>费用估算（2 人总计 · 美元 + 人民币）</h3>
+      <p class="note">已出票项按人民币原价；当地消费按<b>保守价</b>估算，人民币按 <b>1 USD ≈ ¥7.2</b> 换算 · 餐饮以酒店自助当早午饭为主，外食仅简餐 · 明细见表下</p>
+      <table>
+        <tr><th>项目</th><th>说明</th><th class="num">美元 USD</th><th class="num">人民币 CNY</th></tr>
+        <tr><td colspan="4" style="font-weight:700;padding-top:.5rem">已出票 / 已订（固定）</td></tr>
+        <tr><td>国际机票（2 人）</td><td>国泰联程 · 已出票</td><td class="num">≈ $3,333</td><td class="num">¥24,000</td></tr>
+        <tr><td>住宿（11 晚）</td><td>7 家 · 已订（含香港丽豪航天城 ¥680）</td><td class="num">≈ $1,421</td><td class="num">¥10,230</td></tr>
+        <tr><td>租车</td><td>Alamo SF→LAX · 4 天</td><td class="num">≈ $278</td><td class="num">¥2,000</td></tr>
+        <tr><td>大巴</td><td>DC→NY + NY→Boston</td><td class="num">≈ $121</td><td class="num">¥870</td></tr>
+        <tr><td>自由女神门票</td><td>Reserve with Pedestal · 10/3 10:00 · 2人 · 已订</td><td class="num">$52</td><td class="num">¥374</td></tr>
+        <tr><td>电话 + 流量卡</td><td>已买 · <b>2 人合计</b> · 覆盖全程 9/24–10/7</td><td class="num">≈ $39</td><td class="num">¥280</td></tr>
+        <tr><td>旅游保险</td><td>已买 · ¥200/人 × 2</td><td class="num">≈ $56</td><td class="num">¥400</td></tr>
+        <tr class="total"><td colspan="2">已付小计</td><td class="num"><b>≈ $5,299</b></td><td class="num"><b>¥38,154</b></td></tr>
+        <tr><td colspan="4" style="font-weight:700;padding-top:.5rem">当地另付（保守估）</td></tr>
+        <tr><td>油费 + 停车</td><td>SF→LA 油 ~$70 · 17-Mile $12 · McWay $10 · 盖蒂 $25 · LA 公停 ~$35</td><td class="num">$110–150</td><td class="num">¥790–1,080</td></tr>
+        <tr><td>餐饮</td><td>自助当早午饭 · 外食仅 D1/D5/D11 及饿了简餐</td><td class="num">$220–350</td><td class="num">¥1,580–2,520</td></tr>
+        <tr><td>门票 / 活动</td><td>Met $60 + Rock $80 · 17-Mile/McWay 已计上栏 · 叮当车 $16 可选</td><td class="num">$140–156</td><td class="num">¥1,010–1,120</td></tr>
+        <tr><td>市内交通 / 杂费</td><td>NY 7 日地铁 ×2 $66 · DC 地铁 ~$20 · Uber ~$80 · 小费 ~$90（流量卡已计入已付）</td><td class="num">$235–295</td><td class="num">¥1,690–2,120</td></tr>
+        <tr class="total"><td colspan="2">当地另付小计</td><td class="num"><b>$705–955</b></td><td class="num"><b>¥5,070–6,870</b></td></tr>
+        <tr class="total total-grand"><td colspan="2">全程总计（含机票）</td><td class="num"><b>≈ $6,004–6,254</b></td><td class="num"><b>≈ ¥43,220–45,020</b></td></tr>
+      </table>
+      <p class="note note-after"><b>保守假设：</b>比佛利不用 valet 改公停；<b>仅 Sirtaj 无早餐</b>，其余自助当早午饭，外食从简；Rock $40/人；国会/航空/盖蒂入馆均免费。女神 $52、电话流量卡 ¥280（2人合计）、保险 ¥400、香港丽豪航天城 ¥680 已计入已付。</p>
+    </div>
+  </section>
+
+  <!-- 贴士 -->
+  <section id="tips">
+    <div class="h2">💡 实用贴士</div>
+    <div class="panel panel-spaced" id="photos">
+      <h3>📸 必拍机位 Top 15</h3>
+      <p class="lead">人像 + 景色合照优先；行程对应站点已标 <b>📸#N</b>。</p>
+      <table>
+        <tr><th>#</th><th>机位</th><th>哪天</th><th>怎么拍</th></tr>
+        <tr><td>1</td><td>金门大桥 Vista Point</td><td>D1 17:30</td><td>南岸观景台，日落侧脸或背影，整桥入镜</td></tr>
+        <tr><td>2</td><td>九曲花街 Hyde 顶</td><td>D2 09:50</td><td>从 Hyde 顶俯拍弯道，叮当车扫进画面</td></tr>
+        <tr><td>3</td><td>艺术宫圆柱廊</td><td>D2 10:15</td><td>柱廊框人，湖面倒影</td></tr>
+        <tr><td>4</td><td>彩绘女士 Alamo Square</td><td>D2 11:00</td><td>草坡对面，六栋彩楼 + 天际线</td></tr>
+        <tr><td>5</td><td>Bixby Creek Bridge</td><td>D3 09:00</td><td>北侧观景台，拱桥 + 太平洋</td></tr>
+        <tr><td>6</td><td>McWay Falls 崖顶</td><td>D3 12:00</td><td>步道终点俯拍，瀑布直入海</td></tr>
+        <tr><td>7</td><td>盖蒂中心中央花园</td><td>D5 12:30</td><td>出馆后平台 / 花园，建筑 + LA 远景</td></tr>
+        <tr><td>8</td><td>格里菲斯天文台</td><td>D5 17:15</td><td>西侧看 Sign，入夜后改朝市区灯海</td></tr>
+        <tr><td>9</td><td>林肯纪念堂台阶 → 反思池</td><td>D7 17:15</td><td>潮汐湖一路向西 · 日落 · 坐像 + 尖碑</td></tr>
+        <tr><td>10</td><td>白宫北草坪外景</td><td>D7 13:15</td><td>纪念碑北侧步行 10min · 小绕</td></tr>
+        <tr><td>11</td><td>Top of the Rock</td><td>D8 19:30</td><td>帝国大厦居中，曼哈顿夜景</td></tr>
+        <tr><td>12</td><td>自由女神渡轮甲板</td><td>D9 10:00</td><td>去程船侧，女神 + 曼哈顿天际线</td></tr>
+        <tr><td>13</td><td>DUMBO Washington St</td><td>D9 16:00</td><td>桥拱下，曼哈顿做背景</td></tr>
+        <tr><td>14</td><td>中央公园 Bow Bridge</td><td>D10 09:30</td><td>桥身弧线 + 湖面 + 远处楼</td></tr>
+        <tr><td>15</td><td>布鲁克林大桥木栈道</td><td>D9 15:00</td><td>步行中段，钢索 + 曼哈顿天际线</td></tr>
+      </table>
+    </div>
+    <div class="grid3">
+      <div class="panel"><h3>🍽 吃饭原则</h3>
+        <p class="lead">仅 <b>Sirtaj 比佛利无早餐</b>，其余酒店自助尽量吃饱当早午饭。白天以走为主，饿了再买三明治/In-N-Out。D5 无早需简餐；D11 太早赶不上自助，昆西当正餐。</p></div>
+      <div class="panel"><h3>🛂 证件 & 签证</h3>
+        <p class="lead">赴美 B1/B2 签证 · 国际驾照（IDP）+ 中国驾照 · 信用卡（租车押金）· <b>港澳通行证</b>（D0 香港过夜需出关） · ✅ 旅游保险已买（¥200/人）</p></div>
+      <div class="panel"><h3>🕐 时差</h3>
+        <p class="lead">美西 UTC-7（比北京慢15h）· 美东 UTC-4（慢12h）· 前2天倒时差 · 10/5 凌晨航班注意白天不要睡太多</p></div>
+      <div class="panel"><h3>🌡 穿衣（按现有衣橱）</h3>
+        <p class="lead">按现有衣橱排造型，衣服已带齐。<a href="#pack">↓ 按你的衣服排的画像</a></p></div>
+      <div class="panel"><h3>🚗 一号公路自驾</h3>
+        <p class="lead">北向南 · 分段导航 · Big Sur 前满油 · 离线地图 · <a href="https://quickmap.dot.ca.gov/" target="_blank">Caltrans 路况</a> · 17-Mile Drive 门票 $12</p></div>
+      <div class="panel"><h3>📱 通讯</h3>
+        <p class="lead">✅ 电话+流量卡已买 <b>¥280（2 人合计）</b> · 覆盖全程 9/24–10/7 · 一号公路 Big Sur 段仍可能无信号，提前下载离线地图</p></div>
+      <div class="panel"><h3>💵 小费文化</h3>
+        <p class="lead">餐厅 18–20% · 酒吧 $1/杯 · 网约车 10–15% · 酒店行李 $2/件 · 停车 valet $2–5</p></div>
+    </div>
+
+    <div class="h3" id="pack" style="margin-top:28px">👕 衣服画像 · 按你现有衣橱</div>
+    <div class="overview compact">
+      衬衫<b>全部是短袖</b>，洛杉矶单穿可以；华盛顿/纽约/波士顿 13–23℃，<b>衬衫当内搭，外面必须叠牛仔衣或抓绒</b>，不能只穿衬衫出门。薄防风已带，金门日落、Bixby、女神渡轮、洛克菲勒套最外。<br>
+      <b>D1–D2 已定同一套：</b>黑短袖 + 牛仔衣 + 黑色紧身牛仔裤 + 黑鞋。<b>D3 与华盛顿已定同一套：</b>黑色迪桑特上衣 + 白色休闲裤 + 黑鞋（风大套抓绒）。<b>D4–D5 已定同一套：</b>米黄衬衫 + 白裤子 + 绿鞋（D4 早上冷，车上套抓绒）。<b>D8 晚时代广场已定：</b>黑灰色拼接外套 + 蓝灰色牛仔裤 + 黑鞋。<b>D9 与 D10 已定同一套：</b>黑色卫衣 + 米咖色宽松休闲裤 + 黑鞋（走两天更舒服；渡轮薄防风最外）。<b>D11 波士顿独立一套：</b>红色针织衫 + 白色裤子 + 绿鞋（清晨抓绒套外面）。白休闲裤 D3、D4–D5、D7、D11；蓝灰牛仔裤只给 D8 晚；米咖宽松裤 D9–D10；<b>绿鞋</b>给 D4–D5、D11；<b>黑鞋</b>给 D1–D3、华盛顿、D8–D10。
+    </div>
+    <div class="spot-subhead" style="border-left-color:var(--west);color:var(--west)">美西</div>
+    <div class="wear-grid">
+      <div class="wear w">
+        <div class="who">造型 1 · 旧金山两天</div>
+        <h4>黑短袖 + 牛仔衣 + 黑色紧身牛仔裤 + 黑鞋</h4>
+        <div class="bits">黑 Tee · 薄牛仔衣 · 黑色紧身牛仔裤（已定）· 抓绒塞包，日落风大再套上</div>
+        <p>渔人码头、金门、次日唐人街、叮当车、九曲花街、彩绘女士、取车南下到 17-Mile，两天不换。黑 + 牛仔对橙红桥和维多利亚楼都够用。日落和 17-Mile 傍晚风大，抓绒叠在牛仔衣外，不要只剩短袖。</p>
+        <div class="when">D1–D2 旧金山 · 已定同一套</div>
+      </div>
+      <div class="wear w">
+        <div class="who">造型 2 · 大苏尔公路</div>
+        <h4>黑色迪桑特上衣 + 白色休闲裤 + 黑鞋</h4>
+        <div class="bits">黑色迪桑特 · 白色休闲裤 · 黑鞋 · 已定 · 和华盛顿同一套 · 观景台套抓绒</div>
+        <p>Bixby、McWay、象海豹。14–20℃ 崖边风硬，迪桑特单穿会凉，停车把抓绒套上。白裤尽量不坐泥地。这身收好，华盛顿 D7 再穿一次。</p>
+        <div class="when">D3 全天 · 已定 · 华盛顿再穿</div>
+      </div>
+      <div class="wear la">
+        <div class="who">造型 3 · 洛杉矶两天</div>
+        <h4>米黄衬衫 + 白裤子 + 绿鞋</h4>
+        <div class="bits">就这一身 · D4–D5 已定 · 不套牛仔衣 · D4 早上车上加抓绒</div>
+        <p>D4 圣巴巴拉、圣莫尼卡、Rodeo；D5 盖蒂、星光大道、格里菲斯。两天不换。D4 07:30 莫罗湾约 14℃，衬衫单穿会凉，抓绒上车再脱。D5 21–29℃ 可以单穿。格里菲斯风大外套拎手上。D6 还车别穿白裤，叠好留给华盛顿。</p>
+        <div class="when">D4–D5 · 已定同一套</div>
+      </div>
+    </div>
+    <div class="spot-subhead" style="border-left-color:var(--east);color:var(--east)">美东</div>
+    <div class="wear-grid">
+      <div class="wear e">
+        <div class="who">造型 5 · 华盛顿权力</div>
+        <h4>黑色迪桑特上衣 + 白色休闲裤 + 黑鞋</h4>
+        <div class="bits">和 D3 同一套 · 黑色迪桑特 · 白色休闲裤 · 黑鞋 · 14℃ 抓绒可套外面</div>
+        <p>国会 → 纪念碑 → 白宫小绕 → 航空馆 → 杰斐逊 → MLK → 林肯，单向不回头。馆内热了脱抓绒，里面仍是迪桑特。白裤 D3、D4–D5 已穿过，D6 还车不要穿，叠好给这天。广场草多，傍晚看一下裤脚。</p>
+        <div class="when">D7 华盛顿 · 已定 · D8 上午继续</div>
+      </div>
+      <div class="wear e">
+        <div class="who">造型 6 · 时代广场夜景</div>
+        <h4>黑灰色拼接外套 + 蓝灰色牛仔裤 + 黑鞋</h4>
+        <div class="bits">黑灰拼接外套 · 蓝灰牛仔裤 · 黑鞋 · 只穿 D8 晚 · 里面短袖即可</div>
+        <p>抵 Secaucus 放行李后换上：图书馆、第五大道、时代广场、Top of the Rock。观景台风大，拼接外套不要脱；薄防风可套最外。D9 不接着穿，改卫衣宽松裤走路。</p>
+        <div class="when">D8 晚 · 时代广场 · 已定</div>
+      </div>
+      <div class="wear e">
+        <div class="who">造型 7 · 纽约走两天</div>
+        <h4>黑色卫衣 + 米咖色宽松休闲裤 + 黑鞋</h4>
+        <div class="bits">黑色卫衣 · 米咖宽松休闲裤 · 黑鞋 · D9 与 D10 已定同一套</div>
+        <p>D9 女神渡轮、华尔街、布鲁克林大桥、DUMBO；D10 联合国、中央公园、Met、高线、Vessel。宽松裤走一天更舒服。渡轮薄防风套卫衣外；Met 馆内热了可脱卫衣。红针织、绿鞋留给波士顿。</p>
+        <div class="when">D9–D10 · 已定同一套</div>
+      </div>
+      <div class="wear e">
+        <div class="who">造型 8 · 波士顿学院</div>
+        <h4>红色针织衫 + 白色裤子 + 绿鞋</h4>
+        <div class="bits">深红针织 · 白色休闲裤 · 绿鞋 · 独立一套 · 不穿拼接外套</div>
+        <p>自由之路、哈佛、MIT。和纽约那两天拆开，不套拼接外套。05:30 约 10℃，抓绒套针织外，薄防风可再加。凌晨登机同套，机上针织当空调衫。备伞。</p>
+        <div class="when">D11 波士顿 · 已定 · 独立一套</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>美国东西海岸 14 天完整攻略 · 美西 5 天 + 美东 5 天 · 祝旅途愉快 🎒<br>行程可视化网页版</footer>
+
+</div>
+<script>
+(function(){
+  var KIND={
+    sight:{icon:'📍',label:'景点'},
+    move:{icon:'🚗',label:'大交通'},
+    fly:{icon:'✈️',label:'飞行'},
+    local:{icon:'🚌',label:'本地交通'},
+    food:{icon:'🍽',label:'吃饭'},
+    stay:{icon:'🏨',label:'住宿'},
+    rest:{icon:'☕',label:'休息'}
+  };
+  document.querySelectorAll('.timeline .tl-card[data-img]').forEach(function(card){
+    if(card.classList.contains('has-img'))return;
+    var imgFile=card.getAttribute('data-img');
+    if(!imgFile)return;
+    card.classList.add('has-img');
+    var media=document.createElement('figure');
+    media.className='tl-card-media';
+    var img=document.createElement('img');
+    img.src='images/'+imgFile;
+    img.alt=(card.querySelector('b')&&card.querySelector('b').textContent||'').slice(0,48);
+    img.loading='lazy';
+    if(card.getAttribute('data-img-fit'))img.classList.add(card.getAttribute('data-img-fit'));
+    media.appendChild(img);
+    var body=document.createElement('div');
+    body.className='tl-card-body';
+    while(card.firstChild)body.appendChild(card.firstChild);
+    card.appendChild(body);
+    card.appendChild(media);
+  });
+  document.querySelectorAll('.timeline .tl-item[data-kind]').forEach(function(item){
+    var meta=KIND[item.getAttribute('data-kind')];
+    if(!meta)return;
+    var host=item.querySelector('.tl-card-body')||item.querySelector('.tl-card');
+    if(!host||host.querySelector('.tl-kind'))return;
+    var chip=document.createElement('span');
+    chip.className='tl-kind';
+    chip.textContent=meta.icon+' '+meta.label;
+    host.insertBefore(chip, host.firstChild);
+  });
+})();
+</script>
+<script>
+(function(){
+  var nav=document.querySelector('.nav');
+  if(!nav)return;
+  var docs=[].slice.call(nav.querySelectorAll('[data-nav="doc"]'));
+  var cities=[].slice.call(nav.querySelectorAll('[data-nav="city"]'));
+  var days=[].slice.call(nav.querySelectorAll('[data-nav="day"]'));
+  var targets=[].slice.call(document.querySelectorAll('section[id], .day[id]'));
+  var lastId='';
+  function setNavH(){
+    document.documentElement.style.setProperty('--nav-h', (nav.offsetHeight+10)+'px');
+  }
+  function intoView(el){
+    if(!el || !el.parentElement) return;
+    var box=el.parentElement;
+    var mid=el.offsetLeft - box.clientWidth/2 + el.offsetWidth/2;
+    box.scrollTo({left:Math.max(0,mid), behavior:'smooth'});
+  }
+  function mark(list, el){
+    list.forEach(function(a){ a.classList.toggle('on', a===el); });
+  }
+  function sync(){
+    var y=nav.offsetHeight+6;
+    var cur=null;
+    for(var i=0;i<targets.length;i++){
+      if(targets[i].getBoundingClientRect().top<=y) cur=targets[i];
+    }
+    if(!cur) return;
+    var id=cur.id;
+    if(id==='west') id='d0';
+    if(id==='east') id='d7';
+    var isDay=/^d\d+$/.test(id);
+    mark(docs, isDay ? null : docs.filter(function(a){return a.getAttribute('href')==='#'+id;})[0]||null);
+    var dayEl=isDay ? days.filter(function(a){return a.getAttribute('data-day')===id;})[0] : null;
+    mark(days, dayEl||null);
+    var lastCity=null;
+    cities.forEach(function(a){
+      var hit=isDay && (','+(a.getAttribute('data-days')||'')+',').indexOf(','+id+',')>=0;
+      a.classList.toggle('on', hit);
+      if(hit) lastCity=a;
+    });
+    if(id!==lastId){
+      lastId=id;
+      if(dayEl) intoView(dayEl);
+      if(lastCity) intoView(lastCity);
+    }
+  }
+  setNavH();
+  sync();
+  window.addEventListener('scroll', sync, {passive:true});
+  window.addEventListener('resize', function(){ setNavH(); sync(); });
+})();
+</script>
+<script src="vendor/leaflet.js"></script>
+<script src="maps.js"></script>
+</body>
+</html>

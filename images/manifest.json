@@ -1,0 +1,394 @@
+[
+  {
+    "file": "17_mile_drive.jpg",
+    "source": "pexels",
+    "ref": "18437947",
+    "url": "https://images.pexels.com/photos/18437947/pexels-photo-18437947.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 440604
+  },
+  {
+    "file": "air_space_museum.jpg",
+    "source": "pexels",
+    "ref": "31413815",
+    "url": "https://images.pexels.com/photos/31413815/pexels-photo-31413815.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 226541
+  },
+  {
+    "file": "airplane_window.jpg",
+    "source": "pexels",
+    "ref": "19095698",
+    "url": "https://images.pexels.com/photos/19095698/pexels-photo-19095698.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 167686
+  },
+  {
+    "file": "bixby_bridge.jpg",
+    "source": "pexels",
+    "ref": "14120214",
+    "url": "https://images.pexels.com/photos/14120214/pexels-photo-14120214.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 203972
+  },
+  {
+    "file": "broadway.jpg",
+    "source": "pexels",
+    "ref": "33619978",
+    "url": "https://images.pexels.com/photos/33619978/pexels-photo-33619978.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 416789
+  },
+  {
+    "file": "brooklyn_bridge.jpg",
+    "source": "pexels",
+    "ref": "35491606",
+    "url": "https://images.pexels.com/photos/35491606/pexels-photo-35491606.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 181663
+  },
+  {
+    "file": "carmel.jpg",
+    "source": "pexels",
+    "ref": "19453485",
+    "url": "https://images.pexels.com/photos/19453485/pexels-photo-19453485.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 364238
+  },
+  {
+    "file": "central_park.jpg",
+    "source": "pexels",
+    "ref": "24589242",
+    "url": "https://images.pexels.com/photos/24589242/pexels-photo-24589242.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 179756
+  },
+  {
+    "file": "chinatown_sf.jpg",
+    "source": "pexels",
+    "ref": "35476938",
+    "url": "https://images.pexels.com/photos/35476938/pexels-photo-35476938.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 183364
+  },
+  {
+    "file": "crypto_arena.jpg",
+    "source": "unsplash",
+    "ref": "cBWgXg-hYNs",
+    "url": "https://unsplash.com/photos/cBWgXg-hYNs/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 257644
+  },
+  {
+    "file": "elephant_seal.jpg",
+    "source": "pexels",
+    "ref": "36086718",
+    "url": "https://images.pexels.com/photos/36086718/pexels-photo-36086718.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 168703
+  },
+  {
+    "file": "empire_state.jpg",
+    "source": "pexels",
+    "ref": "290120",
+    "url": "https://images.pexels.com/photos/290120/pexels-photo-290120.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 374696
+  },
+  {
+    "file": "fifth_avenue.jpg",
+    "source": "pexels",
+    "ref": "20004399",
+    "url": "https://images.pexels.com/photos/20004399/pexels-photo-20004399.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 177509
+  },
+  {
+    "file": "fishermans_wharf.jpg",
+    "source": "pexels",
+    "ref": "5447709",
+    "url": "https://images.pexels.com/photos/5447709/pexels-photo-5447709.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 172934
+  },
+  {
+    "file": "freedom_trail.jpg",
+    "source": "pexels",
+    "ref": "28916296",
+    "url": "https://images.pexels.com/photos/28916296/pexels-photo-28916296.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 432035
+  },
+  {
+    "file": "getty_center.jpg",
+    "source": "unsplash",
+    "ref": "5SxtqlB7veY",
+    "url": "https://unsplash.com/photos/5SxtqlB7veY/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 305302
+  },
+  {
+    "file": "golden_gate.jpg",
+    "source": "pexels",
+    "ref": "208745",
+    "url": "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 130636
+  },
+  {
+    "file": "griffith_observatory.jpg",
+    "source": "pexels",
+    "ref": "35104147",
+    "url": "https://images.pexels.com/photos/35104147/pexels-photo-35104147.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 143527
+  },
+  {
+    "file": "half_moon_bay.jpg",
+    "source": "pexels",
+    "ref": "35527571",
+    "url": "https://images.pexels.com/photos/35527571/pexels-photo-35527571.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 283036
+  },
+  {
+    "file": "harvard.jpg",
+    "source": "pexels",
+    "ref": "18394016",
+    "url": "https://images.pexels.com/photos/18394016/pexels-photo-18394016.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 452128
+  },
+  {
+    "file": "high_line.jpg",
+    "source": "pexels",
+    "ref": "17626428",
+    "url": "https://images.pexels.com/photos/17626428/pexels-photo-17626428.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 129593
+  },
+  {
+    "file": "hollywood_sign.jpg",
+    "source": "unsplash",
+    "ref": "r3IiT4BaZB8",
+    "url": "https://unsplash.com/photos/r3IiT4BaZB8/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 210091
+  },
+  {
+    "file": "hong_kong.jpg",
+    "source": "pexels",
+    "ref": "31013534",
+    "url": "https://images.pexels.com/photos/31013534/pexels-photo-31013534.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 273843
+  },
+  {
+    "file": "jefferson_memorial.jpg",
+    "source": "pexels",
+    "ref": "37298770",
+    "url": "https://images.pexels.com/photos/37298770/pexels-photo-37298770.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 83929
+  },
+  {
+    "file": "la_skyline.jpg",
+    "source": "pexels",
+    "ref": "8319465",
+    "url": "https://images.pexels.com/photos/8319465/pexels-photo-8319465.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 204904
+  },
+  {
+    "file": "lincoln_memorial.jpg",
+    "source": "pexels",
+    "ref": "7711475",
+    "url": "https://images.pexels.com/photos/7711475/pexels-photo-7711475.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 118998
+  },
+  {
+    "file": "lombard_street.jpg",
+    "source": "pexels",
+    "ref": "6655184",
+    "url": "https://images.pexels.com/photos/6655184/pexels-photo-6655184.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 178744
+  },
+  {
+    "file": "mcway_falls.jpg",
+    "source": "pexels",
+    "ref": "32476257",
+    "url": "https://images.pexels.com/photos/32476257/pexels-photo-32476257.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 356961
+  },
+  {
+    "file": "memorial_911.jpg",
+    "source": "pexels",
+    "ref": "34843213",
+    "url": "https://images.pexels.com/photos/34843213/pexels-photo-34843213.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 419178
+  },
+  {
+    "file": "mit.jpg",
+    "source": "unsplash",
+    "ref": "9MByoiBNN1c",
+    "url": "https://unsplash.com/photos/9MByoiBNN1c/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 696487
+  },
+  {
+    "file": "national_gallery.jpg",
+    "source": "pexels",
+    "ref": "236691",
+    "url": "https://images.pexels.com/photos/236691/pexels-photo-236691.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 241541
+  },
+  {
+    "file": "natural_history_museum.jpg",
+    "source": "pexels",
+    "ref": "16230736",
+    "url": "https://images.pexels.com/photos/16230736/pexels-photo-16230736.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 426667
+  },
+  {
+    "file": "ny_public_library.jpg",
+    "source": "pexels",
+    "ref": "34843215",
+    "url": "https://images.pexels.com/photos/34843215/pexels-photo-34843215.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 395518
+  },
+  {
+    "file": "painted_ladies.jpg",
+    "source": "pexels",
+    "ref": "37091012",
+    "url": "https://images.pexels.com/photos/37091012/pexels-photo-37091012.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 225431
+  },
+  {
+    "file": "palace_of_fine_arts.jpg",
+    "source": "pexels",
+    "ref": "36705123",
+    "url": "https://images.pexels.com/photos/36705123/pexels-photo-36705123.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 432975
+  },
+  {
+    "file": "quincy_market.jpg",
+    "source": "pexels",
+    "ref": "28766481",
+    "url": "https://images.pexels.com/photos/28766481/pexels-photo-28766481.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 313906
+  },
+  {
+    "file": "rodeo_drive.jpg",
+    "source": "unsplash",
+    "ref": "Eosig9eYM6w",
+    "url": "https://unsplash.com/photos/Eosig9eYM6w/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 547890
+  },
+  {
+    "file": "santa_barbara.jpg",
+    "source": "pexels",
+    "ref": "31049333",
+    "url": "https://images.pexels.com/photos/31049333/pexels-photo-31049333.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 381946
+  },
+  {
+    "file": "santa_monica.jpg",
+    "source": "pexels",
+    "ref": "32521888",
+    "url": "https://images.pexels.com/photos/32521888/pexels-photo-32521888.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 265572
+  },
+  {
+    "file": "statue_of_liberty.jpg",
+    "source": "pexels",
+    "ref": "14325544",
+    "url": "https://images.pexels.com/photos/14325544/pexels-photo-14325544.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 61581
+  },
+  {
+    "file": "the_met.jpg",
+    "source": "pexels",
+    "ref": "14501441",
+    "url": "https://images.pexels.com/photos/14501441/pexels-photo-14501441.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 356094
+  },
+  {
+    "file": "the_vessel.jpg",
+    "source": "pexels",
+    "ref": "5759270",
+    "url": "https://images.pexels.com/photos/5759270/pexels-photo-5759270.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 305880
+  },
+  {
+    "file": "times_square.jpg",
+    "source": "pexels",
+    "ref": "3414533",
+    "url": "https://images.pexels.com/photos/3414533/pexels-photo-3414533.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 211417
+  },
+  {
+    "file": "top_of_the_rock.jpg",
+    "source": "pexels",
+    "ref": "27283281",
+    "url": "https://images.pexels.com/photos/27283281/pexels-photo-27283281.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 270393
+  },
+  {
+    "file": "united_nations.jpg",
+    "source": "wiki",
+    "ref": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/UNHQ_NYC.jpg/1280px-UNHQ_NYC.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/UNHQ_NYC.jpg/1280px-UNHQ_NYC.jpg",
+    "status": "OK",
+    "bytes": 605184
+  },
+  {
+    "file": "us_capitol.jpg",
+    "source": "pexels",
+    "ref": "28279113",
+    "url": "https://images.pexels.com/photos/28279113/pexels-photo-28279113.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 141157
+  },
+  {
+    "file": "walk_of_fame.jpg",
+    "source": "unsplash",
+    "ref": "dmHp6Np9Gmk",
+    "url": "https://unsplash.com/photos/dmHp6Np9Gmk/download?force=true&w=1200",
+    "status": "OK",
+    "bytes": 406371
+  },
+  {
+    "file": "wall_street.jpg",
+    "source": "pexels",
+    "ref": "23439083",
+    "url": "https://images.pexels.com/photos/23439083/pexels-photo-23439083.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 310272
+  },
+  {
+    "file": "white_house.jpg",
+    "source": "pexels",
+    "ref": "129112",
+    "url": "https://images.pexels.com/photos/129112/pexels-photo-129112.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "status": "OK",
+    "bytes": 245530
+  }
+]
