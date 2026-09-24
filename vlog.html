@@ -96,6 +96,22 @@
 
   /* ── 表格 ── */
   table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+
+  /* 表格横向滚动容器（脚本自动包裹所有 table） */
+  .tw{overflow-x:auto;overflow-y:visible;margin:0 0 12px;-webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#c3ccd8 #f1f5f9}
+  .tw>table{margin:0}
+  .tw::-webkit-scrollbar{height:10px}
+  .tw::-webkit-scrollbar-track{background:#f1f5f9;border-radius:6px}
+  .tw::-webkit-scrollbar-thumb{background:#c3ccd8;border-radius:6px;border:2px solid #f1f5f9}
+  .tw::-webkit-scrollbar-thumb:hover{background:#9aa7b8}
+  .swipe-hint{display:none}
+  @media (max-width:900px){
+    .swipe-hint{display:block;font-size:11px;font-weight:700;color:var(--mute);
+      margin:-4px 0 14px;letter-spacing:.03em}
+  }
+  .ch-body .tw{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  @media print{.tw{overflow:visible!important}.tw>table{min-width:0!important}.swipe-hint{display:none}}
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   th{background:#f7f8fa;font-size:12.5px;font-weight:700;color:var(--sub);white-space:nowrap}
   td.tc{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:var(--sub)}
@@ -103,8 +119,9 @@
 
   /* ── 章节 ── */
   .ch{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-    box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
-  .ch-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;color:#fff}
+    box-shadow:var(--shadow);margin-bottom:16px}
+  .ch-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;color:#fff;
+    border-radius:calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0}
   .ch-head .idx{font-size:26px;font-weight:800;line-height:1;opacity:.55}
   .ch-head .ti{flex:1;min-width:0}
   .ch-head .ti b{font-size:17px;display:block;letter-spacing:.01em}
@@ -121,10 +138,11 @@
   .theme b{color:#7a5c17}
 
   /* 人文底料卡 */
-  .fact{margin:14px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .fact{margin:14px 0;border:1px solid var(--line);border-radius:8px}
   .fact-h{
     background:#eef1f5;padding:7px 14px;font-size:12.5px;font-weight:800;color:#334155;
     border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;
+    border-radius:7px 7px 0 0;
   }
   .fact-h i{font-style:normal;font-size:11px;font-weight:700;background:#334155;color:#fff;
     padding:1px 6px;border-radius:4px;letter-spacing:.06em}
@@ -995,6 +1013,49 @@
   美国 14 天 Vlog 拍摄剧本 · 20:00 成片 · 双人对话体 · 基于 9/24–10/7 真实行程生成<br>
   人文底料请以现场展签与官方导览为准，冲突时以现场为准 · 出发前请把「婚礼必拍 12 镜」抄进手机
 </footer>
+
+<script>
+/* 表格横向滚动：自动包裹 .tw + 按列数给最小宽度 + 解除祖先 overflow:hidden 裁剪 */
+(function(){
+  function cols(t){
+    var th=t.querySelectorAll('th');
+    if(th.length) return th.length;
+    var r=t.rows && t.rows[0];
+    return r ? r.cells.length : 3;
+  }
+  function unclip(el){
+    var p=el.parentElement;
+    while(p && p!==document.body && p!==document.documentElement){
+      var cs=getComputedStyle(p);
+      if(cs.overflowX==='hidden'||cs.overflowY==='hidden'||cs.overflow==='hidden'||cs.overflow==='clip'){
+        if(cs.overflowX!=='auto'&&cs.overflowX!=='scroll') p.style.overflow='visible';
+      }
+      p=p.parentElement;
+    }
+  }
+  function run(){
+    var ts=document.querySelectorAll('table');
+    for(var i=0;i<ts.length;i++){
+      var t=ts[i];
+      if(t.parentElement && t.parentElement.classList.contains('tw')) continue;
+      var d=document.createElement('div');
+      d.className='tw';
+      t.parentNode.insertBefore(d,t);
+      d.appendChild(t);
+      var n=cols(t);
+      t.style.minWidth=(n>=6?880:n>=5?740:n>=4?620:460)+'px';
+      var hint=document.createElement('div');
+      hint.className='swipe-hint';
+      hint.textContent='← 左右滑动查看完整表格 →';
+      if(d.nextSibling) d.parentNode.insertBefore(hint,d.nextSibling);
+      else d.parentNode.appendChild(hint);
+      unclip(d);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
+  else run();
+})();
+</script>
 
 </div>
 </body>

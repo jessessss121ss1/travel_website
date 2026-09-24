@@ -110,6 +110,22 @@
   .note-after{margin:8px 0 0}
 
   table{width:100%;border-collapse:collapse;font-size:13px}
+
+  /* 表格横向滚动容器（脚本自动包裹所有 table） */
+  .tw{overflow-x:auto;overflow-y:visible;margin:0 0 12px;-webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#c3ccd8 #f1f5f9}
+  .tw>table{margin:0}
+  .tw::-webkit-scrollbar{height:10px}
+  .tw::-webkit-scrollbar-track{background:#f1f5f9;border-radius:6px}
+  .tw::-webkit-scrollbar-thumb{background:#c3ccd8;border-radius:6px;border:2px solid #f1f5f9}
+  .tw::-webkit-scrollbar-thumb:hover{background:#9aa7b8}
+  .swipe-hint{display:none}
+  @media (max-width:900px){
+    .swipe-hint{display:block;font-size:11px;font-weight:700;color:#8b95a5;
+      margin:-4px 0 14px;letter-spacing:.03em}
+  }
+  .panel .tw{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+  @media print{.tw{overflow:visible!important}.tw>table{min-width:0!important}.swipe-hint{display:none}}
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
   th{
     color:var(--sub);font-weight:700;font-size:11px;text-transform:uppercase;
@@ -1924,6 +1940,48 @@
   sync();
   window.addEventListener('scroll', sync, {passive:true});
   window.addEventListener('resize', function(){ setNavH(); sync(); });
+})();
+</script>
+<script>
+/* 表格横向滚动：自动包裹 .tw + 按列数给最小宽度 + 解除祖先 overflow:hidden 裁剪 */
+(function(){
+  function cols(t){
+    var th=t.querySelectorAll('th');
+    if(th.length) return th.length;
+    var r=t.rows && t.rows[0];
+    return r ? r.cells.length : 3;
+  }
+  function unclip(el){
+    var p=el.parentElement;
+    while(p && p!==document.body && p!==document.documentElement){
+      var cs=getComputedStyle(p);
+      if(cs.overflowX==='hidden'||cs.overflowY==='hidden'||cs.overflow==='hidden'||cs.overflow==='clip'){
+        if(cs.overflowX!=='auto'&&cs.overflowX!=='scroll') p.style.overflow='visible';
+      }
+      p=p.parentElement;
+    }
+  }
+  function run(){
+    var ts=document.querySelectorAll('table');
+    for(var i=0;i<ts.length;i++){
+      var t=ts[i];
+      if(t.parentElement && t.parentElement.classList.contains('tw')) continue;
+      var d=document.createElement('div');
+      d.className='tw';
+      t.parentNode.insertBefore(d,t);
+      d.appendChild(t);
+      var n=cols(t);
+      t.style.minWidth=(n>=6?880:n>=5?740:n>=4?620:460)+'px';
+      var hint=document.createElement('div');
+      hint.className='swipe-hint';
+      hint.textContent='← 左右滑动查看完整表格 →';
+      if(d.nextSibling) d.parentNode.insertBefore(hint,d.nextSibling);
+      else d.parentNode.appendChild(hint);
+      unclip(d);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
+  else run();
 })();
 </script>
 <script src="vendor/leaflet.js"></script>
