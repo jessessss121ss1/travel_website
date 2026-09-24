@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美国 14 天 · Vlog 拍摄剧本（20 分钟 · 双人对话体 · 体验+人文向）</title>
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --card:#ffffff;
+    --ink:#16181d;
+    --sub:#5b6472;
+    --mute:#8b95a5;
+    --line:#e3e6ec;
+    --line2:#eef0f4;
+    --r:12px;
+    --doc:1080px;
+    --nav-h:110px;
+
+    --sf:#3f7ea8;   /* 旧金山 雾蓝 */
+    --hwy:#0f8a80;  /* 一号公路 海青 */
+    --la:#d98a1f;   /* 洛杉矶 落日金 */
+    --dc:#6b7280;   /* 华盛顿 石灰 */
+    --ny:#7c4dbe;   /* 纽约 霓虹紫 */
+    --bos:#b23b3b;  /* 波士顿 砖红 */
+    --gold:#8a6a2a;
+    --a:#2f6db5;    /* 说话人 A */
+    --b:#b5651d;    /* 说话人 B */
+    --shadow:0 1px 3px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.72;font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--doc);margin:0 auto;padding:0 20px}
+
+  /* ── Hero ── */
+  .hero{
+    background:linear-gradient(135deg,#1b2430 0%,#243447 45%,#3a2f2a 100%);
+    color:#fff;padding:44px 0 38px;position:relative;overflow:hidden;
+  }
+  .hero:after{
+    content:"";position:absolute;right:-80px;top:-60px;width:380px;height:380px;
+    background:radial-gradient(circle,rgba(217,138,31,.35),transparent 65%);
+  }
+  .hero h1{font-size:30px;letter-spacing:-.01em;line-height:1.3;position:relative;z-index:2}
+  .hero .sub{margin-top:10px;font-size:14px;color:#c9d2de;position:relative;z-index:2;max-width:780px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;position:relative;z-index:2}
+  .chip{
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+    padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600;
+  }
+  .chip b{color:#f0c274;font-weight:800}
+
+  /* ── Nav ── */
+  .nav{
+    position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;gap:6px;overflow-x:auto;padding:10px 0;align-items:center}
+  .nav a{
+    flex:0 0 auto;font-size:12.5px;color:var(--sub);text-decoration:none;
+    padding:6px 12px;border-radius:8px;border:1px solid var(--line);transition:.15s;
+  }
+  .nav a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .nav a.k{font-weight:700}
+
+  /* ── Sections ── */
+  section{padding:34px 0 6px}
+  h2{
+    font-size:20px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;
+    padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:18px;
+  }
+  h2 .num{
+    font-size:11px;font-weight:800;letter-spacing:.1em;color:#fff;background:var(--ink);
+    padding:3px 8px;border-radius:5px;
+  }
+  h3{font-size:16px;margin:22px 0 10px}
+  p{margin-bottom:10px}
+  .lead{color:var(--sub);font-size:14px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px}
+
+  /* ── 时长条 ── */
+  .bar{display:flex;height:38px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:6px 0 10px}
+  .bar div{
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:11.5px;
+    font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;
+  }
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;color:var(--sub)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+  /* ── 表格 ── */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f7f8fa;font-size:12.5px;font-weight:700;color:var(--sub);white-space:nowrap}
+  td.tc{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:var(--sub)}
+  tr:nth-child(even) td{background:#fcfcfd}
+
+  /* ── 章节 ── */
+  .ch{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+  .ch-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;color:#fff}
+  .ch-head .idx{font-size:26px;font-weight:800;line-height:1;opacity:.55}
+  .ch-head .ti{flex:1;min-width:0}
+  .ch-head .ti b{font-size:17px;display:block;letter-spacing:.01em}
+  .ch-head .ti span{font-size:12.5px;opacity:.85}
+  .ch-head .dur{
+    font-size:12.5px;font-weight:800;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.3);padding:4px 10px;border-radius:6px;white-space:nowrap;
+  }
+  .ch-body{padding:4px 20px 18px}
+  .theme{
+    background:#fbfaf7;border:1px solid #ede6d6;border-left:3px solid var(--gold);
+    padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13.5px;color:#5c4a26;
+  }
+  .theme b{color:#7a5c17}
+
+  /* 人文底料卡 */
+  .fact{margin:14px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .fact-h{
+    background:#eef1f5;padding:7px 14px;font-size:12.5px;font-weight:800;color:#334155;
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;
+  }
+  .fact-h i{font-style:normal;font-size:11px;font-weight:700;background:#334155;color:#fff;
+    padding:1px 6px;border-radius:4px;letter-spacing:.06em}
+  .fact table{font-size:12.8px;border:0}
+  .fact td{border:0;border-bottom:1px solid var(--line2)}
+  .fact tr:last-child td{border-bottom:0}
+  .fact td:first-child{font-weight:700;color:var(--ink);white-space:nowrap;width:120px;background:#fafbfc}
+
+  /* 上屏信息卡 */
+  .card-on-screen{
+    margin:12px 0;padding:11px 15px;background:#f8f9fb;border:1px solid var(--line);
+    border-left:3px solid #94a3b8;border-radius:0 8px 8px 0;font-size:13px;color:var(--sub);
+  }
+  .card-on-screen b{color:var(--ink)}
+  .card-on-screen .lb{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+    color:#64748b;border:1px solid #cbd5e1;padding:1px 6px;border-radius:4px;margin-right:8px}
+
+  /* ── 提示块 ── */
+  .tip{background:#fff8ec;border:1px solid #f2dfba;border-radius:8px;padding:11px 14px;
+    font-size:13px;color:#6b4e15;margin:12px 0}
+  .tip b{color:#8a5d0c}
+  .warn{background:#fdf1f1;border:1px solid #f2cccc;border-radius:8px;padding:11px 14px;
+    font-size:13px;color:#7a2b2b;margin:12px 0}
+  .warn b{color:#9c2b2b}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .mini{background:#f8f9fb;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:13px}
+  .mini h4{font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .mini ul{margin-left:16px;color:var(--sub)}
+  .mini li{margin-bottom:3px}
+
+  ul.clean{margin-left:18px}
+  ul.clean li{margin-bottom:5px;font-size:13.5px}
+
+  /* 对话体 */
+  .shot{width:100%;border-collapse:collapse;font-size:13px}
+  .shot th{font-size:12px}
+  .shot td{vertical-align:top;line-height:1.65}
+  .shot .id{font-weight:800;color:var(--mute);text-align:center;width:42px}
+  .dlg{font-size:12.8px}
+  .dlg .ln{display:block;margin-bottom:2px}
+  .dlg .sp{font-weight:800;font-size:11px;padding:1px 5px;border-radius:4px;margin-right:5px;color:#fff}
+  .dlg .sp.a{background:var(--a)}
+  .dlg .sp.b{background:var(--b)}
+  .dlg .sfx{display:block;color:var(--mute);font-size:11.5px;font-style:italic;margin-top:3px}
+
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;
+    border:1px solid var(--line);color:var(--sub);background:#fff;white-space:nowrap}
+  .badge.wed{border-color:#e6b7c1;color:#a13a56;background:#fdf4f6}
+  .badge.key{border-color:#e0cfa6;color:var(--gold);background:#fdf9ef}
+  .badge.fact{border-color:#cbd5e1;color:#334155;background:#f1f5f9}
+
+  .chk{list-style:none;margin:0}
+  .chk li{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line2);font-size:13.5px}
+  .chk li:last-child{border-bottom:0}
+  .chk input{margin-top:5px;accent-color:#1f2937}
+
+  .citytag{display:inline-block;font-size:11px;font-weight:800;color:#fff;padding:2px 8px;border-radius:5px}
+
+  footer{padding:30px 20px 40px;text-align:center;color:var(--mute);font-size:12.5px}
+
+  @media print{
+    .nav{display:none}
+    .hero{background:#1b2430 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .ch,.card,table,.bar div,.ch-head,.fact-h,.dlg .sp{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{page-break-inside:avoid}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <a href="index.html" style="display:inline-block;margin-bottom:14px;font-size:13px;font-weight:700;color:#1d4ed8;text-decoration:none;padding:6px 14px;border:1px solid #c7d7f5;border-radius:999px;background:#fff">← 返回 14 天完整攻略</a>
+    <h1>美国 14 天 · Vlog 拍摄剧本</h1>
+    <div class="sub">
+      20 分钟成片 · 六城章节 · <b>双人边走边聊的纪实解说</b>，不做抒情旁白<br>
+      每章配真实人文史料（年份 / 数据 / 冷知识），由两人在现场用对话自然带出；素材全部对齐 9/24–10/7 真实行程的时段、预约与 📸 机位。
+    </div>
+    <div class="hero-meta">
+      <span class="chip">成片时长 <b>20:00</b></span>
+      <span class="chip">城市章节 <b>6</b></span>
+      <span class="chip">拍摄日 <b>D1–D12</b></span>
+      <span class="chip">分镜数 <b>60</b></span>
+      <span class="chip">解说形式 <b>A / B 对话</b></span>
+      <span class="chip">婚礼版 <b>5:00 / 3:00 / 1:00</b></span>
+      <span class="chip">素材配比 <b>约 9:1</b></span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="wrap">
+    <div class="nav-in">
+      <a class="k" href="#overview">总览</a>
+      <a href="#howto">对话怎么拍</a>
+      <a href="#ch0">序章 · 出发</a>
+      <a href="#ch1">1 旧金山</a>
+      <a href="#ch2">2 一号公路</a>
+      <a href="#ch3">3 洛杉矶</a>
+      <a href="#ch4">4 华盛顿</a>
+      <a href="#ch5">5 纽约</a>
+      <a href="#ch6">6 波士顿</a>
+      <a href="#ch7">终章 · 明年见</a>
+      <a href="#wedding">婚礼镜头清单</a>
+      <a href="#rules">拍摄规范</a>
+      <a href="#broll">每日 B-roll</a>
+      <a href="#sound">解说与音乐</a>
+      <a href="#post">后期与交付</a>
+      <a href="#check">执行清单</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════ 总览 ══════════ -->
+<section id="overview">
+  <h2><span class="num">00</span>总览 · 20 分钟怎么分</h2>
+  <p class="lead">结构逻辑：<b>一条地理线 + 一条认知线</b>。地理线从太平洋开到大西洋；认知线是两个人一路边看边聊，把「只在照片里见过的地方」变成「知道它为什么是这样」的地方。每一章给一个城市性格，避免六段风景同质化。</p>
+
+  <div class="card">
+    <div class="bar">
+      <div style="background:#2b3644;width:5.83%">序 1:10</div>
+      <div style="background:var(--sf);width:14.17%">旧金山 2:50</div>
+      <div style="background:var(--hwy);width:16.67%">一号公路 3:20</div>
+      <div style="background:var(--la);width:13.33%">洛杉矶 2:40</div>
+      <div style="background:var(--dc);width:12.5%">华盛顿 2:30</div>
+      <div style="background:var(--ny);width:17.5%">纽约 3:30</div>
+      <div style="background:var(--bos);width:11.67%">波士顿 2:20</div>
+      <div style="background:#7a5c17;width:8.33%">终 1:40</div>
+    </div>
+    <div class="legend">
+      <span><i style="background:#2b3644"></i>序章 · 出发</span>
+      <span><i style="background:var(--sf)"></i>旧金山</span>
+      <span><i style="background:var(--hwy)"></i>一号公路</span>
+      <span><i style="background:var(--la)"></i>洛杉矶</span>
+      <span><i style="background:var(--dc)"></i>华盛顿</span>
+      <span><i style="background:var(--ny)"></i>纽约</span>
+      <span><i style="background:var(--bos)"></i>波士顿</span>
+      <span><i style="background:#7a5c17"></i>终章</span>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="mini" style="border-top:3px solid var(--sf)">
+      <h4>🌉 旧金山 · 为什么是橙色的</h4>
+      <span class="badge">D1–D2</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">缆车、坡、桥。聊的是<b>工程</b>——这座城市怎么在地震和陡坡上建起来。</p>
+    </div>
+    <div class="mini" style="border-top:3px solid var(--hwy)">
+      <h4>🛣 一号公路 · 这条路怎么修出来的</h4>
+      <span class="badge">D2–D4</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">公路片章节。聊的是<b>大萧条时期怎么在崖壁上开出路</b>。</p>
+    </div>
+    <div class="mini" style="border-top:3px solid var(--la)">
+      <h4>🎬 洛杉矶 · 造梦的工业</h4>
+      <span class="badge">D4–D5</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">聊的是<b>招牌、星光、天文台为什么都免费</b>——一个城市的自我营销史。</p>
+    </div>
+    <div class="mini" style="border-top:3px solid var(--dc)">
+      <h4>🏛 华盛顿 · 石头里的时间</h4>
+      <span class="badge">D7–D8</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">聊的是<b>建国、内战、民权</b>——纪念碑为什么长这样。</p>
+    </div>
+    <div class="mini" style="border-top:3px solid var(--ny)">
+      <h4>🗽 纽约 · 移民、钱、天际线</h4>
+      <span class="badge">D8–D10</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">聊的是<b>港口、铁路、大萧条工地</b>——这个城市怎么长成这样。</p>
+    </div>
+    <div class="mini" style="border-top:3px solid var(--bos)">
+      <h4>🎓 波士顿 · 最老的那部分</h4>
+      <span class="badge">D11</span>
+      <p style="font-size:12.5px;color:var(--sub);margin-top:6px">聊的是<b>独立战争与两所学校的真实年龄</b>。收尾。</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <b>文案原则（本版核心改动）：</b>全片<b>不写抒情旁白、不做金句卡</b>。声音设计只有三层——
+    ① <b>两人现场对话</b>（主力，占比 60%）② <b>环境音</b>（海浪、地铁、风，占比 30%）③ <b>上屏信息卡</b>（年份/数据，占比 10%）。
+    观众得到的是「这两个人在一个地方聊了点有意思的事」，而不是「一个人在旁白里感叹人生」。
+  </div>
+</section>
+
+<!-- ══════════ 对话怎么拍 ══════════ -->
+<section id="howto">
+  <h2><span class="num">01</span>对话怎么拍 · 全片的声音方法论</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">三种对话模板（够用一整趟）</h3>
+      <table style="font-size:13px">
+        <tr><th style="width:100px">模板</th><th>结构与示例</th></tr>
+        <tr>
+          <td><b>① 提问式</b><br><span class="badge">最好用</span></td>
+          <td>一个人问，另一个答。<b>问题必须是真想知道的</b>。<br>
+          <span class="dlg"><span class="ln"><span class="sp a">A</span>这桥多少年了？</span><span class="ln"><span class="sp b">B</span>1937 年通的，快九十年。</span><span class="ln"><span class="sp a">A</span>那会儿中国还在打仗。</span></span></td>
+        </tr>
+        <tr>
+          <td><b>② 纠正式</b><br><span class="badge">最真实</span></td>
+          <td>一个人说错或猜错，另一个纠正。<b>猜错的那个要真猜</b>，不要演。<br>
+          <span class="dlg"><span class="ln"><span class="sp b">B</span>这柱子 50 根？</span><span class="ln"><span class="sp a">A</span>36 根。</span><span class="ln"><span class="sp b">B</span>……那代表啥。</span><span class="ln"><span class="sp a">A</span>林肯去世时候的州数。</span></span></td>
+        </tr>
+        <tr>
+          <td><b>③ 观察式</b><br><span class="badge">最省事</span></td>
+          <td>两人同时看到什么，各自说一句，<b>不解释、不总结</b>。<br>
+          <span class="dlg"><span class="ln"><span class="sp a">A</span>它直接落海里了。</span><span class="ln"><span class="sp b">B</span>嗯，落海里了。</span><span class="sfx">（沉默 4 秒，只留水声）</span></span></td>
+        </tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">对话的硬规矩</h3>
+      <ul class="clean">
+        <li><b>不念稿、不背稿。</b>出发前各自看一遍本剧本的「人文底料」，脑子里有数就够了，现场用自己的话讲</li>
+        <li><b>允许说错、允许不知道。</b>「我不知道」「我猜是……」这类话保留在成片里，比标准答案真实</li>
+        <li><b>每段对话不超过 25 秒</b>，讲完就走，不要站着录完一整段</li>
+        <li><b>边走边说，不要停下来对着镜头说。</b>画面里是背影/侧脸，声音才是主角</li>
+        <li><b>不总结、不升华。</b>禁止「这次旅行让我明白……」这类句式，一句话出口就剪掉</li>
+        <li><b>信息讲错了就上屏改。</b>剪辑时发现事实有误，用字幕更正，不重录</li>
+      </ul>
+      <div class="tip" style="margin-top:12px"><b>收音方案：</b>两人各别一支领夹麦（一拖二），边走边聊全程录。<b>风大的机位（Bixby / 渡轮 / 格里菲斯）必开防风毛套</b>，实在糊了就放弃人声，只留环境音 + 上屏字幕——这反而更有纪录片感。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">每章的「人文底料」怎么用</h3>
+    <p>下面每一章都有一张 <span class="badge fact">人文底料</span> 表，列出该站<b>可核查的事实</b>。它不是台词稿，是<b>聊天时的弹药</b>——两人出发前各扫一遍，到了现场谁想起来谁说。对话里讲出其中<b>两三条</b>就够，讲多了变导游。</p>
+    <div class="warn" style="margin-bottom:0"><b>关于准确性：</b>底料里的年份和数据请以现场展签、官方导览为准。现场发现与剧本冲突时，<b>以现场为准</b>，回来用字幕修正。宁可少说，不要说错——婚礼上会有懂行的人看。</div>
+  </div>
+</section>
+
+<!-- ══════════ 序章 ══════════ -->
+<section id="ch0">
+  <h2><span class="num">02</span>序章 · 出发（00:00 – 01:10）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:#2b3644">
+      <div class="idx">序</div>
+      <div class="ti"><b>出发</b><span>北京 → 香港 → 旧金山 · 9/24–9/25 · 全片最快的一段，用「动」开场</span></div>
+      <div class="dur">1:10</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>30 秒内交代清楚「谁、去哪、多久」，然后立刻把观众扔进飞机。<b>不抒情、不感叹</b>，用动作和声音开场。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>底料</i>序章可用信息（选一条聊即可）</div>
+        <table>
+          <tr><td>航程</td><td>北京 → 香港 → 旧金山，实际飞行约 12 小时 + 转机；跨越国际日期变更线，<b>9/25 当天再次落地是同一天</b>（9/25 13:25 起飞，9/25 10:55 抵达）</td></tr>
+          <tr><td>时差</td><td>旧金山比北京晚 15 小时（夏令时）。落地那天的下午，是北京的凌晨</td></tr>
+          <tr><td>入境</td><td>持 B1/B2 需 EVUS 登记；入境排队 1–1.5 小时是常态</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">1</td><td class="tc">00:00–00:07</td>
+            <td>黑屏 → 特写</td>
+            <td>黑屏，只听见机场广播。切：登机牌特写（手指捏着），焦点拉实</td>
+            <td class="dlg"><span class="ln">（无对白，机场广播环境音）</span><span class="ln"><span class="sp a">A</span>走吗。</span><span class="ln"><span class="sp b">B</span>走。</span></td>
+            <td>两个字开场，不解释</td>
+          </tr>
+          <tr>
+            <td class="id">2</td><td class="tc">00:07–00:18</td>
+            <td>广角 · 手持跟拍</td>
+            <td>PEK T3 出发大厅，两人背影推着行李箱往前走，一人回头看镜头</td>
+            <td class="dlg"><span class="ln"><span class="sp b">B</span>十四天，六个城市。</span><span class="ln"><span class="sp a">A</span>你算过总共多少公里吗。</span><span class="ln"><span class="sp b">B</span>没算，别算。</span></td>
+            <td><span class="badge wed">婚礼必拍</span> 开场背影</td>
+          </tr>
+          <tr>
+            <td class="id">3</td><td class="tc">00:18–00:30</td>
+            <td>特写组接 · 快剪</td>
+            <td>舷窗云层延时 → 两人靠肩睡着 → 机翼 → 餐盒 → HKG 夜景 → 转机廊道</td>
+            <td class="dlg"><span class="ln">（无对白，引擎与广播环境音）</span></td>
+            <td>每镜 1.5–2 秒，卡点切</td>
+          </tr>
+          <tr>
+            <td class="id">4</td><td class="tc">00:30–00:45</td>
+            <td>中景 · 稳定器</td>
+            <td>SFO 落地。入境长队、海关窗口、第一脚踏出机场门</td>
+            <td class="dlg"><span class="ln"><span class="sp a">A</span>排了多久。</span><span class="ln"><span class="sp b">B</span>一个半小时。</span><span class="ln"><span class="sp a">A</span>我脚麻了。</span></td>
+            <td>真实体感，不美化</td>
+          </tr>
+          <tr>
+            <td class="id">5</td><td class="tc">00:45–01:10</td>
+            <td>车内 / 街景 · 固定</td>
+            <td>292 → 30 路公交进城。车窗外旧金山的坡与维多利亚房子，手拉扶手的特写</td>
+            <td class="dlg"><span class="ln"><span class="sp b">B</span>这坡也太陡了。</span><span class="ln"><span class="sp a">A</span>车都横着停的，你看见没。</span><span class="ln"><span class="sp b">B</span>看见了。</span></td>
+            <td><span class="badge wed">婚礼必拍</span> 牵手母题起点</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>2026.09.25　San Francisco</b>　｜　北京 → 香港 → 旧金山　飞行约 12 小时
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 1 旧金山 ══════════ -->
+<section id="ch1">
+  <h2><span class="num">03</span>第一章 · 旧金山（01:10 – 04:00）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--sf)">
+      <div class="idx">01</div>
+      <div class="ti"><b>为什么是橙色的</b><span>D1 9/25 下午 – D2 9/26 上午 · 聊工程、地震、坡度 · 冷色 / 中速</span></div>
+      <div class="dur">2:50</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>建立「两个人在陌生城市里自己找路」的关系感。<b>不拍景点合集</b>——每个机位都要有人、有对话。本章高潮是 D1 傍晚金门大桥（📸#1）。主题是「这座城市是怎么在地震和陡坡上建起来的」。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>旧金山 · 现场能聊的真事（挑 3–4 条）</div>
+        <table>
+          <tr><td>金门大桥</td><td>1937 年通车；主跨约 1280 米，建成时是世界上最长的悬索桥；<b>「国际橙」原本只是防锈底漆</b>，海军想刷黑黄、陆军想刷灰，设计师认为橙色与环境协调，最后保留至今</td></tr>
+          <tr><td>建筑代价</td><td>施工期间因安全网救下 19 人（「Half Way to Hell Club」），最终仍有 11 人死亡；桥体常年循环刷漆维护</td></tr>
+          <tr><td>缆车</td><td>1873 年第一条缆车线开通，发明者 Andrew Hallidie；<b>缆绳在地下以恒定速度运行，车靠夹钳握绳与松绳来走停</b>；1906 年大地震后大部分被电车取代，现存三条线，已列为国家历史地标</td></tr>
+          <tr><td>九曲花街</td><td>Lombard Street 1922 年改建；坡度约 27%，当时汽车马力不足，只能靠八个急弯「绕」下来，限速 5 mph</td></tr>
+          <tr><td>唐人街</td><td>北美最早的华人聚居区之一，19 世纪中叶随淘金潮形成；1906 年地震后重建</td></tr>
+          <tr><td>彩绘女士</td><td>Alamo Square 一带的维多利亚式住宅，多为 19 世纪末建造；旧金山现存大量木构维多利亚老宅，是地震重建后的城市肌理</td></tr>
+          <tr><td>1906 地震</td><td>1906 年 4 月 18 日里氏约 7.9 级地震 + 三天大火，大半个城市被毁，成为这座城市所有故事的起点</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">6</td><td class="tc">01:10–01:28</td><td>中景 · 稳定器平移</td><td>渔人码头。Boudin 酸面包碗里的蛤蜊浓汤，抬勺，两人同桌</td><td class="dlg"><span class="ln"><span class="sp a">A</span>酸面包，1849 年就有了。</span><span class="ln"><span class="sp b">B</span>谁告诉你的。</span><span class="ln"><span class="sp a">A</span>菜单上写的。</span><span class="ln"><span class="sp b">B</span>那也不一定对。</span></td><td>有质疑才像真聊天</td></tr>
+          <tr><td class="id">7</td><td class="tc">01:28–01:45</td><td>特写 → 全景</td><td>Pier 39 海狮，先特写再拉到木栈道全景</td><td class="dlg"><span class="ln"><span class="sp b">B</span>它们为什么都在这儿。</span><span class="ln"><span class="sp a">A</span>1989 年地震之后码头上没人了，它们就来了，然后不走了。</span><span class="ln"><span class="sp b">B</span>赖上了。</span></td><td>海狮叫声做音桥</td></tr>
+          <tr><td class="id">8</td><td class="tc">01:45–02:20</td><td>全景 → 中景 · 缓推</td><td><b>金门大桥 Vista Point 日落（📸#1）</b>。先空镜：雾穿桥塔；再切两人背影</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1937 年通的，主跨一千二百八十米，当时世界第一。</span><span class="ln"><span class="sp b">B</span>现在第几。</span><span class="ln"><span class="sp a">A</span>早就不是了。</span><span class="ln"><span class="sp b">B</span>那颜色也挺怪。</span><span class="ln"><span class="sp a">A</span>那是防锈底漆。海军想刷黑黄，陆军想刷灰，最后说橙色跟这海湾搭，就这么留下来了。</span><span class="ln"><span class="sp b">B</span>说白了就是懒得再刷一遍。</span></td><td><span class="badge key">本章高潮</span><span class="badge wed">婚礼必拍</span></td></tr>
+          <tr><td class="id">9</td><td class="tc">02:20–02:42</td><td>中景 · 手持</td><td>D2 早晨唐人街。龙门牌坊、灯笼、早茶店蒸汽</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这招牌是繁体。</span><span class="ln"><span class="sp a">A</span>一百多年前来的那批人写的。</span><span class="ln"><span class="sp b">B</span>有种没出国的错觉。</span></td><td>08:15 光线柔和</td></tr>
+          <tr><td class="id">10</td><td class="tc">02:42–03:00</td><td>低角度 · 固定</td><td>叮当车 Powell-Hyde，车头驶来，一人挂车侧；切车内铃铛</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这车没有发动机。</span><span class="ln"><span class="sp b">B</span>那靠什么。</span><span class="ln"><span class="sp a">A</span>地底下有根钢缆一直转，一直不停。车要停就松手，要走就夹紧。</span><span class="ln"><span class="sp b">B</span>那一百多年前想出来的？</span><span class="ln"><span class="sp a">A</span>1873 年。</span></td><td>工程细节比形容词好看</td></tr>
+          <tr><td class="id">11</td><td class="tc">03:00–03:20</td><td>俯拍 · 下摇</td><td>九曲花街 Hyde 顶（📸#2），一辆车缓缓蛇形下行</td><td class="dlg"><span class="ln"><span class="sp b">B</span>为什么不直接修直的。</span><span class="ln"><span class="sp a">A</span>坡二十七，当年的车爬不上去也刹不住，只能绕。</span><span class="ln"><span class="sp b">B</span>所以是被逼的。</span><span class="ln"><span class="sp a">A</span>对，不是设计。</span></td><td>「不是设计」这类反转最有意思</td></tr>
+          <tr><td class="id">12</td><td class="tc">03:20–03:40</td><td>中景 · 框式</td><td>艺术宫（📸#3）、彩绘女士（📸#4）</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这些房子木头做的。</span><span class="ln"><span class="sp b">B</span>地震了怎么办。</span><span class="ln"><span class="sp a">A</span>1906 年烧了三天，全烧了，这些都是后来重盖的。</span></td><td>两个点各 8–10 秒</td></tr>
+          <tr><td class="id">13</td><td class="tc">03:40–04:00</td><td>中景 · 固定</td><td>Alamo 取车。钥匙、后备箱合上、导航设 Monterey</td><td class="dlg"><span class="ln"><span class="sp b">B</span>接下来三天我们住车里？</span><span class="ln"><span class="sp a">A</span>住酒店，车只是交通工具。</span><span class="ln"><span class="sp b">B</span>哦。</span></td><td>过场，勾第二章</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Golden Gate Bridge · 1937</b>　｜　主跨 1280 m　｜　「国际橙」＝原本的防锈底漆<br>
+        <span class="lb">上屏</span><b>Cable Car · 1873</b>　｜　地下钢缆恒速运行，车靠夹钳握绳走停
+      </div>
+      <div class="tip"><b>服装提醒：</b>D1–D2 同一套（黑 Tee + 牛仔衣 + 黑紧身牛仔裤 + 黑鞋）。两天素材剪在一起，<b>服装统一才连贯</b>。日落抓绒上身时拍一条，后面能接。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 2 一号公路 ══════════ -->
+<section id="ch2">
+  <h2><span class="num">04</span>第二章 · 一号公路（04:00 – 07:20）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--hwy)">
+      <div class="idx">02</div>
+      <div class="ti"><b>这条路怎么修出来的</b><span>D2 下午 – D4 9/28 下午 · 全片唯一的公路片章节 · 慢 / 长镜头</span></div>
+      <div class="dur">3:20</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>全片<b>最像电影</b>的一段，也最容易拍砸（因为全是开车）。核心手法：<b>车拍三件套</b>——① 前挡固定机位拍路 ② 副驾回头拍开车的人 ③ 车窗框景拍外侧海崖。人文线是<b>「这条路是大萧条时期在崖壁上凿出来的」</b>——把风景变成人的工程。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>一号公路 · 现场能聊的真事（挑 3–4 条）</div>
+        <table>
+          <tr><td>Big Sur 名字</td><td>来自西班牙语 <b>el sur grande</b>（「大河以南」），18 世纪西班牙殖民时期命名，因为它在蒙特雷以南、地形险峻</td></tr>
+          <tr><td>Bixby Creek Bridge</td><td>1932 年建成，钢筋混凝土拱桥，高约 79 米、长约 218 米；<b>建于大萧条时期</b>，是打通 Big Sur 段的关键工程；当年施工方原以为要建悬索桥，改用拱桥省了钱也更抗风</td></tr>
+          <tr><td>公路史</td><td>Big Sur 段 Highway 1 从 1920 年代开工到 1930 年代才贯通，此前这段海岸基本靠骡马小道通行，居民「与世隔绝」</td></tr>
+          <tr><td>McWay Falls</td><td>落差约 24 米，<b>直接落进太平洋</b>，是世界上极少数「入海瀑布」；Julia Pfeiffer Burns 州立公园以当地牧场主的女儿命名</td></tr>
+          <tr><td>象海豹</td><td>北象海豹 19 世纪因油脂被大量捕杀，一度濒临灭绝；受保护后数量恢复，Piedras Blancas 海滩全年可见上岸个体</td></tr>
+          <tr><td>孤柏树</td><td>17-Mile Drive 的 Lone Cypress，树龄约 250 年，是这片海岸最著名的地标，现设围栏保护；这条路由私人公司运营并收费（行程中 $12/车）</td></tr>
+          <tr><td>圣巴巴拉</td><td>1925 年地震后按西班牙殖民复兴风格重建，县法院钟楼可登顶；1786 年建立的传教所被称为「传教所女王」</td></tr>
+          <tr><td>Route 66</td><td>1926 年正式编号，1985 年退役；圣莫尼卡是它的西端终点</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">14</td><td class="tc">04:00–04:22</td><td>车内 · 固定</td><td>出发。前挡拍路延伸，仪表盘、挂挡；切副驾视角：开车那人的侧脸</td><td class="dlg"><span class="ln"><span class="sp b">B</span>Big Sur 什么意思。</span><span class="ln"><span class="sp a">A</span>西班牙语，「大河以南」。</span><span class="ln"><span class="sp b">B</span>哪条大河。</span><span class="ln"><span class="sp a">A</span>……我不知道，回头查。</span></td><td><span class="badge wed">婚礼必拍</span> 副驾视角</td></tr>
+          <tr><td class="id">15</td><td class="tc">04:22–04:40</td><td>空镜 · 高角度</td><td>半月湾悬崖、17-Mile 孤柏树，风把草吹倒</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这棵树两百五十年。</span><span class="ln"><span class="sp b">B</span>清朝。</span><span class="ln"><span class="sp a">A</span>……对，差不多。</span></td><td>海浪声做音桥</td></tr>
+          <tr><td class="id">16</td><td class="tc">04:40–05:00</td><td>中景 · 手持跟随</td><td>卡梅尔小镇，鹅卵石街道、画廊橱窗</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这儿的房子没有门牌号。</span><span class="ln"><span class="sp a">A</span>对，他们一直抵制装门牌，快递靠描述地址。</span><span class="ln"><span class="sp b">B</span>那怎么找。</span><span class="ln"><span class="sp a">A</span>「蓝门那家」。</span></td><td>卡梅尔确实长期无门牌，以现场核实为准</td></tr>
+          <tr><td class="id">17</td><td class="tc">05:00–05:30</td><td>全景 → 中景 · 横移</td><td><b>Bixby Creek Bridge（📸#5）</b>，北侧观景台</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1932 年，大萧条最惨的时候修的。</span><span class="ln"><span class="sp b">B</span>没钱还修桥？</span><span class="ln"><span class="sp a">A</span>就是为了给人活干。这桥八十米高，当年要是修悬索的更贵，后来改成拱的。</span><span class="ln"><span class="sp b">B</span>省钱的方案反而更好看。</span></td><td><span class="badge key">本章高潮</span> 09:00 光线最好</td></tr>
+          <tr><td class="id">18</td><td class="tc">05:30–05:52</td><td>俯拍 · 固定</td><td>McWay Falls（📸#6），瀑布直接落进海里</td><td class="dlg"><span class="ln"><span class="sp b">B</span>它直接落海里？</span><span class="ln"><span class="sp a">A</span>落海里。全世界没几个这样的。</span><span class="sfx">（沉默 4 秒，只留水声与海浪）</span></td><td><b>不说话比说话好</b></td></tr>
+          <tr><td class="id">19</td><td class="tc">05:52–06:10</td><td>特写 · 手持</td><td>象海豹滩，成群晒太阳打闹</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这东西一百多年前差点被杀绝。</span><span class="ln"><span class="sp b">B</span>为什么杀。</span><span class="ln"><span class="sp a">A</span>炼油。一头能出好几百升。</span><span class="ln"><span class="sp b">B</span>现在呢。</span><span class="ln"><span class="sp a">A</span>现在躺这儿晒太阳。</span></td><td>本章唯一轻松段落</td></tr>
+          <tr><td class="id">20</td><td class="tc">06:10–06:28</td><td>空镜 · 延时</td><td>莫罗湾日落 → 次日 07:30 出发，Morro Rock、加油枪、里程碑</td><td class="dlg"><span class="ln">（无对白，加油声、关门声、引擎）</span></td><td>里程碑/路牌是公路片必备转场</td></tr>
+          <tr><td class="id">21</td><td class="tc">06:28–06:50</td><td>中全景 · 环绕</td><td>圣巴巴拉县法院，红顶白墙、钟楼、拱廊</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这怎么看着像西班牙。</span><span class="ln"><span class="sp a">A</span>1925 年地震之后，整座城按这个风格重盖的。</span><span class="ln"><span class="sp b">B</span>所以是被地震统一了审美。</span></td><td>本章唯一暖色段</td></tr>
+          <tr><td class="id">22</td><td class="tc">06:50–07:10</td><td>车内 → 中景</td><td>Malibu PCH，手掌伸出窗外；圣莫尼卡 66 号公路终点牌、摩天轮</td><td class="dlg"><span class="ln"><span class="sp a">A</span>那个牌子，六十六号公路的终点。</span><span class="ln"><span class="sp b">B</span>从芝加哥开始的那条？</span><span class="ln"><span class="sp a">A</span>对，1985 年就废了，牌子还在。</span><span class="ln"><span class="sp b">B</span>路没了终点还在。</span></td><td>终点牌合影必拍</td></tr>
+          <tr><td class="id">23</td><td class="tc">07:10–07:20</td><td>全景 · 上摇</td><td>圣莫尼卡海滩上摇到 LA 天际线，棕榈剪影</td><td class="dlg"><span class="ln"><span class="sp a">A</span>下一站，洛杉矶。</span></td><td>转场</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Bixby Creek Bridge · 1932</b>　｜　高 79 m　｜　大萧条时期工程<br>
+        <span class="lb">上屏</span><b>McWay Falls</b>　｜　落差约 24 m，直接落入太平洋
+      </div>
+      <div class="warn"><b>安全红线：</b>Bixby、McWay、象海豹滩均为崖边/海边机位。<b>严禁为构图站到护栏外或崖沿</b>；拍背影站内侧平台用广角，绝不自拍杆外伸。手机挂绳必备。开车的人不碰机器。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 洛杉矶 ══════════ -->
+<section id="ch3">
+  <h2><span class="num">05</span>第三章 · 洛杉矶（07:20 – 10:00）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--la)">
+      <div class="idx">03</div>
+      <div class="ti"><b>造梦的工业</b><span>D4 9/28 下午 – D5 9/29 · 聊招牌、星光、为什么都免费 · 金橙 / 中快</span></div>
+      <div class="dur">2:40</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>从「自然」切到「人造的梦」，节奏由慢转<b>中快</b>。全部素材集中在 D5 一天，<b>严格按时间顺序拍</b>就有现成的叙事线：球场 → 美术馆 → 名店街 → 星光 → Sign → 日落天文台，是一条光从白天走到黄昏的线。人文主题：<b>这个城市怎么把自己卖向全世界</b>。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>洛杉矶 · 现场能聊的真事（挑 3–4 条）</div>
+        <table>
+          <tr><td>Hollywood Sign</td><td>1923 年竖起，<b>原本是「HOLLYWOODLAND」</b>——一个房地产项目的广告牌；1949 年拆掉后四个字母，改由城市维护。字母高约 13.7 米</td></tr>
+          <tr><td>星光大道</td><td>1958 年设立，现有两千七百多颗星；<b>星星不是「奖」，是要花钱申请的</b>，获选者需支付一笔不菲的赞助/维护费用</td></tr>
+          <tr><td>格里菲斯天文台</td><td>1935 年开放，<b>捐地人 Griffith J. Griffith 的遗赠条件之一就是对公众免费</b>，至今免费；以天文科普与城市观景闻名，也是大量电影的取景地</td></tr>
+          <tr><td>盖蒂中心</td><td>1997 年开放，建筑师 Richard Meier，建在圣莫尼卡山顶；<b>门票免费</b>，只收停车费（行程中 $25）</td></tr>
+          <tr><td>Crypto.com Arena</td><td>1999 年启用，原名 Staples Center，2021 年改名；湖人、快船等球队主场，承办过两届奥运会（2028 将是第三届）级别的赛事</td></tr>
+          <tr><td>Rodeo Drive</td><td>1960–70 年代成为奢侈品街，因电影《风月俏佳人》广为人知；比佛利山是洛杉矶县内的独立城市</td></tr>
+          <tr><td>城市结构</td><td>洛杉矶以「多中心 + 高速路网」著称，是典型汽车城市；公共交通覆盖率低，这也是本行程必须租车的原因</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">24</td><td class="tc">07:20–07:36</td><td>中景 · 稳定器</td><td>Rodeo Drive 初逛（D4 17:30），市徽、棕榈、橱窗反射</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这树是种的还是野的。</span><span class="ln"><span class="sp a">A</span>种的。洛杉矶本来没棕榈，是为了「看起来像加州」。<span class="sfx">（这条需现场核实，讲不准就删）</span></span></td><td>不确定就别说，删掉即可</td></tr>
+          <tr><td class="id">25</td><td class="tc">07:36–07:55</td><td>全景 · 低角度上摇</td><td>Crypto.com Arena 外观 + Star Plaza 雕像</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这馆 1999 年开的，2021 年改的名。</span><span class="ln"><span class="sp b">B</span>改成加密货币了。</span><span class="ln"><span class="sp a">A</span>冠名。</span><span class="ln"><span class="sp b">B</span>那改名那天球迷什么反应。</span><span class="ln"><span class="sp a">A</span>骂呗。</span></td><td>建筑仰角强调「大」</td></tr>
+          <tr><td class="id">26</td><td class="tc">07:55–08:25</td><td>中景 · 环绕</td><td><b>盖蒂中心（📸#7）</b>，白色建筑、中央花园、远眺 LA 平台</td><td class="dlg"><span class="ln"><span class="sp a">A</span>门票免费。</span><span class="ln"><span class="sp b">B</span>这么大一地方免费？</span><span class="ln"><span class="sp a">A</span>盖蒂基金会给的钱，只收停车，二十五刀。</span><span class="ln"><span class="sp b">B</span>那也行。</span><span class="ln"><span class="sp a">A</span>1997 年开的，建在山顶上，为了从城里哪儿都能看见。</span></td><td>2 小时参观留 30 秒</td></tr>
+          <tr><td class="id">27</td><td class="tc">08:25–08:42</td><td>特写 · 快剪</td><td>星光大道地面星星、TCL 剧院手印脚印、街头艺人</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这星是评出来的？</span><span class="ln"><span class="sp a">A</span>提名通过之后要交钱，几万美金。</span><span class="ln"><span class="sp b">B</span>那就是买的。</span><span class="ln"><span class="sp a">A</span>也不能全这么说，但确实要钱。</span></td><td>快剪 3 组，配鼓点</td></tr>
+          <tr><td class="id">28</td><td class="tc">08:42–09:02</td><td>中景 · 草地低机位</td><td>Lake Hollywood Park，草坡朝北望 Sign，两人坐着</td><td class="dlg"><span class="ln"><span class="sp a">A</span>那牌子 1923 年立的，本来叫 Hollywoodland。</span><span class="ln"><span class="sp b">B</span>多了个 land。</span><span class="ln"><span class="sp a">A</span>是个楼盘的广告。1949 年把后面四个字母拆了。</span><span class="ln"><span class="sp b">B</span>广告变成地标了。</span></td><td><span class="badge wed">婚礼必拍</span> 坐姿背影</td></tr>
+          <tr><td class="id">29</td><td class="tc">09:02–09:35</td><td>全景 · 缓推</td><td><b>格里菲斯日落（📸#8）</b>，天光由金转蓝，灯一盏盏亮</td><td class="dlg"><span class="ln"><span class="sp b">B</span>九十年前就有这地方了。</span><span class="ln"><span class="sp a">A</span>1935 年。捐地的那个人叫 Griffith，条件是永远免费。</span><span class="ln"><span class="sp b">B</span>写进遗嘱了？</span><span class="ln"><span class="sp a">A</span>类似吧，反正到现在还免费。</span><span class="sfx">（沉默 6 秒，只留风声与远处车流）</span></td><td><span class="badge key">本章高潮</span><span class="badge wed">婚礼必拍</span> 架稳定器拍满 3 分钟</td></tr>
+          <tr><td class="id">30</td><td class="tc">09:35–09:50</td><td>车内 / 街景</td><td>回比佛利，LA 夜街、车灯轨迹</td><td class="dlg"><span class="ln"><span class="sp a">A</span>明天还车。</span><span class="ln"><span class="sp b">B</span>然后飞另一个海岸。</span></td><td>过场</td></tr>
+          <tr><td class="id">31</td><td class="tc">09:50–10:00</td><td>中景 · 手持</td><td>D6 LAX 还车、shuttle、登机口屏幕跳到 DCA</td><td class="dlg"><span class="ln">（无对白，机场广播）</span></td><td>屏幕特写是最干净的转场</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Hollywood Sign · 1923</b>　｜　原名 HOLLYWOODLAND，房地产广告牌，1949 年拆除后四字<br>
+        <span class="lb">上屏</span><b>Griffith Observatory · 1935</b>　｜　至今免费开放
+      </div>
+      <div class="tip"><b>拍摄提示：</b>D5 一天拍一整章，节奏紧。盖蒂预约 12:30、停车 $25 现场付，<b>进馆前先在门口拍够空镜</b>；格里菲斯 17:15 到，<b>提前 40 分钟到位架机器</b>。服装米黄衬衫 + 白裤子 + 绿鞋（D4–D5 同款），白色在金光里最好看。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 4 华盛顿 ══════════ -->
+<section id="ch4">
+  <h2><span class="num">06</span>第四章 · 华盛顿（10:00 – 12:30）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--dc)">
+      <div class="idx">04</div>
+      <div class="ti"><b>石头里的时间</b><span>D7 10/1 – D8 10/2 上午 · 聊建国、内战、民权 · 白 / 低饱和 / 慢</span></div>
+      <div class="dur">2:30</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>全片的<b>呼吸口</b>。前两章一直在动，这里突然慢下来。手法：<b>对称构图 + 固定机位 + 长镜头</b>，音乐从公路感转钢琴。<b>本章人文密度最高</b>——纪念碑不是装饰，每一个都在讲一个具体的时间点。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>华盛顿 · 现场能聊的真事（挑 4–5 条，本章重头）</div>
+        <table>
+          <tr><td>国会大厦</td><td>1793 年华盛顿总统奠基，1800 年国会首次在此开会；<b>1814 年英军攻入华盛顿将其焚毁</b>；现铸铁穹顶在 1850–60 年代加建，1863 年顶部立起自由女神像</td></tr>
+          <tr><td>华盛顿纪念碑</td><td>1848 年开工，因经费与内战<b>中断二十多年</b>，1884 年才完工；高约 169 米，是世界上最高的石造方尖碑；<b>碑身上下两段大理石颜色不同</b>（复工后换了采石场）——肉眼可辨</td></tr>
+          <tr><td>林肯纪念堂</td><td>1922 年落成；<b>36 根柱子代表林肯去世时的联邦州数</b>；坐像高约 5.8 米；1963 年马丁·路德·金在此发表《我有一个梦想》</td></tr>
+          <tr><td>杰斐逊纪念堂</td><td>1943 年落成（罗斯福时期推动），新古典主义圆顶；内部铜像 1947 年立</td></tr>
+          <tr><td>MLK 纪念堂</td><td>2011 年落成，是国家广场上第一个纪念非裔美国人的纪念物；石材与雕刻由中国团队完成（当时有争议）</td></tr>
+          <tr><td>航空航天馆</td><td>国家广场馆 1976 年开放；藏有 1903 年莱特飞行器、林德伯格的「圣路易斯精神号」、阿波罗 11 号指令舱等原件</td></tr>
+          <tr><td>白宫</td><td>1800 年亚当斯成为首位入住总统，1814 年同样被英军烧毁后重建；约 130 余个房间</td></tr>
+          <tr><td>国家美术馆</td><td>1937 年开馆，源于 Andrew Mellon 的捐赠与出资；<b>达芬奇在美洲唯一的作品</b>《吉内薇拉·德·本奇》在此</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">32</td><td class="tc">10:00–10:15</td><td>空镜 · 固定</td><td>D6 夜抵 DC，清晨国家广场第一缕光</td><td class="dlg"><span class="ln"><span class="sp b">B</span>昨天还在海边。</span><span class="ln"><span class="sp a">A</span>今天在首都。</span></td><td>东西岸切换过渡</td></tr>
+          <tr><td class="id">33</td><td class="tc">10:15–10:38</td><td>对称构图 · 上摇</td><td><b>国会大厦（10:40 已预约）</b>，Visitor Center 安检、穹顶仰拍、柱廊</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1793 年华盛顿亲自奠基的。</span><span class="ln"><span class="sp b">B</span>然后呢。</span><span class="ln"><span class="sp a">A</span>1814 年英国人打进来，烧了。</span><span class="ln"><span class="sp b">B</span>烧了？</span><span class="ln"><span class="sp a">A</span>烧了。白宫一起烧的。后来重盖，这个铁顶子是五六十年代加的。</span></td><td>穹顶仰拍是本章最好空镜</td></tr>
+          <tr><td class="id">34</td><td class="tc">10:38–10:58</td><td>中景 → 俯拍</td><td>纪念碑登顶（12:30 已订），碑下中景 → 电梯 → 500 ft 俯瞰</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这碑怎么两截颜色不一样。</span><span class="ln"><span class="sp a">A</span>你看见了？1848 年开工，没钱停了，内战也停，二十多年后才接着盖，石头换了个采石场。</span><span class="ln"><span class="sp b">B</span>停工了二十年。</span><span class="ln"><span class="sp a">A</span>所以你看见那条线，就是二十多年。</span></td><td><span class="badge key">独家素材</span> 全片唯一上帝视角</td></tr>
+          <tr><td class="id">35</td><td class="tc">10:58–11:12</td><td>中景 · 固定</td><td>白宫北草坪外景（📸#10），隔着栏杆的远景</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1800 年第一个住进去的是亚当斯。</span><span class="ln"><span class="sp b">B</span>然后被烧了。</span><span class="ln"><span class="sp a">A</span>被烧了两次讲头，一次就够。</span></td><td>可选机位，紧则跳过</td></tr>
+          <tr><td class="id">36</td><td class="tc">11:12–11:30</td><td>特写 · 手持</td><td>航空航天馆（14:00 timed pass），悬挂飞机、莱特飞行器</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1903 年那架就在这儿。</span><span class="ln"><span class="sp b">B</span>一百二十年。</span><span class="ln"><span class="sp a">A</span>第一次飞了十二秒，三十六米。</span><span class="ln"><span class="sp b">B</span>比这厅还短。</span><span class="ln"><span class="sp a">A</span>比它自己翼展的三倍多一点。</span></td><td>馆内暗，剪影反而好看</td></tr>
+          <tr><td class="id">37</td><td class="tc">11:30–11:50</td><td>全景 · 横移</td><td>潮汐湖一线：杰斐逊 → MLK 纪念堂，湖面与白色圆顶倒影</td><td class="dlg"><span class="ln"><span class="sp b">B</span>杰斐逊这个是新的吧。</span><span class="ln"><span class="sp a">A</span>1943 年。这儿最新的那个才是马丁·路德·金，2011 年。</span><span class="ln"><span class="sp b">B</span>比我们还新。</span><span class="ln"><span class="sp a">A</span>……确实是。</span></td><td>顺路不折返，连续长镜头</td></tr>
+          <tr><td class="id">38</td><td class="tc">11:50–12:18</td><td>全景 → 中景 · 缓推</td><td><b>林肯纪念堂 + 反思池（📸#9）</b>，坐像、台阶东看尖碑、日落</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这柱子多少根。</span><span class="ln"><span class="sp a">A</span>你数数。</span><span class="ln"><span class="sp b">B</span>……五十？</span><span class="ln"><span class="sp a">A</span>三十六。林肯死的时候三十六个州。</span><span class="ln"><span class="sp b">B</span>所以不是五十。</span><span class="ln"><span class="sp a">A</span>不是，是那时候的数。</span><span class="ln"><span class="sp b">B</span>1963 年金在这儿讲的话。</span><span class="ln"><span class="sp a">A</span>就在那个台阶。</span></td><td><span class="badge key">本章高潮</span><span class="badge wed">婚礼必拍</span></td></tr>
+          <tr><td class="id">39</td><td class="tc">12:18–12:30</td><td>中景 · 手持</td><td>D8 国家美术馆，展厅、两人在画前</td><td class="dlg"><span class="ln"><span class="sp a">A</span>达芬奇在美洲就这一幅。</span><span class="ln"><span class="sp b">B</span>就这一幅？</span><span class="ln"><span class="sp a">A</span>就这一幅。</span><span class="ln"><span class="sp b">B</span>那得去看一眼。</span></td><td>馆内禁拍区不拍</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Washington Monument</b>　｜　1848 开工 · 因经费与内战停工二十余年 · 1884 完工<br>
+        <span class="lb">上屏</span><b>Lincoln Memorial · 1922</b>　｜　36 根柱 = 林肯去世时的联邦州数　｜　1963 年金在此演讲
+      </div>
+      <div class="warn"><b>拍摄限制：</b>国会内部、航空航天馆部分展区<b>可能禁拍或禁三脚架</b>，见到标识立即收机器。纪念馆类机位保持肃穆，不摆拍跳跃——这些素材婚礼上要给长辈看。<b>涉及历史评价的部分只陈述事实，不做判断。</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 5 纽约 ══════════ -->
+<section id="ch5">
+  <h2><span class="num">07</span>第五章 · 纽约（12:30 – 16:00）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--ny)">
+      <div class="idx">05</div>
+      <div class="ti"><b>移民、钱、天际线</b><span>D8 10/2 晚 – D10 10/4 · 最长的一章 · 快剪 · 霓虹紫 / 夜蓝</span></div>
+      <div class="dur">3:30</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>全片<b>信息密度最高</b>的一章，三天素材压 3 分半。手法：<b>快剪 + 音桥 + 三幕式</b>（第一夜「进城」→ 第二天「水」→ 第三天「高处与人」），每个子段落用一条声音串起来：地铁报站、渡轮汽笛、街头鼓点。人文线：<b>港口、铁路、大萧条工地</b>——这城市为什么长成这样。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>纽约 · 现场能聊的真事（挑 4–5 条）</div>
+        <table>
+          <tr><td>自由女神</td><td>1886 年落成，法国为纪念美国建国百年赠送；铜像由 Bartholdi 设计、<b>内部铁架由埃菲尔（Eiffel）设计</b>；铜皮氧化后呈绿色；基座内刻有 Emma Lazarus 的诗《新巨人》——「把你疲惫的、贫穷的……交给我」</td></tr>
+          <tr><td>埃利斯岛</td><td>1892–1954 年间约一千二百万移民在此入境登记，是「移民国家」的物理入口</td></tr>
+          <tr><td>布鲁克林大桥</td><td>1883 年建成，主跨约 486 米，当时世界最长悬索桥；设计者老 Roebling 开工前去世，其子 Washington Roebling 因沉箱病瘫痪，<b>由妻子 Emily 在工地现场代为监督完成</b>；工期 14 年，数十名工人死亡</td></tr>
+          <tr><td>华尔街铜牛</td><td>1989 年由雕塑家 Di Modica 私自放置在交易所门口（未经许可的「游击艺术」），因受欢迎被留下；重约 3 吨</td></tr>
+          <tr><td>9/11 纪念馆</td><td>两个水池建在原双子塔基坑位置，是北美最大的人工瀑布之一；池沿刻着遇难者姓名；场地内有一棵 9·11 后从废墟中救回的梨树「幸存者树」</td></tr>
+          <tr><td>洛克菲勒中心</td><td>大萧条时期（1930 年代）由小洛克菲勒出资兴建，<b>是当时最大的私人建设项目，为数千人提供了工作</b>；Top of the Rock 位于 70 层</td></tr>
+          <tr><td>高线公园</td><td>原为 1930 年代的高架货运铁路，1980 年最后一趟列车（运的是冷冻火鸡）；1990 年代面临拆除，由社区居民争取保留，2009 年改为空中公园，长约 2.3 公里</td></tr>
+          <tr><td>中央公园</td><td>1858 年由 Olmsted 与 Vaux 的「Greensward 方案」开始建设，约 340 公顷；建造前这里是沼泽与贫民聚居地</td></tr>
+          <tr><td>纽约公共图书馆</td><td>1911 年建成，门前两只石狮名为「耐心」与「坚毅」</td></tr>
+          <tr><td>联合国总部</td><td>1946 年决定设在纽约，1952 年建成；<b>园区为国际领土，不属于美国</b>；用地由小洛克菲勒捐赠</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">40</td><td class="tc">12:30–12:48</td><td>车内 / 街景 · 手持</td><td>Union Station 12:00 大巴 → 抵 NY，NJ Transit 进曼哈顿、地铁车厢</td><td class="dlg"><span class="ln"><span class="sp a">A</span>四个半小时。</span><span class="ln"><span class="sp b">B</span>从首都到纽约，坐大巴。</span><span class="ln"><span class="sp a">A</span>火车贵一倍。</span></td><td>大巴窗外延时做转场</td></tr>
+          <tr><td class="id">41</td><td class="tc">12:48–13:08</td><td>中景 · 稳定器</td><td>纽约公共图书馆 + Bryant Park</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这两只狮子有名字吗。</span><span class="ln"><span class="sp a">A</span>有，耐心和坚毅。</span><span class="ln"><span class="sp b">B</span>谁起的。</span><span class="ln"><span class="sp a">A</span>三十年代市长起的，说市民需要这两样。</span></td><td>馆内暖光，本章少有暖色</td></tr>
+          <tr><td class="id">42</td><td class="tc">13:08–13:30</td><td>中景 · 快剪</td><td>第五大道橱窗 → 时代广场大屏与人群</td><td class="dlg"><span class="ln"><span class="sp a">A</span>一百多年前这儿是马厩区。</span><span class="ln"><span class="sp b">B</span>现在全是屏幕。</span></td><td>快剪 2 秒一切</td></tr>
+          <tr><td class="id">43</td><td class="tc">13:30–13:55</td><td>全景 · 环绕</td><td><b>Top of the Rock（📸#11）</b>，帝国大厦居中、夜景、两人剪影</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这一片都是一家盖的？</span><span class="ln"><span class="sp a">A</span>洛克菲勒家。大萧条最惨的时候开工的。</span><span class="ln"><span class="sp b">B</span>别人都没钱。</span><span class="ln"><span class="sp a">A</span>对，他有钱，还一直盖，几千个人靠这个吃饭。</span><span class="ln"><span class="sp b">B</span>那这事还算好的。</span></td><td><span class="badge key">子章高潮</span><span class="badge wed">婚礼必拍</span></td></tr>
+          <tr><td class="id">44</td><td class="tc">13:55–14:20</td><td>中景 · 手持</td><td><b>自由女神渡轮（📸#12）</b>，去程甲板，底视仰拍</td><td class="dlg"><span class="ln"><span class="sp a">A</span>1886 年，法国送的。</span><span class="ln"><span class="sp b">B</span>为什么是绿的。</span><span class="ln"><span class="sp a">A</span>铜，氧化了。原来是铜色。</span><span class="ln"><span class="sp b">B</span>那里面铁架子谁做的。</span><span class="ln"><span class="sp a">A</span>埃菲尔。</span><span class="ln"><span class="sp b">B</span>……那个埃菲尔？</span><span class="ln"><span class="sp a">A</span>那个埃菲尔。</span><span class="ln"><span class="sp b">B</span>他先练了个手。</span></td><td>去程拍，回程人多；开防风</td></tr>
+          <tr><td class="id">45</td><td class="tc">14:20–14:38</td><td>中景 → 全景</td><td>华尔街铜牛 → 9/11 纪念馆水池 → One WTC</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这牛是官方摆的？</span><span class="ln"><span class="sp a">A</span>不是。1989 年一个雕塑家半夜自己拉来放这儿的。</span><span class="ln"><span class="sp b">B</span>没人管？</span><span class="ln"><span class="sp a">A</span>本来要拖走，大家喜欢，就留下了。</span></td><td>纪念馆段落静音只留水声</td></tr>
+          <tr><td class="id">46</td><td class="tc">14:38–15:05</td><td>低角度 · 稳定器</td><td><b>DUMBO（📸#13）+ 布鲁克林大桥（📸#15）</b></td><td class="dlg"><span class="ln"><span class="sp a">A</span>这桥 1883 年，十四年才建完。</span><span class="ln"><span class="sp b">B</span>为什么这么久。</span><span class="ln"><span class="sp a">A</span>总工程师开工前死了，儿子接手，在水下挖基坑得病瘫了。</span><span class="ln"><span class="sp b">B</span>那谁干的。</span><span class="ln"><span class="sp a">A</span>他老婆。每天在工地，跟工人对图纸，把这桥建完了。</span><span class="ln"><span class="sp b">B</span>……那这桥应该叫她的名字。</span></td><td><span class="badge key">子章高潮</span> 全片最经典纽约画面</td></tr>
+          <tr><td class="id">47</td><td class="tc">15:05–15:30</td><td>中景 · 稳定器</td><td>D10：联合国外观（09:00，闭馆）→ 中央公园 Bow Bridge（📸#14）→ Met 台阶</td><td class="dlg"><span class="ln"><span class="sp b">B</span>那块地算美国的吗。</span><span class="ln"><span class="sp a">A</span>不算，国际领土。</span><span class="ln"><span class="sp b">B</span>那也算出国了。</span><span class="ln"><span class="sp a">A</span>……算吧。</span></td><td>Bow Bridge 拍弧线 + 倒影</td></tr>
+          <tr><td class="id">48</td><td class="tc">15:30–15:50</td><td>中景 · 横移</td><td>Met 展厅 → 上东区 → 高线南段 → The Vessel</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这条原来是火车道。</span><span class="ln"><span class="sp b">B</span>运什么。</span><span class="ln"><span class="sp a">A</span>货运，三十年代修的，最后一趟车运的是冷冻火鸡。</span><span class="ln"><span class="sp b">B</span>1980 年？</span><span class="ln"><span class="sp a">A</span>1980 年。</span><span class="ln"><span class="sp b">B</span>然后荒了三十年。</span><span class="ln"><span class="sp a">A</span>要拆，居民不让，改成公园了。</span></td><td>高线拍植物 + 旧铁轨</td></tr>
+          <tr><td class="id">49</td><td class="tc">15:50–16:00</td><td>街景 · 手持</td><td>街头热狗摊、地铁口蒸汽、黄色出租车、街角招牌</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这城市不怎么好闻。</span><span class="ln"><span class="sp a">A</span>是。</span></td><td>不美化，转场</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Statue of Liberty · 1886</b>　｜　法国赠礼　｜　内部铁架由埃菲尔设计<br>
+        <span class="lb">上屏</span><b>Brooklyn Bridge · 1883</b>　｜　工期 14 年　｜　工程师 Washington Roebling 病瘫后，其妻 Emily 现场督建完成<br>
+        <span class="lb">上屏</span><b>The High Line</b>　｜　1930s 货运高架　｜　1980 年最后一趟列车（冷冻火鸡）　｜　2009 年改为公园
+      </div>
+      <div class="tip"><b>拍摄提示：</b>纽约三天素材最容易爆量（预计 60+ 分钟压 3:30）。诀窍是<b>每天只追一条主线</b>：D8 追「夜」，D9 追「水」（渡轮—铜牛—桥—DUMBO 全在水边），D10 追「高处与人」（联合国—公园—Met—高线—Vessel）。主线之外只留 B-roll。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 6 波士顿 ══════════ -->
+<section id="ch6">
+  <h2><span class="num">08</span>第六章 · 波士顿（16:00 – 18:20）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:var(--bos)">
+      <div class="idx">06</div>
+      <div class="ti"><b>最老的那部分</b><span>D11 10/5 · 聊独立战争与两所学校的真实年龄 · 砖红 / 秋黄 / 最慢</span></div>
+      <div class="dur">2:20</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>波士顿内容量最少（仅 10 小时），但<b>情绪权重最高</b>——最后一站，接着就是凌晨的飞机。拍摄上<b>不要贪</b>，四打卡点各拍 20 秒，剩下的时间全给「人」。<b>这一章的主角不是城市，是我们两个人。</b>人文主题：美国最老的那部分，以及「雕像骗人的三件事」。</div>
+
+      <div class="fact">
+        <div class="fact-h"><i>人文底料</i>波士顿 · 现场能聊的真事（挑 3–4 条）</div>
+        <table>
+          <tr><td>哈佛</td><td><b>1636 年建校，是美国最古老的高等学府</b>。院内 John Harvard 雕像（1884 年，Daniel Chester French 作品，他也是林肯坐像的作者）俗称<b>「三谎言雕像」</b>——① 他不是创始人，只是最早捐款的牧师；② 碑上写 1638，实际建校是 1636；③ 雕像不是他的长相，因为没有任何画像留存，用的是当时的学生模特</td></tr>
+          <tr><td>MIT</td><td>1861 年成立（创始人 William Barton Rogers），1916 年从波士顿市区搬到剑桥；<b>Great Dome 仿罗马万神殿</b>比例设计</td></tr>
+          <tr><td>自由之路</td><td>长约 4 公里、16 个站点的红砖步道，<b>1951 年由当地记者提议设立</b>，把分散的独立战争遗迹串成一条线——是「被设计出来的历史路线」，不是古道</td></tr>
+          <tr><td>波士顿公园</td><td>1634 年辟为公共用地，是美国最早的公共公园之一，曾作为牧羊场与操练场</td></tr>
+          <tr><td>昆西市场</td><td>1826 年建成，以当时的市长 Josiah Quincy 命名，希腊复兴式花岗岩建筑；1970 年代改造为餐饮与零售空间</td></tr>
+          <tr><td>Faneuil Hall</td><td>1742 年由商人 Peter Faneuil 捐建，二楼是集会厅，独立战争时期的演讲多在此，被称为「自由摇篮」</td></tr>
+        </table>
+      </div>
+
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">50</td><td class="tc">16:00–16:18</td><td>窗景 · 固定</td><td>07:00 大巴 NY → Boston，窗外新英格兰秋色，抵 South Station</td><td class="dlg"><span class="ln"><span class="sp b">B</span>最后一站。</span><span class="ln"><span class="sp a">A</span>今天就一天。</span></td><td>秋色是本章色调</td></tr>
+          <tr><td class="id">51</td><td class="tc">16:18–16:40</td><td>中景 · 跟随</td><td>自由之路精华段，红砖地上的红线，两人踩着线走</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这条线不是老东西。</span><span class="ln"><span class="sp b">B</span>不是？</span><span class="ln"><span class="sp a">A</span>1951 年一个记者提的，把这些点串起来好走。</span><span class="ln"><span class="sp b">B</span>七十多年。</span><span class="ln"><span class="sp a">A</span>比那些房子年轻多了。</span></td><td>脚踩红线特写必拍</td></tr>
+          <tr><td class="id">52</td><td class="tc">16:40–17:00</td><td>特写 → 中景</td><td>昆西市场，龙虾卷、蛤蜊浓汤、碰杯</td><td class="dlg"><span class="ln"><span class="sp b">B</span>这建筑 1826 年的。</span><span class="ln"><span class="sp a">A</span>当时是个菜市场。</span><span class="ln"><span class="sp b">B</span>现在也是。</span><span class="ln"><span class="sp a">A</span>现在卖龙虾卷。</span></td><td><span class="badge wed">婚礼必拍</span> 最生活化</td></tr>
+          <tr><td class="id">53</td><td class="tc">17:00–17:22</td><td>中景 · 稳定器</td><td>Harvard Yard，红砖楼、雕像脚、图书馆台阶</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这雕像有三个地方是错的。</span><span class="ln"><span class="sp b">B</span>说。</span><span class="ln"><span class="sp a">A</span>一，他不是创始人，他就是捐了钱。二，底下写 1638，学校 1636 年建的。三，这脸不是他，因为没有画像，找了个学生当模特。</span><span class="ln"><span class="sp b">B</span>那还摸脚呢。</span><span class="ln"><span class="sp a">A</span>摸吧，反正都摸亮了。</span></td><td>「三谎言」是本章最好聊的点</td></tr>
+          <tr><td class="id">54</td><td class="tc">17:22–17:45</td><td>全景 · 横移</td><td>MIT Great Dome → 查尔斯河，帆船、对岸天际线、日落</td><td class="dlg"><span class="ln"><span class="sp a">A</span>这个穹顶是仿万神殿的。</span><span class="ln"><span class="sp b">B</span>罗马那个？</span><span class="ln"><span class="sp a">A</span>按比例缩的。学校 1861 年成立，1916 年才搬过来。</span><span class="ln"><span class="sp b">B</span>比哈佛小两百多年。</span><span class="ln"><span class="sp a">A</span>两百二十五。</span></td><td><span class="badge key">本章高潮</span> 全程最后一个日落</td></tr>
+          <tr><td class="id">55</td><td class="tc">17:45–18:05</td><td>中景 · 固定长镜</td><td>河畔坐着的两人（远景），不说话，只看河</td><td class="dlg"><span class="ln">（无对白，只留风声与水声，镜头不动 12 秒以上）</span></td><td><span class="badge wed">婚礼必拍</span> 全片唯一长静默</td></tr>
+          <tr><td class="id">56</td><td class="tc">18:05–18:20</td><td>中景 · 手持</td><td>21:00 去 BOS，Silver Line、值机、空荡候机厅、01:45 登机口</td><td class="dlg"><span class="ln"><span class="sp a">A</span>十四个小时以后到家。</span><span class="ln"><span class="sp b">B</span>明天。</span><span class="ln"><span class="sp a">A</span>后天。</span></td><td>接终章</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span><b>Harvard · 1636</b>　｜　美国最古老的高等学府　｜　雕像「三个错误」：非创始人 · 年份 1638≠1636 · 面容非本人<br>
+        <span class="lb">上屏</span><b>Freedom Trail</b>　｜　1951 年由记者提议设立 · 长约 4 km · 16 站
+      </div>
+      <div class="warn"><b>时间是最硬的约束：</b>D11 有效游玩只有 11:30–21:00。<b>拍摄绝不能拖慢行程</b>——每个点限 15 分钟内拍完，超时立即放弃该机位。优先级：昆西午餐 &gt; 哈佛 &gt; 自由之路 &gt; MIT。若大巴延误先砍 MIT，保住 55 号镜头（河畔静默），那是全片情感落点。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 终章 ══════════ -->
+<section id="ch7">
+  <h2><span class="num">09</span>终章 · 明天见（18:20 – 20:00）</h2>
+  <div class="ch">
+    <div class="ch-head" style="background:#7a5c17">
+      <div class="idx">终</div>
+      <div class="ti"><b>回程</b><span>D12 10/6–10/7 返程素材 + 一段对谈 · 全片唯一「对着镜头说话」的段落</span></div>
+      <div class="dur">1:40</div>
+    </div>
+    <div class="ch-body">
+      <div class="theme"><b>章节任务：</b>把地理线收束回来，并<b>明确指向明年的婚礼</b>。这是全片唯一允许「刻意设计」的段落——但形式不是抒情独白，而是<b>两人对谈</b>：互相问对方一个具体问题。真实、简短、有信息量。</div>
+      <table class="shot">
+        <thead><tr><th style="width:42px">#</th><th style="width:78px">时间码</th><th style="width:140px">景别 / 运镜</th><th>画面内容</th><th style="width:290px">对话 / 声音</th><th style="width:130px">备注</th></tr></thead>
+        <tbody>
+          <tr><td class="id">57</td><td class="tc">18:20–18:45</td><td>特写组接 · 蒙太奇</td><td>回程：BOS 舷窗、机舱夜灯、HKG 日出、PEK 落地；中间插<b>六城双人背影快闪</b>（每城 1.5 秒）</td><td class="dlg"><span class="ln"><span class="sp b">B</span>六个城市。</span><span class="ln"><span class="sp a">A</span>两个海洋。</span><span class="ln"><span class="sp b">B</span>十四个日落？</span><span class="ln"><span class="sp a">A</span>没数过，大概吧。</span></td><td><span class="badge wed">婚礼必拍</span> 每城必须同规格背影</td></tr>
+          <tr><td class="id">58</td><td class="tc">18:45–19:20</td><td>近景 · 固定机位</td><td><b>对谈</b>：两人对着镜头（另一人站在镜头旁），各答 15 秒。问题固定：<b>「这趟里你最想再回去一次的地方是哪儿？」</b></td><td class="dlg"><span class="ln"><span class="sp a">A</span>（讲一个具体的地方 + 一个具体的理由，30 字以内）</span><span class="ln"><span class="sp b">B</span>（同上，可以与 A 相同也可以不同，允许争执）</span></td><td><span class="badge wed">婚礼必拍</span> 全片最重要两镜。<b>不抒情、不感谢、不许诺</b>，讲具体的事</td></tr>
+          <tr><td class="id">59</td><td class="tc">19:20–19:40</td><td>中景 · 手持</td><td>回国后生活空镜（可补拍）：家门口、钥匙、两个杯子、冰箱贴</td><td class="dlg"><span class="ln"><span class="sp b">B</span>回来了。</span><span class="ln"><span class="sp a">A</span>嗯。</span></td><td>唯一允许回国后补拍的段落</td></tr>
+          <tr><td class="id">60</td><td class="tc">19:40–20:00</td><td>定格 → 黑屏</td><td>画面定格在一张最满意的合影，缓慢推近，黑屏白字</td><td class="dlg"><span class="ln">（音乐收尾，留 4 秒黑屏再上落款）</span></td><td>落款见下</td></tr>
+        </tbody>
+      </table>
+      <div class="card-on-screen">
+        <span class="lb">上屏</span>2026.09.25 – 10.06　｜　San Francisco · Big Sur · Los Angeles · Washington D.C. · New York · Boston<br>
+        <span class="lb">上屏</span><b>明年，我们结婚。</b>　（婚礼日期 / 两人姓名，留空待填）
+      </div>
+      <div class="tip"><b>对谈怎么拍：</b>找干净背景（酒店白墙/窗边），手机架三脚架，<b>让另一个人站在镜头旁边</b>——对着爱人说话而不是对着机器，眼神才不飘。问题只有一个，答案不许超过 30 字。<b>禁止的句式：</b>「感谢你陪我」「这趟让我明白」「未来我们会」。<b>允许的句式：</b>「我想再去一次 Bixby，因为那天风太大了，没听清你说什么。」</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 婚礼镜头清单 ══════════ -->
+<section id="wedding">
+  <h2><span class="num">10</span>婚礼可用镜头清单与剪辑方案</h2>
+  <p class="lead">婚礼现场放 20 分钟太长，通常需要 <b>3–5 分钟</b>。下面是婚礼版的全部原料——<span class="badge wed">婚礼必拍</span> 标记共 12 个，<b>漏一个婚礼版就要降级</b>，出发前请单独抄进手机备忘录。</p>
+
+  <div class="card">
+    <h3>必须拍到的 12 个镜头</h3>
+    <table>
+      <thead><tr><th style="width:38px">#</th><th style="width:150px">镜头</th><th style="width:90px">城市 / 日</th><th style="width:210px">具体画面</th><th>为什么婚礼上必须有</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><b>开场背影</b></td><td>序章 · D0</td><td>PEK T3 两人推行李箱往前走，一人回头</td><td>婚礼版第一个镜头，交代「他们出发了」</td></tr>
+        <tr><td>2</td><td><b>第一只牵手</b></td><td>序章 · D1</td><td>公交车上两只手拉着同一根扶手</td><td>含蓄，长辈最吃这种</td></tr>
+        <tr><td>3</td><td><b>金门日落背影</b></td><td>旧金山 · D1</td><td>Vista Point，背影 + 桥 + 雾</td><td>画质最好，可作婚礼版封面帧</td></tr>
+        <tr><td>4</td><td><b>副驾视角</b></td><td>一号公路 · D2</td><td>开车那人的侧脸，之后隔 500 km 再拍一次</td><td>「一起走很远的路」，最贴合婚礼主题</td></tr>
+        <tr><td>5</td><td><b>Sign 草坡</b></td><td>洛杉矶 · D5</td><td>坐在草坡上背对镜头看 Hollywood Sign</td><td>安静、无亲密动作，长辈友好</td></tr>
+        <tr><td>6</td><td><b>格里菲斯日落→灯海</b></td><td>洛杉矶 · D5</td><td>并肩站栏杆前，天光由金转蓝</td><td>全片情绪最高点，婚礼版高潮</td></tr>
+        <tr><td>7</td><td><b>林肯纪念堂并坐</b></td><td>华盛顿 · D7</td><td>台阶上并排坐着，反思池在前</td><td>庄重，适合婚礼的仪式感</td></tr>
+        <tr><td>8</td><td><b>Top of the Rock</b></td><td>纽约 · D8</td><td>曼哈顿夜景全景 + 两人剪影</td><td>大场面，投影在婚礼现场最出效果</td></tr>
+        <tr><td>9</td><td><b>渡轮甲板</b></td><td>纽约 · D9</td><td>去程甲板，风吹头发，女神由远及近</td><td>「抵达」的隐喻</td></tr>
+        <tr><td>10</td><td><b>吃龙虾卷</b></td><td>波士顿 · D11</td><td>自然表情、碰杯</td><td>婚礼版唯一的轻松段落</td></tr>
+        <tr><td>11</td><td><b>河畔静默</b></td><td>波士顿 · D11</td><td>坐着看查尔斯河，镜头不动 12 秒</td><td>全片唯一的静，给宾客反应时间</td></tr>
+        <tr><td>12</td><td><b>对谈 ×2</b></td><td>终章 · D12</td><td>各 15 秒，答「最想再去一次的地方」</td><td>婚礼版核心，宾客会记住的就是这两段</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <h3 style="margin-top:0">5:00 版 · 迎宾循环</h3>
+      <p class="lead" style="font-size:13px">签到/入席时循环播放，<b>不上人声</b>，纯画面 + 音乐 + 上屏信息卡。</p>
+      <ul class="clean" style="font-size:13px">
+        <li>00:00 出发背影（15s）</li>
+        <li>00:15 金门日落（30s）</li>
+        <li>00:45 副驾 + Bixby（45s）</li>
+        <li>01:30 格里菲斯灯海（45s）</li>
+        <li>02:15 林肯纪念堂 + Top of the Rock（45s）</li>
+        <li>03:00 渡轮 + DUMBO（45s）</li>
+        <li>03:45 河畔静默（30s）</li>
+        <li>04:15 六城背影快闪（30s）</li>
+        <li>04:45 「明年，我们结婚」（15s）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">3:00 版 · 仪式前播放</h3>
+      <p class="lead" style="font-size:13px">宾客已就座，<b>保留对谈</b>，节奏收紧。</p>
+      <ul class="clean" style="font-size:13px">
+        <li>00:00 出发 + 「六个城市」（10s）</li>
+        <li>00:10 旧金山→一号公路快剪（40s）</li>
+        <li>00:50 格里菲斯灯海（35s）</li>
+        <li>01:25 纽约夜与桥（40s）</li>
+        <li>02:05 <b>对谈 ×2</b>（30s）</li>
+        <li>02:35 六城背影快闪（15s）</li>
+        <li>02:50 「明年，我们结婚」（10s）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">1:00 版 · 预告/请柬</h3>
+      <p class="lead" style="font-size:13px">朋友圈、电子请柬、婚礼大屏暖场。</p>
+      <ul class="clean" style="font-size:13px">
+        <li>00:00 片名（5s）</li>
+        <li>00:05 四城各一镜快闪（20s）</li>
+        <li>00:25 格里菲斯 / Top of the Rock（15s）</li>
+        <li>00:40 河畔静默（10s）</li>
+        <li>00:50 「明年，我们结婚」（10s）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <b>婚礼播放的三条硬规则：</b><br>
+    ① <b>音乐必须可商用或已获授权</b>——婚礼属公开播放，热门流行歌直接用有风险；优先免版税曲库（Artlist / Epidemic Sound / 国内商用曲库）或公有领域古典/爵士。<br>
+    ② <b>成片提前两周导出并现场试放一次</b>——婚礼音响与投影的色深、音量差异很大，必带备份 U 盘 + 云端链接。<br>
+    ③ <b>全中文字幕</b>——长辈看画面，字幕帮他们读懂；关键信息卡（年份/数据）字要大，停留 ≥ 3 秒。
+  </div>
+</section>
+
+<!-- ══════════ 拍摄规范 ══════════ -->
+<section id="rules">
+  <h2><span class="num">11</span>拍摄规范 · 六章统一的技术标准</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">设备与参数</h3>
+      <table style="font-size:13px">
+        <tr><th>项目</th><th>建议</th></tr>
+        <tr><td>主机</td><td>手机主摄，全程 <b>锁定 4K</b>（便于后期裁切与防抖）</td></tr>
+        <tr><td>画幅</td><td><b>横屏 16:9</b>。婚礼大屏与电视只认横屏，竖屏素材无法补救</td></tr>
+        <tr><td>帧率</td><td>日常 30fps；日落/海边/公路可开 60fps 备慢动作</td></tr>
+        <tr><td>收音</td><td><b>一拖二领夹麦是本项目最重要的设备</b>——对话体全靠它。大风必开防风毛套</td></tr>
+        <tr><td>稳定</td><td>手持稳定器 + 手机挂绳（崖边必需）；无稳定器时靠墙/靠栏杆借力</td></tr>
+        <tr><td>存储</td><td>每天 20–30 GB，每晚导入移动硬盘/云端，<b>每天备份一次</b></td></tr>
+        <tr><td>电量</td><td>两块充电宝 + 车充；日落前必须满电</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">双人出镜的「三镜头法」</h3>
+      <p class="lead" style="font-size:13px">每个景点拍三个人像镜头，剪辑时永远够用：</p>
+      <ul class="clean">
+        <li><b>① 远景交代（5–8s）</b>：人在环境里，占画面 1/3。证明「我们真的到了」</li>
+        <li><b>② 中景互动（5–10s）</b>：两人走路/说话/指东西。不摆拍，让他俩真的做点什么</li>
+        <li><b>③ 细节特写（3–5s）</b>：手、脚、杯子、被风吹起的衣角</li>
+      </ul>
+      <div class="tip" style="margin-top:12px"><b>不要做的三件事：</b>① 长时间自拍杆怼脸 ② 对着镜头说「我们现在在……」的导游腔 ③ 每个景点拍同样站姿的合影（剪出来像流水账）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">按城市统一的视觉设定</h3>
+    <table>
+      <thead><tr><th style="width:110px">城市</th><th style="width:120px">色调</th><th style="width:110px">节奏</th><th style="width:150px">音乐方向</th><th>构图关键词</th></tr></thead>
+      <tbody>
+        <tr><td><span class="citytag" style="background:var(--sf)">旧金山</span></td><td>冷蓝 + 雾灰</td><td>中速</td><td>民谣吉他 / 轻鼓</td><td>坡道线条、前景框景、逆光剪影</td></tr>
+        <tr><td><span class="citytag" style="background:var(--hwy)">一号公路</span></td><td>海青 + 草黄</td><td>慢（长镜）</td><td>公路摇滚 / 空旷合成器</td><td>水平线放 1/3、车轨引导线、崖边留白</td></tr>
+        <tr><td><span class="citytag" style="background:var(--la)">洛杉矶</span></td><td>金橙 + 高饱和</td><td>中快</td><td>复古 funk / 流行</td><td>金色时刻侧光、建筑几何、玻璃反射</td></tr>
+        <tr><td><span class="citytag" style="background:var(--dc)">华盛顿</span></td><td>白 + 低饱和</td><td>慢</td><td>钢琴 / 弦乐</td><td>严格对称、人物放小、长焦压缩</td></tr>
+        <tr><td><span class="citytag" style="background:var(--ny)">纽约</span></td><td>霓虹紫 + 夜蓝</td><td>快剪</td><td>爵士 / 电子鼓点</td><td>仰拍高楼、反射、人群流动</td></tr>
+        <tr><td><span class="citytag" style="background:var(--bos)">波士顿</span></td><td>砖红 + 秋黄</td><td>最慢</td><td>大提琴 / 简单钢琴</td><td>红砖纹理、河面倒影、固定长镜</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ B-roll ══════════ -->
+<section id="broll">
+  <h2><span class="num">12</span>每日必拍 B-roll 清单（万能素材）</h2>
+  <p class="lead">不管当天去哪，这 10 类素材每天各拍一条，后期永远有东西可填。<b>对话体 vlog 尤其依赖 B-roll</b>——人声在讲历史，画面不能停在原地。</p>
+  <div class="grid2">
+    <div class="card">
+      <ul class="clean">
+        <li><b>① 出门</b>：房门关上、钥匙放下、电梯下行</li>
+        <li><b>② 交通工具</b>：上车/上机/上船一瞬间，脚部特写最好用</li>
+        <li><b>③ 窗外</b>：车/机/船窗外，30 秒以上，剪延时或转场</li>
+        <li><b>④ 路牌地名</b>：城市名、街牌、地铁标识（替代口播交代位置）</li>
+        <li><b>⑤ 食物</b>：上桌全景 → 特写 → 第一口</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul class="clean">
+        <li><b>⑥ 手部动作</b>：拿咖啡、翻地图、系鞋带、按快门</li>
+        <li><b>⑦ 展签/铭牌</b>：<b>本版新增</b>——人文类内容的证据，剪进对话里非常有说服力</li>
+        <li><b>⑧ 当地人</b>：街头背影、遛狗的人、街头艺人（<b>不拍正面特写</b>）</li>
+        <li><b>⑨ 材质空镜</b>：石材、铁锈、木头、玻璃（讲历史时做画面填充）</li>
+        <li><b>⑩ 收工</b>：回酒店的街景、灯、脱鞋、躺下</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip"><b>数量建议：</b>每天至少 <b>15 分钟素材</b>，12 天 ≈ 180 分钟 → 剪 20 分钟，比例约 9:1。<b>宁多勿少，删素材永远比补拍便宜。</b></div>
+</section>
+
+<!-- ══════════ 解说与音乐 ══════════ -->
+<section id="sound">
+  <h2><span class="num">13</span>解说、字幕与音乐</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">对话解说原则</h3>
+      <ul class="clean">
+        <li><b>全片对话控制在 10 段以内</b>，每段不超过 25 秒。观众是来看地方的，不是来听长谈的</li>
+        <li><b>现场收录为主，后期补录为辅。</b>现场版语气更真，风噪太大时再回酒店补录同一句</li>
+        <li><b>信息要准确，表达要口语。</b>「1937 年通车」可以说，「见证了一个时代的沧桑」不能说</li>
+        <li><b>留白。</b>每章至少一段 8 秒以上完全无对话，只留环境音</li>
+        <li><b>音量配比：</b>对话 &gt; 环境音 &gt; 音乐。音乐永远不要盖过说话</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">字幕规范</h3>
+      <ul class="clean">
+        <li><b>对话全字幕</b>——现场收音难免糊，字幕是保险</li>
+        <li><b>信息卡是第二层字幕</b>：年份、数据、名称，白色无衬线 + 深色底条，停留 ≥ 3 秒</li>
+        <li>地名格式：<b>中文（英文）</b>，如「金门大桥 Golden Gate Bridge」</li>
+        <li>发现口播说错时，<b>用字幕更正而不重录</b>：<span class="badge">更正：实际为 1636 年</span></li>
+        <li>字体统一，全片位置固定（左下对话、中下信息卡）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">音乐与版权</h3>
+    <p>全片按 <b>三段式配乐</b>：西岸（旧金山—洛杉矶）民谣/公路感 → 华盛顿转钢琴弦乐 → 纽约转节奏感强的电子/爵士 → 波士顿与终章回到开头那首的钢琴版（<b>首尾呼应，婚礼上最催泪的一招</b>）。对话段落把音乐压到 -20dB 以下或完全让位。</p>
+    <div class="warn" style="margin-bottom:0"><b>版权：</b>婚礼属公开场合播放，直接用热门流行歌存在风险。三个安全选项：① 订阅免版税曲库（Artlist / Epidemic Sound / 国内商用曲库）② 公有领域古典/爵士曲目 ③ AI 生成伴奏并确认商用条款。<b>导出前把授权凭证存一份。</b></div>
+  </div>
+</section>
+
+<!-- ══════════ 后期 ══════════ -->
+<section id="post">
+  <h2><span class="num">14</span>后期流程与交付</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:110px">阶段</th><th style="width:110px">时间</th><th>做什么</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 素材归库</b></td><td>1–2 天</td><td>按「日期_城市_机位」重命名，删废片，180 分钟 → 精选 60 分钟，云端再备份一份</td></tr>
+        <tr><td><b>2 声音先行</b></td><td>1–2 天</td><td><b>本版与常规流程不同：先挑对话。</b>把可用的对话段全部打点，选出最有信息的 10 段，围绕它们搭结构</td></tr>
+        <tr><td><b>3 粗剪</b></td><td>3–5 天</td><td>按本剧本时间码铺画面，把 20:00 撑满，此时只删不调</td></tr>
+        <tr><td><b>4 结构剪辑</b></td><td>2–3 天</td><td>调章节顺序与时长；每章确认「一个高潮 + 至少一段有效对话」都在；砍重复机位</td></tr>
+        <tr><td><b>5 补录</b></td><td>1 天</td><td>对风噪废掉的对话做补录；<b>事实核对</b>——逐条检查口播里的年份与数据</td></tr>
+        <tr><td><b>6 音乐音效</b></td><td>1–2 天</td><td>三段式配乐 + 环境音（海浪/地铁/风）；确保人声高于音乐</td></tr>
+        <tr><td><b>7 调色</b></td><td>1 天</td><td>六城统一基调后按上表微调；人像肤色优先，宁淡不艳</td></tr>
+        <tr><td><b>8 字幕</b></td><td>1 天</td><td>对话全字幕 + 信息卡 + 更正条；检查错别字与英文拼写</td></tr>
+        <tr><td><b>9 导出</b></td><td>半天</td><td>主版 4K/25Mbps；另出 1080P 婚礼版、1 分钟竖屏版</td></tr>
+        <tr><td><b>10 婚礼版</b></td><td>提前 2 周</td><td>出 5:00 / 3:00，<b>现场试放一次</b>，备份 U 盘 + 云端</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><b>交付清单：</b>① 20:00 完整版（4K + 1080P）② 5:00 婚礼迎宾版 ③ 3:00 仪式版 ④ 1:00 预告版（横 + 竖）⑤ 原始素材归档盘 ⑥ 音乐授权凭证。婚礼前一周再确认播放设备接口。</div>
+</section>
+
+<!-- ══════════ 清单 ══════════ -->
+<section id="check">
+  <h2><span class="num">15</span>执行清单 · 打印带走</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">出发前（9/24 前）</h3>
+      <ul class="chk">
+        <li><input type="checkbox"> <b>一拖二领夹麦</b>（含防风毛套）——本片最关键设备</li>
+        <li><input type="checkbox"> 手机清空 ≥ 80 GB，确认支持 4K</li>
+        <li><input type="checkbox"> 稳定器充满电，试拍确认平衡</li>
+        <li><input type="checkbox"> 充电宝 ×2 + 车充 + 多口插头</li>
+        <li><input type="checkbox"> 手机挂绳（崖边机位必备）</li>
+        <li><input type="checkbox"> 移动硬盘 / 云空间，确认每天可备份</li>
+        <li><input type="checkbox"> 两人各看一遍六章的「人文底料」表</li>
+        <li><input type="checkbox"> 打印「婚礼必拍 12 镜」到手机备忘录</li>
+        <li><input type="checkbox"> 约定 A / B 谁是谁（全片固定不要换）</li>
+        <li><input type="checkbox"> 查好每日日落时间（金门 / 格里菲斯 / 查尔斯河）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">每天收工后（10 分钟）</h3>
+      <ul class="chk">
+        <li><input type="checkbox"> 素材导入硬盘 / 上传云端</li>
+        <li><input type="checkbox"> 记一句「今天聊到的最有意思的一条」</li>
+        <li><input type="checkbox"> 勾选当天已拍到的婚礼必拍镜头</li>
+        <li><input type="checkbox"> 手机 / 麦 / 稳定器全充满</li>
+        <li><input type="checkbox"> 扫一眼明天的行程，预判两个机位</li>
+      </ul>
+      <h3>最容易漏的 5 件事</h3>
+      <ul class="chk">
+        <li><input type="checkbox"> 每城一张<b>同规格双人背影</b>（终章快闪要用）</li>
+        <li><input type="checkbox"> 每个景点拍「③ 细节特写」（手/脚/杯子）</li>
+        <li><input type="checkbox"> <b>展签/铭牌特写</b>（人文内容的证据）</li>
+        <li><input type="checkbox"> 环境音单独录 30 秒（海浪、地铁、风）</li>
+        <li><input type="checkbox"> 至少一段 8 秒以上的完全静默画面</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  美国 14 天 Vlog 拍摄剧本 · 20:00 成片 · 双人对话体 · 基于 9/24–10/7 真实行程生成<br>
+  人文底料请以现场展签与官方导览为准，冲突时以现场为准 · 出发前请把「婚礼必拍 12 镜」抄进手机
+</footer>
+
+</div>
+</body>
+</html>
